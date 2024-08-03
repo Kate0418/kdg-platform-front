@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './tailwind.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import LoginIndex from './pages/login/Index'
+import LoginIndex from './pages/login/LoginIndex'
 
 export const router = createBrowserRouter([
     {
