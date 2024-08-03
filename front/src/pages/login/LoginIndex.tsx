@@ -1,8 +1,12 @@
 import Form from '../../components/login/index/Form'
+import Header from '../../layouts/Header'
 
 const LoginIndex = () => {
     return (
-        <Form />
+        <>
+            <Header />
+            <Form />
+        </>
     )
 }
 
