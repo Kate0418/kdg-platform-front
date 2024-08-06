@@ -1,5 +1,5 @@
-import Form from '../../components/login/index/Form'
-import Header from '../../layouts/Header'
+import Form from '../components/login/Form'
+import Header from '../layouts/Header'
 
 const LoginIndex = () => {
     return (

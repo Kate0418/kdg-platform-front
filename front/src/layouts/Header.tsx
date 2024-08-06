@@ -1,10 +1,10 @@
 const Header = () => {
     return (
         <>
-            <header>
-                <div className="p-3 bg-[#B4BD4F]">
+            <header className="fixed top-0 left-0 w-full border-y">
+                <div className="p-3">
                     <img className='w-1/4 p-1' src='/imgs/logo.gif'></img>
-                    <div className="border-b-2 border-[#6A5E57]"></div>
+                    <div className="border-b-2"></div>
                 </div>
             </header>
         </>
