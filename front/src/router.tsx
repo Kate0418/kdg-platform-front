@@ -1,15 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './tailwind.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 import Login from './pages/Login'
+import Top from './pages/Top'
 
-export const router = createBrowserRouter([
-    {
-        path: "/login",
-        element: <Login />,
-        children:[]
-    },
+const router = createBrowserRouter([
+  {
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/top',
+    element: <Top />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
