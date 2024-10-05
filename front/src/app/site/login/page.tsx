@@ -1,25 +1,38 @@
 "use client"
 
 import Login from "@/api/Login";
+import Loader from "@/components/layout/Loader";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function Page() {
+export default function () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const router = useRouter()
 
     const Api = async () => {
+
         if (await Login(email, password)) {
-            alert('こんにちは')
+            setLoading(true);
+            router.push("/service/top");
         } else {
             console.log(email, password)
+            setLoading(false);
             alert('メールアドレスもしくはパスワードが間違っています。')
         }
     }
 
+    if (loading) { return <Loader /> }
+
     return (
       <div className="flex flex-col items-center justify-center w-screen h-[calc(100vh-110px)]">
-        <div className="flex flex-col w-1/3 h-3/4 border border-[var(--text-color)] rounded-lg bg-white overflow-hidden">
+        <form className="flex flex-col w-1/3 h-3/4 border border-[var(--text-color)] rounded-lg bg-white overflow-hidden"
+            onSubmit={(e) => {
+                e.preventDefault();
+                Api();
+            }}>
             <p className="text-2xl text-center py-2 text-[var(--base-color)] bg-[var(--text-color)]">ログイン</p>
             <div className="p-4">
                 <div className="flex justify-center py-5">
@@ -36,11 +49,11 @@ export default function Page() {
                 </div>
 
                 <div className="flex justify-end pr-2">
-                    <button className="p-3 rounded-lg" onClick={ Api }>ログイン</button>
+                    <button className="p-3 rounded-lg" type="submit">ログイン</button>
                 </div>
             </div>
             <div className="bg-[var(--text-color)] h-2 mt-auto"></div>
-        </div>
+        </form>
       </div>
     );
 }

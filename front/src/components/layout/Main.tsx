@@ -8,7 +8,7 @@ import Loader from '@/components/layout/Loader';
 export default function Main ({ children, }: Readonly<{ children: React.ReactNode; }>) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-    const app_flg = usePathname().startsWith("/app/");
+    const app_flg = usePathname().startsWith("/service/");
 
     useEffect(() => {
         if (app_flg) {
