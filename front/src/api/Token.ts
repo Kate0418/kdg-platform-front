@@ -14,7 +14,7 @@ export default async function Token(): Promise<boolean> {
             }
         });
         if (response.data) {
-            sessionStorage.setItem('user', JSON.stringify(response.data));
+            localStorage.setItem('user', JSON.stringify(response.data));
             return true;
         }
     } catch (e) {

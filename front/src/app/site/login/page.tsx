@@ -28,7 +28,7 @@ export default function () {
 
     return (
       <div className="flex flex-col items-center justify-center w-screen h-[calc(100vh-110px)]">
-        <form className="flex flex-col w-1/3 h-3/4 border border-[var(--text-color)] rounded-lg bg-white overflow-hidden"
+        <form className="flex flex-col lg:w-1/3 border border-[var(--text-color)] rounded-lg bg-white overflow-hidden"
             onSubmit={(e) => {
                 e.preventDefault();
                 Api();

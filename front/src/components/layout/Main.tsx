@@ -8,16 +8,15 @@ import Loader from '@/components/layout/Loader';
 export default function Main ({ children, }: Readonly<{ children: React.ReactNode; }>) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-    const app_flg = usePathname().startsWith("/service/");
+    const service_flg = usePathname().startsWith("/service/");
 
     useEffect(() => {
-        if (app_flg) {
+        if (service_flg) {
             const checkToken = async () => {
                 if (!await Token()) {
                     router.push("/site/login");
-                } else {
-                    setLoading(false);
                 }
+                setLoading(false);
             }
 
             checkToken();
