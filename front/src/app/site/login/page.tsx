@@ -14,11 +14,11 @@ export default function () {
 
     const Api = async () => {
 
-        if (await Login(email, password)) {
-            setLoading(true);
-            router.push("/service/top");
+        setLoading(true);
+        const login = await Login(email, password);
+        if (login.success) {
+            router.push(`/service/${login.type}/top`);
         } else {
-            console.log(email, password)
             setLoading(false);
             alert('メールアドレスもしくはパスワードが間違っています。')
         }

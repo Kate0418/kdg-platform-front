@@ -1,25 +1,22 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default async function Token(): Promise<boolean> {
-    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/user`;
-    const token = localStorage.getItem('token');
+    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/token`;
+    const token = Cookies.get('token');
     if (!token) {
         return false;
     }
 
     try {
-        const response = await axios.get(api_url, {
+        const response = await axios.get<{success: true}>(api_url, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
-        if (response.data) {
-            localStorage.setItem('user', JSON.stringify(response.data));
-            return true;
-        }
+        return response.data.success
     } catch (e) {
+        console.error(e);
         return false;
     }
-
-    return false;
 }
