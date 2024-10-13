@@ -24,6 +24,11 @@ button {
   color: var(--base-color);
 }
 
+a {
+  background-color: var(--accent-color);
+  color: var(--base-color);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

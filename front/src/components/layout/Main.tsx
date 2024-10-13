@@ -15,6 +15,7 @@ export default function Main ({ children, }: Readonly<{ children: React.ReactNod
                     router.push("/site/login");
                 }
             }
+            checkToken();
             const interval_id = setInterval(checkToken, 60000)
             return () => clearInterval(interval_id);
         }
