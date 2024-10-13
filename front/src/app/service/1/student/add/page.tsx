@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Token from "@/api/Token";
 import StudentAdd from "@/api/StudentAdd";
-import Page from "@/components/layout/page";
+import Page from "@/components/layout/Page";
 
 export default function () {
     const [courses, setCourses] = useState<Array<{id: number, name: string}>>([]);

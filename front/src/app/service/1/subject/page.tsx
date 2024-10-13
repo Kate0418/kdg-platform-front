@@ -1,7 +1,7 @@
 "use client"
 
 import SubjectGet from "@/api/SubjectGet";
-import Page from "@/components/layout/page";
+import Page from "@/components/layout/Page";
 import { useState, useEffect, use } from "react";
 
 export default function () {
@@ -9,13 +9,13 @@ export default function () {
     const [key_word, setKeyWord] = useState("");
 
     useEffect(() => {
-        const api = async() => {
+        const getApi = async() => {
             const response = await SubjectGet(key_word);
             if (response.success) {
                 setSubjects(response.subjects)
             }
         }
-        api();
+        getApi();
     })
 
     return (
@@ -28,6 +28,19 @@ export default function () {
                         <td className="w-1/12"></td>
                     </tr>
                 </thead>
+                <tbody>
+                    {subjects.map((subject) => (
+                        <tr>
+                            <td className="border border-[var(--text-color)] p-2">{subject.name}</td>
+                            <td className="border border-[var(--text-color)] p-2">{subject.teacher_name}</td>
+                            <td className="border border-[var(--text-color)] p-2">
+                                <a>編集</a>
+                            </td>
+                        </tr>
+                    ))
+
+                    }
+                </tbody>
             </table>
         </Page>
     )

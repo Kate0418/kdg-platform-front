@@ -3,7 +3,7 @@
 import StudentGetUsers from "@/api/StudentGetUsers";
 import React from 'react';
 import { useState, useEffect } from "react";
-import Page from "@/components/layout/page";
+import Page from "@/components/layout/Page";
 
 export default function () {
     const [key_word, setKeyWord] = useState(null);
