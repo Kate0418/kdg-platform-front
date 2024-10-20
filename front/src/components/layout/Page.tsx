@@ -15,7 +15,7 @@ export default function (props: Props) {
                 </div>
 
                 <div className="py-5">
-                    <div className="border border-[var(--text-color)] rounded-xl bg-white h-[600px] overflow-auto">
+                    <div className="border border-[var(--text-color)] rounded-lg bg-white h-[600px] overflow-auto">
                         <div className="bg-[var(--text-color)] text-[var(--base-color)] p-1">{contents_name}</div>
                         <div className="p-8">
                             {children}
