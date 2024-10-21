@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Token from "@/api/Token";
 import Page from "@/components/layout/Page";
 import SubjectAdd from "@/api/SubjectAdd";
+import Title from "@/components/layout/Title";
 
 export default function () {
     const [teachers, setTeachers] = useState<Array<{id: number, name: string}>>([]);
@@ -50,7 +51,8 @@ export default function () {
 
     return (
         <>
-            <Page title="科目登録ページ" contents_name="登録科目一覧">
+            <Title title="科目登録ページ" />
+            <Page title="登録科目一覧">
                 <div className="flex flex-col items-center overflow-auto max-h-[430px]">
                     <table className="w-full mb-5">
                         <thead>

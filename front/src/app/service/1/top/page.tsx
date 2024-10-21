@@ -1,7 +1,11 @@
 import Page from "@/components/layout/Page";
+import Title from "@/components/layout/Title";
 
 export default function () {
     return (
-        <Page title="トップページ" contents_name="機能一覧" />
+        <>
+            <Title title="トップページ" />
+            <Page title="機能一覧" />
+        </>
     )
 }

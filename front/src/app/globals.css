@@ -19,16 +19,6 @@ main {
   padding-top: 88px;
 }
 
-button {
-  background-color: var(--accent-color);
-  color: var(--base-color);
-}
-
-a {
-  background-color: var(--accent-color);
-  color: var(--base-color);
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -49,6 +39,12 @@ a {
     radial-gradient(circle at calc(100% - var(--stroke-width)) calc(100% - var(--stroke-width)), var(--color) 0%, var(--color) var(--stroke-width), transparent var(--stroke-width), transparent 100%),
     radial-gradient(circle at var(--stroke-width) calc(100% - var(--stroke-width)), var(--color) 0%, var(--color) var(--stroke-width), transparent var(--stroke-width), transparent 100%);
   animation: var(--animation-timing-function) var(--animation-duration) infinite square-spin-2-animation;
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 10px;
+  }
 }
 
 @keyframes square-spin-2-animation {

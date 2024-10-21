@@ -9,6 +9,7 @@ import Page from "@/components/layout/Page";
 import React from 'react';
 import TeacherAdd from "@/api/TeacherAdd";
 import dynamic from 'next/dynamic';
+import Title from "@/components/layout/Title";
 const Select = dynamic(() => import('react-select'), { ssr: false });
 
 export default function () {
@@ -67,7 +68,12 @@ export default function () {
 
     return (
         <>
-            <Page title="講師登録ページ" contents_name="登録講師一覧">
+            <Title title="講師登録ページ" />
+            <div className="flex">
+                <label>検索値</label>
+                <input />
+            </div>
+            <Page title="登録講師一覧">
                 <div className="flex flex-col items-center overflow-auto max-h-[450px]">
                 {teachers.map((teacher, index) => (
                     <table key={index} className="w-full mb-28">

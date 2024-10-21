@@ -20,5 +20,13 @@ export default function Main ({ children, }: Readonly<{ children: React.ReactNod
             return () => clearInterval(interval_id);
         }
     }, [router]);
-    return <main>{children}</main>
+    return (
+        <main>
+            <div className="flex flex-col w-screen items-center">
+                <div className="w-full pt-5 px-3 lg:px-10">
+                    {children}
+                </div>
+            </div>
+        </main>
+    )
 }

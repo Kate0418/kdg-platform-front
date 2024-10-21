@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 import Token from "@/api/Token";
 import StudentAdd from "@/api/StudentAdd";
 import Page from "@/components/layout/Page";
+import { Button } from "@/components/layout/Button";
+import { A } from "@/components/layout/A";
+import Modal from "@/components/layout/Modal";
+import Title from "@/components/layout/Title";
 
 export default function () {
     const [courses, setCourses] = useState<Array<{id: number, name: string}>>([]);
@@ -38,7 +42,7 @@ export default function () {
         setStudents(updatedTables);
     };
 
-    const Api = async() => {
+    const addApi = async() => {
         setLoading(true);
         if (!await Token) {
             router.push("/site/login");
@@ -60,17 +64,17 @@ export default function () {
 
     return (
         <>
-            <Page title="生徒登録ページ" contents_name="登録生徒一覧">
-                <div className="flex flex-col items-center overflow-auto max-h-[450px]">
-                    <table className="w-full mb-5">
-                        <thead>
+            <Title title="生徒登録ページ" />
+            <Page title="登録生徒一覧">
+                    <table className="w-full">
+                        <thead className="">
                             <tr className="border border-[var(--text-color)] bg-[var(--text-color)]">
                                 <td className="border-r border-[var(--base-color)] text-[var(--base-color)] p-1">名前</td>
                                 <td className="border-r border-[var(--base-color)] text-[var(--base-color)] p-1">メールアドレス</td>
-                                <td className=" text-[var(--base-color)] p-1">コース</td>
+                                <td className="text-[var(--base-color)] p-1">コース</td>
                             </tr>
                         </thead>
-                        <tbody className="overflow-auto">
+                        <tbody>
                         {students.map((student, index) => (
                             <tr key={index}>
                                 <td className="border border-[var(--text-color)]">
@@ -100,47 +104,42 @@ export default function () {
                         ))}
                         </tbody>
                     </table>
-                </div>
-                <div className="flex justify-between w-full pt-5">
-                    <a className="ml-5 p-3 rounded-lg" href="/service/1/student">戻る</a>
-
-                    <div className="flex">
-                        <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => setStudents([...students,{ name: "", email: "", courseId: null }])}>追加</button>
-                        <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => students.length > 1 && setStudents(students.slice(0, -1))}>削除</button>
-                        <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => students.length === adds ? setConfirm(true) : alert("生徒情報を正しく入力してください")}>確認</button>
-                    </div>
-                </div>
             </Page>
-            {confirm && (
-                <div className="fixed top-0 left-0 p-40">
-                    <div className="fixed top-0 left-0 w-screen h-screen z-40 bg-[var(--text-color)] opacity-60"></div>
-                    <div className="fixed bg-white z-50 inset-x-60 flex flex-col items-center p-8 rounded-lg h-[500px] overflow-auto">
-                        <table className="w-11/12 mb-5">
-                            <thead>
-                                <tr className="border border-[var(--text-color)] bg-[var(--text-color)]">
-                                    <td className="border-r border-[var(--base-color)] text-[var(--base-color)] p-1">名前</td>
-                                    <td className="border-r border-[var(--base-color)] text-[var(--base-color)] p-1">メールアドレス</td>
-                                    <td className=" text-[var(--base-color)] p-1">コース</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {students.map((student, index) => (
-                                    (student.name || student.email || student.courseId) &&
-                                    <tr key={index}>
-                                        <td className="border border-[var(--text-color)] w-12/4 p-1">{student.name}</td>
-                                        <td className="border border-[var(--text-color)] w-12/5 p-1">{student.email}</td>
-                                        <td className="border border-[var(--text-color)] w-12/3 p-1">{student.courseId}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <div className="flex justify-end w-full">
-                            <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => { setConfirm(false) }}>戻る</button>
-                            <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => { Api() }}>登録</button>
-                        </div>
-                    </div>
+            <div className="flex justify-between w-full">
+                <A href="/service/1/student">戻る</A>
+
+                <div className="flex">
+                    <Button type="button" onClick={() => setStudents([...students,{ name: "", email: "", courseId: null }])}>追加</Button>
+                    <Button type="button" onClick={() => students.length > 1 && setStudents(students.slice(0, -1))}>削除</Button>
+                    <Button type="button" onClick={() => students.length === adds ? setConfirm(true) : alert("生徒情報を正しく入力してください")}>確認</Button>
                 </div>
-            )}
+            </div>
+
+            <Modal flg={confirm}>
+                <table className="w-full mb-5">
+                    <thead>
+                        <tr className="border border-[var(--text-color)] bg-[var(--text-color)]">
+                            <td className="border-r border-[var(--base-color)] text-[var(--base-color)] p-1">名前</td>
+                            <td className="border-r border-[var(--base-color)] text-[var(--base-color)] p-1">メールアドレス</td>
+                            <td className=" text-[var(--base-color)] p-1">コース</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {students.map((student, index) => (
+                            (student.name || student.email || student.courseId) &&
+                            <tr key={index}>
+                                <td className="border border-[var(--text-color)] w-12/4 p-1">{student.name}</td>
+                                <td className="border border-[var(--text-color)] w-12/5 p-1">{student.email}</td>
+                                <td className="border border-[var(--text-color)] w-12/3 p-1">{student.courseId}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <div className="flex justify-end w-full">
+                    <Button type="button" onClick={() => { setConfirm(false) }}>戻る</Button>
+                    <Button type="button" onClick={() => { addApi() }}>登録</Button>
+                </div>
+            </Modal>
         </>
     )
 }
