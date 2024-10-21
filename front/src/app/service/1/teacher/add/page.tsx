@@ -8,9 +8,8 @@ import Token from "@/api/Token";
 import Page from "@/components/layout/Page";
 import React from 'react';
 import TeacherAdd from "@/api/TeacherAdd";
-import dynamic from 'next/dynamic';
 import Title from "@/components/layout/Title";
-const Select = dynamic(() => import('react-select'), { ssr: false });
+import { Select } from "@/components/layout/Select";
 
 export default function () {
     const [subjects, setSubjects] = useState<Array<{value: number, label: string}>>([]);
@@ -69,10 +68,6 @@ export default function () {
     return (
         <>
             <Title title="講師登録ページ" />
-            <div className="flex">
-                <label>検索値</label>
-                <input />
-            </div>
             <Page title="登録講師一覧">
                 <div className="flex flex-col items-center overflow-auto max-h-[450px]">
                 {teachers.map((teacher, index) => (
@@ -103,25 +98,10 @@ export default function () {
                                     <div className="flex">
                                         <div className="bg-[var(--text-color)] text-[var(--base-color)] p-1 w-1/6 text-center">科目</div>
                                         <div className="w-5/6">
-                                            <Select options={subjects} isMulti maxMenuHeight={120}
-                                            styles={{
-                                                control: (provided, state) => ({
-                                                    ...provided,
-                                                    borderColor: state.isFocused ? 'var(--accent-color)' : '#ccc',
-                                                    boxShadow: state.isFocused ? '0 0 0 1px var(--accent-color)' : null,
-                                                    '&:hover': {
-                                                        borderColor: state.isFocused ? 'var(--accent-color)' : '#aaa',
-                                                    },
-                                                }),
-                                                option: (provided, state) => ({
-                                                    ...provided,
-                                                    backgroundColor: state.isFocused
-                                                      ? 'var(--accent-color)'
-                                                      : null,
-                                                })
-                                              }}
-                                            value={teacher.subjectIds}
-                                            onChange={(e) => handleInputChange(index, 'subjectIds', e)}
+                                            <Select
+                                                options={subjects}
+                                                value={teacher.subjectIds}
+                                                onChange={(e) => handleInputChange(index, 'subjectIds', e)}
                                             />
                                         </div>
                                     </div>

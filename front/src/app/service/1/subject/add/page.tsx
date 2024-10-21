@@ -7,6 +7,9 @@ import Token from "@/api/Token";
 import Page from "@/components/layout/Page";
 import SubjectAdd from "@/api/SubjectAdd";
 import Title from "@/components/layout/Title";
+import { Button } from "@/components/layout/Button";
+import { A } from "@/components/layout/A";
+import { Select } from "@/components/layout/Select";
 
 export default function () {
     const [teachers, setTeachers] = useState<Array<{id: number, name: string}>>([]);
@@ -84,16 +87,17 @@ export default function () {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-between w-full pt-5">
-                    <a className="ml-5 p-3 rounded-lg" href="/service/1/subject">戻る</a>
+            </Page>
+            <div className="flex justify-between w-full">
+                    <A href="/service/1/subject">戻る</A>
 
                     <div className="flex">
-                        <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => setSubjects([...subjects,{ name: "",teacherId: null }])}>追加</button>
-                        <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => subjects.length > 1 && setSubjects(subjects.slice(0, -1))}>削除</button>
-                        <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => subjects.length === adds ? setConfirm(true) : alert("科目情報を正しく入力してください")}>確認</button>
+                        <Button type="button" onClick={() => setSubjects([...subjects,{ name: "",teacherId: null }])}>追加</Button>
+                        <Button type="button" onClick={() => subjects.length > 1 && setSubjects(subjects.slice(0, -1))}>削除</Button>
+                        <Button type="button" onClick={() => subjects.length === adds ? setConfirm(true) : alert("科目情報を正しく入力してください")}>確認</Button>
                     </div>
                 </div>
-            </Page>
+
             {confirm && (
                 <div className="fixed top-0 left-0 p-40">
                     <div className="fixed top-0 left-0 w-screen h-screen z-40 bg-[var(--text-color)] opacity-60"></div>
@@ -115,8 +119,8 @@ export default function () {
                             </tbody>
                         </table>
                         <div className="flex justify-end w-full">
-                            <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => { setConfirm(false) }}>戻る</button>
-                            <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => { addApi() }}>登録</button>
+                            <Button type="submit" onClick={() => { setConfirm(false) }}>戻る</Button>
+                            <Button type="submit" onClick={() => { addApi() }}>登録</Button>
                         </div>
                     </div>
                 </div>

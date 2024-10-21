@@ -5,6 +5,7 @@ import Loader from "@/components/layout/Loader";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/layout/Button";
 
 export default function () {
     const [email, setEmail] = useState("");
@@ -49,7 +50,7 @@ export default function () {
                 </div>
 
                 <div className="flex justify-end pr-2">
-                    <button className="p-3 rounded-lg" type="submit">ログイン</button>
+                    <Button type="submit">ログイン</Button>
                 </div>
             </div>
             <div className="bg-[var(--text-color)] h-2 mt-auto"></div>

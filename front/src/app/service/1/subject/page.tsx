@@ -22,17 +22,13 @@ export default function () {
     return (
         <>
             <Title title="科目情報管理ページ" />
-            <div className="flex">
-                <label>検索値</label>
-                <input />
-            </div>
             <Page title="科目一覧">
                 <table className="w-full">
                     <thead>
                         <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-                            <td className="border-r border-[var(--base-color)] p-1 w-7/12">科目名</td>
-                            <td className="border-r border-[var(--base-color)] p-1 w-4/12">講師名</td>
-                            <td className="w-1/12"></td>
+                            <td className="border-r border-[var(--base-color)] p-1">科目名</td>
+                            <td className="border-r border-[var(--base-color)] p-1">講師名</td>
+                            <td className="w-[50px] lg:w-[100px]"></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,8 +36,8 @@ export default function () {
                             <tr>
                                 <td className="border border-[var(--text-color)] p-2">{subject.name}</td>
                                 <td className="border border-[var(--text-color)] p-2">{subject.teacher_name}</td>
-                                <td className="border border-[var(--text-color)] p-2">
-                                    <a>編集</a>
+                                <td className="border border-[var(--text-color)] p-1 lg:p-3"> 
+                                    <a className="p-1 lg:p-3 rounded-lg bg-[var(--accent-color)] text-[var(--base-color)]" href="">編集</a>
                                 </td>
                             </tr>
                         ))

@@ -4,8 +4,6 @@ import StudentGetUsers from "@/api/StudentGetUsers";
 import React from 'react';
 import { useState, useEffect } from "react";
 import Page from "@/components/layout/Page";
-import { Button } from "@/components/layout/Button";
-import { A } from "@/components/layout/A";
 import Title from "@/components/layout/Title";
 
 export default function () {
