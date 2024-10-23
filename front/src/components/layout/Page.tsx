@@ -3,7 +3,7 @@ interface Props {
     children?: React.ReactNode;
 }
 
-export default function (props: Props) {
+export function Page (props: Props) {
     const { title, children } = props;
 
     return (

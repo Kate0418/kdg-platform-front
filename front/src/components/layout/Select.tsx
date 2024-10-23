@@ -2,14 +2,20 @@ import dynamic from 'next/dynamic';
 const ReactSelect = dynamic(() => import('react-select'), { ssr: false });
 
 export interface Props {
+    className?: string
     options: Array<{value: number, label: string}>
-    value: Array<{value: number, label: string}>
-    onChange: React.MouseEventHandler<HTMLButtonElement>
+    value: Array<{value: number, label: string}> | {value: number, label: string} | null
+    onChange?: React.MouseEventHandler<HTMLButtonElement>
+    multi?: boolean
 }
 
-export function Select({options, value ,onChange}: Props) {
+export function Select({className, options, value ,onChange, multi = false}: Props) {
     return (
-        <ReactSelect options={options} isMulti maxMenuHeight={120}
+        <ReactSelect
+            className={className}
+            options={options}
+            isMulti={multi}
+            maxMenuHeight={120}
             styles={{
                 control: (provided, state) => ({
                     ...provided,

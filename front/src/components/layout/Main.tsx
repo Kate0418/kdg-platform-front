@@ -1,6 +1,6 @@
 'use client'
 
-import Token from '@/api/Token'
+import { Token } from '@/api/Token'
 import { useEffect } from 'react'
 import { useRouter, usePathname } from "next/navigation";
 
@@ -11,7 +11,8 @@ export default function Main ({ children, }: Readonly<{ children: React.ReactNod
     useEffect(() => {
         if (service_flg) {
             const checkToken = async () => {
-                if (!await Token()) {
+                const token = await Token();
+                if (!token.success) {
                     router.push("/site/login");
                 }
             }

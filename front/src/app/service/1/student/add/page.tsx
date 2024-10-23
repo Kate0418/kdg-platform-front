@@ -1,16 +1,16 @@
 "use client"
 
 import CourseSelect from "@/api/CourseSelect"
-import Loader from "@/components/layout/Loader";
+import { Loader } from "@/components/layout/Loader";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Token from "@/api/Token";
+import { Token } from "@/api/Token";
 import StudentAdd from "@/api/StudentAdd";
-import Page from "@/components/layout/Page";
+import { Page } from "@/components/layout/Page";
 import { Button } from "@/components/layout/Button";
 import { A } from "@/components/layout/A";
-import Modal from "@/components/layout/Modal";
-import Title from "@/components/layout/Title";
+import { Modal } from "@/components/layout/Modal";
+import { Title } from "@/components/layout/Title";
 
 export default function () {
     const [courses, setCourses] = useState<Array<{id: number, name: string}>>([]);

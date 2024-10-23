@@ -1,11 +1,15 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-export default async function Token(): Promise<boolean> {
+export interface Response {
+    success: boolean
+}
+
+export async function Token(): Promise<Response> {
     const api_url = `${process.env.NEXT_PUBLIC_API_URL}/token`;
     const token = Cookies.get('token');
     if (!token) {
-        return false;
+        return {success: false};
     }
 
     try {
@@ -14,9 +18,9 @@ export default async function Token(): Promise<boolean> {
                 Authorization: `Bearer ${token}`
             }
         });
-        return response.data.success
+        return response.data
     } catch (e) {
         console.error(e);
-        return false;
+        return {success: false};
     }
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-interface apiType {
+export interface Response {
     success: boolean,
     subjects: Array<{
         value: number,
@@ -9,12 +9,12 @@ interface apiType {
     }>
 }
 
-export default async function (): Promise<apiType> {
+export default async function (): Promise<Response> {
     const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/select`;
     const token = Cookies.get('token');
 
     try {
-        const response = await axios.post<apiType>(
+        const response = await axios.post<Response>(
             api_url,
             {},
             {

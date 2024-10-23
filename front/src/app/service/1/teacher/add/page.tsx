@@ -1,14 +1,14 @@
 "use client"
 
 import SubjectSelect from "@/api/SubjectSelect"
-import Loader from "@/components/layout/Loader";
+import { Loader } from "@/components/layout/Loader";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Token from "@/api/Token";
-import Page from "@/components/layout/Page";
+import { Token } from "@/api/Token";
+import { Page } from "@/components/layout/Page";
 import React from 'react';
 import TeacherAdd from "@/api/TeacherAdd";
-import Title from "@/components/layout/Title";
+import { Title } from "@/components/layout/Title";
 import { Select } from "@/components/layout/Select";
 
 export default function () {
@@ -99,6 +99,7 @@ export default function () {
                                         <div className="bg-[var(--text-color)] text-[var(--base-color)] p-1 w-1/6 text-center">科目</div>
                                         <div className="w-5/6">
                                             <Select
+                                                multi={true}
                                                 options={subjects}
                                                 value={teacher.subjectIds}
                                                 onChange={(e) => handleInputChange(index, 'subjectIds', e)}

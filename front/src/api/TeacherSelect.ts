@@ -1,29 +1,21 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-export interface Props {
-    key_word: string
-}
-
 export interface Response {
     success: boolean,
-    subjects: Array<{
-        id: number,
-        name: string,
-        teacher_name: string
+    teachers: Array<{
+        value: number,
+        label: string,
     }>
 }
 
-export async function SubjectGet ({ key_word }: Props): Promise<Response> {
-    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/get`;
+export async function TeacherSelect(): Promise<Response> {
+    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/teacher/select`;
     const token = Cookies.get('token');
 
     try {
-        const response = await axios.post<Response>(
+        const response = await axios.get<Response>(
             api_url,
-            {
-                key_word: key_word,
-            },
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -34,7 +26,7 @@ export async function SubjectGet ({ key_word }: Props): Promise<Response> {
     } catch (e) {
         return {
             success: false,
-            subjects: []
+            teachers: []
         }
     }
 }

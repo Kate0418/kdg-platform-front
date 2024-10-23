@@ -1,12 +1,22 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-interface apiType {
+export interface Props {
+    subjects: Array<{
+        name: string,
+        teacherId: {
+            value: number,
+            label: string,
+        } | null
+    }>
+}
+
+export interface Response {
     success: boolean,
     message: string
 }
 
-export default async function (subjects: Array<{name: string, teacherId: number | null}>): Promise<apiType> {
+export async function SubjectAdd ({ subjects }: Props): Promise<Response> {
     const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/add`;
     const token = Cookies.get('token');
 
@@ -18,7 +28,7 @@ export default async function (subjects: Array<{name: string, teacherId: number 
             },
             {
                 headers: {
-                Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 }
             }
         );

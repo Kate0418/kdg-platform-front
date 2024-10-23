@@ -1,27 +1,50 @@
 "use client"
 
-import SubjectGet from "@/api/SubjectGet";
-import Page from "@/components/layout/Page";
-import Title from "@/components/layout/Title";
+import { SubjectGet } from "@/api/SubjectGet";
+import { TeacherSelect } from "@/api/TeacherSelect";
+import { Page } from "@/components/layout/Page";
+import { Select } from "@/components/layout/Select";
+import { Title } from "@/components/layout/Title";
 import { useState, useEffect, use } from "react";
 
 export default function () {
     const [subjects, setSubjects] = useState<Array<{id: number, name: string, teacher_name: string | null}>>([]);
     const [key_word, setKeyWord] = useState("");
+    const [teacherId, setTeacherId] = useState<{value: number, label: string} | null>(null);
+    const [option, setOption] = useState<Array<{value: number, label: string}>>([]);
 
     useEffect(() => {
         const getApi = async() => {
-            const response = await SubjectGet(key_word);
+            const response = await SubjectGet({ key_word });
             if (response.success) {
                 setSubjects(response.subjects)
             }
         }
         getApi();
-    })
+    });
+
+    useEffect(() => {
+        const SelectApi = async() => {
+            const response = await TeacherSelect();
+            setOption(response.teachers)
+        }
+
+        SelectApi();
+    });
 
     return (
         <>
             <Title title="科目情報管理ページ" />
+            <div>
+                <label>検索ワード：</label>
+                <input />
+                <label>検索講師</label>
+                <Select
+                    options={option}
+                    value={teacherId}
+                    onChange={(e) => setTeacherId(e)}
+                />
+            </div>
             <Page title="科目一覧">
                 <table className="w-full">
                     <thead>
@@ -32,8 +55,8 @@ export default function () {
                         </tr>
                     </thead>
                     <tbody>
-                        {subjects.map((subject) => (
-                            <tr>
+                        {subjects.map((subject, index) => (
+                            <tr key={index}>
                                 <td className="border border-[var(--text-color)] p-2">{subject.name}</td>
                                 <td className="border border-[var(--text-color)] p-2">{subject.teacher_name}</td>
                                 <td className="border border-[var(--text-color)] p-1 lg:p-3"> 
