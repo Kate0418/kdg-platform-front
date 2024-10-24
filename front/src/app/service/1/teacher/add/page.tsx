@@ -68,7 +68,7 @@ export default function () {
     return (
         <>
             <Title title="講師登録ページ" />
-            <Page title="登録講師一覧">
+            <Page title="登録講師一覧" h={520}>
                 <div className="flex flex-col items-center overflow-auto max-h-[450px]">
                 {teachers.map((teacher, index) => (
                     <table key={index} className="w-full mb-28">

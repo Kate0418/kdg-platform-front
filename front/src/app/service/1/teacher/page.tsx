@@ -31,7 +31,7 @@ export default function () {
     return (
         <>
             <Title title="講師情報管理ページ" />
-            <Page title="講師一覧">
+            <Page title="講師一覧" h={520}>
                 <table className="w-full">
                     <thead>
                         <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">

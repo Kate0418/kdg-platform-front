@@ -33,7 +33,7 @@ export default function () {
             <Title title="生徒情報管理ページ" />
             <div className="flex">
             </div>
-            <Page title="生徒一覧">
+            <Page title="生徒一覧" h={520}>
                 <table className="w-full">
                     <thead>
                         <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">

@@ -77,7 +77,7 @@ export default function () {
     return (
         <>
             <Title title="科目登録ページ" />
-            <Page title="登録科目一覧">
+            <Page title="登録科目一覧" h={520}>
                 <table className="w-full mb-5">
                     <thead>
                         <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">

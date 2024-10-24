@@ -65,7 +65,7 @@ export default function () {
     return (
         <>
             <Title title="生徒登録ページ" />
-            <Page title="登録生徒一覧">
+            <Page title="登録生徒一覧" h={520}>
                     <table className="w-full">
                         <thead className="">
                             <tr className="border border-[var(--text-color)] bg-[var(--text-color)]">

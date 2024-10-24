@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export interface Props {
-    key_word: string
+    keyWord: string;
 }
 
 export interface Response {
@@ -14,7 +14,7 @@ export interface Response {
     }>
 }
 
-export async function SubjectGet ({ key_word }: Props): Promise<Response> {
+export async function SubjectGet ({ keyWord }: Props): Promise<Response> {
     const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/get`;
     const token = Cookies.get('token');
 
@@ -22,7 +22,7 @@ export async function SubjectGet ({ key_word }: Props): Promise<Response> {
         const response = await axios.post<Response>(
             api_url,
             {
-                key_word: key_word,
+                keyWord: keyWord,
             },
             {
                 headers: {
