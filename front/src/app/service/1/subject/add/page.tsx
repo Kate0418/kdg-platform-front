@@ -4,7 +4,7 @@ import { Loader } from "@/components/layout/Loader";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
-import { Page } from "@/components/layout/Page";
+import { List } from "@/components/layout/List";
 import { SubjectAdd } from "@/api/SubjectAdd";
 import { Title } from "@/components/layout/Title";
 import { Button } from "@/components/layout/Button";
@@ -77,8 +77,8 @@ export default function () {
     return (
         <>
             <Title title="科目登録ページ" />
-            <Page title="登録科目一覧" h={520}>
-                <table className="w-full mb-5">
+            <List title="登録科目一覧" h={520}>
+                <table className="w-full mb-5 mt-2">
                     <thead>
                         <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
                             <td className="border-r border-[var(--base-color)] p-1 w-1/2">科目名</td>
@@ -89,7 +89,7 @@ export default function () {
                     {subjects.map((subject, index) => (
                         <tr key={index}>
                             <td className="border border-[var(--text-color)]">
-                                <input type="text" className="w-full p-1"
+                                <input type="text" className="w-full p-1 font-bold"
                                 value={subject.name}
                                 onChange={(e) => handleInputChange(index, 'name', e.target.value)}
                                 />
@@ -105,7 +105,7 @@ export default function () {
                     ))}
                     </tbody>
                 </table>
-            </Page>
+            </List>
 
             <div className="flex justify-between w-full">
                 <A href="/service/1/subject">戻る</A>
@@ -118,7 +118,7 @@ export default function () {
             </div>
 
             <Modal modalFlg={modalFlg}>
-                <table className="w-11/12 mb-5">
+                <table className="w-full mb-5">
                     <thead>
                         <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
                             <td className="border-r border-[var(--base-color)] p-1 w-1/2">科目名</td>

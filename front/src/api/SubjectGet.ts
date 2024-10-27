@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 
 export interface Props {
     keyWord: string;
+    pageCount: number;
 }
 
 export interface Response {
@@ -11,10 +12,11 @@ export interface Response {
         id: number,
         name: string,
         teacher_name: string
-    }>
+    }>,
+    total: number
 }
 
-export async function SubjectGet ({ keyWord }: Props): Promise<Response> {
+export async function SubjectGet ({ keyWord, pageCount }: Props): Promise<Response> {
     const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/get`;
     const token = Cookies.get('token');
 
@@ -23,6 +25,7 @@ export async function SubjectGet ({ keyWord }: Props): Promise<Response> {
             api_url,
             {
                 keyWord: keyWord,
+                pageCount: pageCount
             },
             {
                 headers: {

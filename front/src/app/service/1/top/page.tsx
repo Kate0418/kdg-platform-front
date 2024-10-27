@@ -1,11 +1,11 @@
-import { Page } from "@/components/layout/Page";
+import { List } from "@/components/layout/List";
 import { Title } from "@/components/layout/Title";
 
 export default function () {
     return (
         <>
             <Title title="トップページ" />
-            <Page title="機能一覧" h={520} />
+            <List title="機能一覧" h={520} />
         </>
     )
 }

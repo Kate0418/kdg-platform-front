@@ -3,8 +3,8 @@
 import StudentGetUsers from "@/api/StudentGetUsers";
 import React from 'react';
 import { useState, useEffect } from "react";
-import { Page } from "@/components/layout/Page";
 import { Title } from "@/components/layout/Title";
+import { List } from "@/components/layout/List";
 
 export default function () {
     const [key_word, setKeyWord] = useState(null);
@@ -33,7 +33,7 @@ export default function () {
             <Title title="生徒情報管理ページ" />
             <div className="flex">
             </div>
-            <Page title="生徒一覧" h={520}>
+            <List title="生徒一覧" h={520}>
                 <table className="w-full">
                     <thead>
                         <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
@@ -69,7 +69,7 @@ export default function () {
                         ))}
                     </tbody>
                 </table>
-            </Page>
+            </List>
         </>   
     )
 }

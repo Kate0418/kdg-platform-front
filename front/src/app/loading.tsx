@@ -1,4 +1,4 @@
-import Loader from "@/components/layout/Loader";
+import { Loader } from "@/components/layout/Loader";
 
 export default function () {
     return <Loader />

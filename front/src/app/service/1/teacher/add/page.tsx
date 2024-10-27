@@ -5,11 +5,11 @@ import { Loader } from "@/components/layout/Loader";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
-import { Page } from "@/components/layout/Page";
 import React from 'react';
 import TeacherAdd from "@/api/TeacherAdd";
 import { Title } from "@/components/layout/Title";
 import { Select } from "@/components/layout/Select";
+import { List } from "@/components/layout/List";
 
 export default function () {
     const [subjects, setSubjects] = useState<Array<{value: number, label: string}>>([]);
@@ -38,7 +38,7 @@ export default function () {
     const handleInputChange = (
         index: number, 
         field: string, 
-        value: string | number | Array<{ value: number, label: string }>
+        value: any
       ) => {
         const updatedTeachers = [...teachers];
         updatedTeachers[index] = { ...updatedTeachers[index], [field]: value };
@@ -68,7 +68,7 @@ export default function () {
     return (
         <>
             <Title title="講師登録ページ" />
-            <Page title="登録講師一覧" h={520}>
+            <List title="登録講師一覧" h={520}>
                 <div className="flex flex-col items-center overflow-auto max-h-[450px]">
                 {teachers.map((teacher, index) => (
                     <table key={index} className="w-full mb-28">
@@ -123,7 +123,7 @@ export default function () {
                         <button className="mr-5 p-3 rounded-lg" type="submit" onClick={() => teachers.length === adds ? setConfirm(true) : alert("生徒情報を正しく入力してください")}>確認</button>
                     </div>
                 </div>
-            </Page>
+            </List>
             {confirm && (
                 <div className="fixed top-0 left-0 p-40">
                     <div className="fixed top-0 left-0 w-screen h-screen z-40 bg-[var(--text-color)] opacity-60"></div>

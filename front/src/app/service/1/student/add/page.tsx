@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
 import StudentAdd from "@/api/StudentAdd";
-import { Page } from "@/components/layout/Page";
+import { List } from "@/components/layout/List";
 import { Button } from "@/components/layout/Button";
 import { A } from "@/components/layout/A";
 import { Modal } from "@/components/layout/Modal";
@@ -65,7 +65,7 @@ export default function () {
     return (
         <>
             <Title title="生徒登録ページ" />
-            <Page title="登録生徒一覧" h={520}>
+            <List title="登録生徒一覧" h={520}>
                     <table className="w-full">
                         <thead className="">
                             <tr className="border border-[var(--text-color)] bg-[var(--text-color)]">
@@ -104,7 +104,7 @@ export default function () {
                         ))}
                         </tbody>
                     </table>
-            </Page>
+            </List>
             <div className="flex justify-between w-full">
                 <A href="/service/1/student">戻る</A>
 
@@ -115,7 +115,7 @@ export default function () {
                 </div>
             </div>
 
-            <Modal flg={confirm}>
+            <Modal modalFlg={confirm}>
                 <table className="w-full mb-5">
                     <thead>
                         <tr className="border border-[var(--text-color)] bg-[var(--text-color)]">
