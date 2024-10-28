@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
 import { List } from "@/components/layout/List";
-import { SubjectAdd } from "@/api/SubjectAdd";
+import { SubjectStore, Props } from "@/api/SubjectStore";
 import { Title } from "@/components/layout/Title";
 import { Button } from "@/components/layout/Button";
 import { A } from "@/components/layout/A";
@@ -15,16 +15,7 @@ import { Modal } from "@/components/layout/Modal";
 
 export default function () {
     const [teachers, setTeachers] = useState<Response['teachers']>([]);
-    const [subjects, setSubjects] = useState<
-        Array<{
-            name: string;
-            teacherId: { value: number; label: string } | null;
-        }>
-    >([
-        { name: "", teacherId: null }
-    ]);
-
-
+    const [subjects, setSubjects] = useState<Props["subjects"]>([{ name: "", teacherId: null }]);
 
     const [modalFlg ,setModalFlg] = useState(false);
     const [addFlg, setAddFlg] = useState(false);
@@ -39,12 +30,12 @@ export default function () {
     }, [subjects]);
 
     useEffect(() =>  {
-        const SelectApi = async() => {
+        const selectApi = async() => {
             const response = await TeacherSelect();
             setTeachers(response.teachers);
         }
 
-        SelectApi();
+        selectApi();
     })
 
     const handleInputChange = (index: number, field: string, value: any) => {
@@ -53,7 +44,7 @@ export default function () {
         setSubjects(updatedTables);
     };
 
-    const addApi = async() => {
+    const storeApi = async() => {
         setLoaderFlg(true);
         const token = await Token();
         if (!token.success) {
@@ -61,7 +52,7 @@ export default function () {
             setLoaderFlg(false);
         }
 
-        const subjectAdd = await SubjectAdd({subjects});
+        const subjectAdd = await SubjectStore({subjects});
         alert(subjectAdd.message);
         if (subjectAdd.success) {
             router.push("/service/1/subject")
@@ -138,7 +129,7 @@ export default function () {
                 </table>
                 <div className="flex justify-end w-full">
                     <Button type="submit" onClick={() => { setModalFlg(false) }}>戻る</Button>
-                    <Button type="submit" onClick={() => { addApi() }}>登録</Button>
+                    <Button type="submit" onClick={() => { storeApi() }}>登録</Button>
                 </div>
             </Modal>
         </>

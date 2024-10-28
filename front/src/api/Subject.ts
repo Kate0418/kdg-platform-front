@@ -16,20 +16,20 @@ export interface Response {
     total: number
 }
 
-export async function SubjectGet ({ keyWord, pageCount }: Props): Promise<Response> {
-    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/get`;
+export async function Subject ({ keyWord, pageCount }: Props): Promise<Response> {
+    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject`;
     const token = Cookies.get('token');
 
     try {
-        const response = await axios.post<Response>(
+        const response = await axios.get<Response>(
             api_url,
-            {
-                keyWord: keyWord,
-                pageCount: pageCount
-            },
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                },
+                params: {
+                    keyWord: keyWord,
+                    pageCount: pageCount
                 }
             }
         )
@@ -37,7 +37,8 @@ export async function SubjectGet ({ keyWord, pageCount }: Props): Promise<Respon
     } catch (e) {
         return {
             success: false,
-            subjects: []
+            subjects: [],
+            total: 0
         }
     }
 }

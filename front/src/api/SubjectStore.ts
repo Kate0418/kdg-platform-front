@@ -16,8 +16,8 @@ export interface Response {
     message: string
 }
 
-export async function SubjectAdd ({ subjects }: Props): Promise<Response> {
-    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/add`;
+export async function SubjectStore ({ subjects }: Props): Promise<Response> {
+    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject`;
     const token = Cookies.get('token');
 
     try {

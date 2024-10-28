@@ -1,6 +1,6 @@
 "use client"
 
-import { SubjectGet } from "@/api/SubjectGet";
+import { Subject } from "@/api/Subject";
 import { A } from "@/components/layout/A";
 import { Button } from "@/components/layout/Button";
 import { List } from "@/components/layout/List";
@@ -17,9 +17,9 @@ export default function () {
 
     const [loaderFlg, setLoaderFlg] = useState(false);
 
-    const getApi = async() => {
+    const indexApi = async() => {
         setLoaderFlg(true);
-        const response = await SubjectGet({keyWord: keyWord, pageCount: pageCount});
+        const response = await Subject({keyWord: keyWord, pageCount: pageCount});
         if (response.success) {
             setSubjects(response.subjects);
             setTotal(response.total);
@@ -28,7 +28,7 @@ export default function () {
     }
 
     useEffect(() => {
-        getApi();
+        indexApi();
     }, [pageCount]);
 
     return (
@@ -38,7 +38,7 @@ export default function () {
                 <div className="flex justify-end items-center">
                     <label>検索ワード：</label>
                     <input className="p-1 border border-[var(--text-color)]" value={keyWord} onChange={(e) => (setKeyWord(e.target.value))}/>
-                    <Button className="!p-1 lg:!p-2" type="button" onClick={ getApi }>検索</Button>
+                    <Button className="!p-1 lg:!p-2" type="button" onClick={ indexApi }>検索</Button>
                     <A className="!p-1 lg:!p-2" href="/service/1/subject/add">新規作成</A>
                 </div>
                 <table className="w-full">

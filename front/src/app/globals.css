@@ -19,6 +19,10 @@ main {
   padding-top: 88px;
 }
 
+input {
+  outline: none;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

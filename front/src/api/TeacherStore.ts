@@ -1,8 +1,24 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-export default async function (teachers: Array<{name: string, email: string, subjectIds: Array<{value: number, label: string}>}>): Promise<{success: boolean, message: string}> {
-    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/teacher/add`;
+export interface Props {
+    teachers: Array<{
+        name: string,
+        email: string,
+        subjectIds: Array<{
+            value: number,
+            label: string,
+        }>
+    }>
+}
+
+export interface Response {
+    success: boolean,
+    message: string,
+}
+
+export async function TeacherStore ({ teachers }: Props): Promise<Response> {
+    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/teacher`;
     const token = Cookies.get('token');
 
     try {

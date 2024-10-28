@@ -1,7 +1,7 @@
 "use client"
 
 import Login from "@/api/Login";
-import Loader from "@/components/layout/Loader";
+import { Loader } from "@/components/layout/Loader";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

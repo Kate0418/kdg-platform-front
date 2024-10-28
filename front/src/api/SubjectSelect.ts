@@ -9,14 +9,13 @@ export interface Response {
     }>
 }
 
-export default async function (): Promise<Response> {
+export async function SubjectSelect (): Promise<Response> {
     const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/select`;
     const token = Cookies.get('token');
 
     try {
-        const response = await axios.post<Response>(
+        const response = await axios.get<Response>(
             api_url,
-            {},
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
