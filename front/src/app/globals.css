@@ -6,6 +6,9 @@
   --accent-color: rgb(180, 188, 78);
   --base-color: rgb(255, 251, 236);
   --text-color: rgb(107, 94, 86);
+
+  --accent-color-60: rgba(180, 188, 78, 0.6);
+  --text-color-60: rgba(107, 94, 86, 0.6);
 }
 
 body {

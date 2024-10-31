@@ -1,7 +1,7 @@
 export interface Props {
     className?: string
     type: "submit" | "reset" | "button" | undefined,
-    onClick?: React.MouseEventHandler<HTMLButtonElement> | Promise<void>
+    onClick?: React.MouseEventHandler<HTMLButtonElement>
     children?: React.ReactNode;
 }
 

@@ -11,7 +11,6 @@ services:
     tty: true
     volumes:
       - ./front:/front
-      - node_modules:/front/node_modules
 
 #   web:
 #     image: nginx
@@ -22,6 +21,3 @@ services:
 #     depends_on:
 #       - front
 #     restart: always
-
-volumes:
-  node_modules:
