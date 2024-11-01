@@ -6,7 +6,7 @@ import { Droppable } from "@/components/dnd-kit/Droppable";
 import { List } from "@/components/layout/List";
 import { Select } from "@/components/layout/Select";
 import { Title } from "@/components/layout/Title";
-import { daysOfWeek } from "@/config";
+import { daysOfWeek, SelectItem } from "@/config";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -81,11 +81,12 @@ export default function CourseStore() {
                             className="text-xs w-5/6 font-bold"
                             options={subjects}
                             value={lessons[i * 12 + j].data}
-                            onChange={(e: any) => {
+                            onChange={(newValue: unknown) => {
+                              const data = newValue as SelectItem;
                               setLessons({
                                 ...lessons,
                                 [i * 12 + j]: {
-                                  data: e,
+                                  data: data,
                                 },
                               });
                             }}
@@ -102,7 +103,12 @@ export default function CourseStore() {
                               });
                             }}
                           >
-                            <Image src="/img/delete.svg" alt="delete" />
+                            <Image
+                              src="/img/delete.svg"
+                              alt="delete"
+                              width={24}
+                              height={24}
+                            />
                           </button>
                         </div>
                       ) : (
@@ -122,7 +128,12 @@ export default function CourseStore() {
                           }}
                         >
                           <div className="w-full h-full bg-[var(--text-color-60)] rounded-lg flex justify-center items-center">
-                            <Image src="/img/plus.svg" alt="plus" />
+                            <Image
+                              src="/img/plus.svg"
+                              alt="plus"
+                              width={24}
+                              height={24}
+                            />
                           </div>
                         </button>
                       )}

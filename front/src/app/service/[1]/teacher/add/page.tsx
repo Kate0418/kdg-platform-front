@@ -13,7 +13,7 @@ import { List } from "@/components/layout/List";
 import { A } from "@/components/layout/A";
 import { Button } from "@/components/layout/Button";
 import { Modal } from "@/components/layout/Modal";
-import { selectItem } from "@/config";
+import { SelectItem } from "@/config";
 
 export default function Page() {
   const [subjects, setSubjects] = useState<Response["subjects"]>([]);
@@ -46,7 +46,7 @@ export default function Page() {
   const handleInputChange = (
     index: number,
     field: string,
-    value: string | selectItem[],
+    value: string | SelectItem[],
   ) => {
     const updatedTeachers = [...teachers];
     updatedTeachers[index] = { ...updatedTeachers[index], [field]: value };
