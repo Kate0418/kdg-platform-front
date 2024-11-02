@@ -1,6 +1,6 @@
 "use client";
 
-import { SubjectSelect, Response } from "@/api/SubjectSelect";
+import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
 import { Loader } from "@/components/layout/Loader";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,9 @@ import { Modal } from "@/components/layout/Modal";
 import { SelectItem } from "@/config";
 
 export default function Page() {
-  const [subjects, setSubjects] = useState<Response["subjects"]>([]);
+  const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
+    [],
+  );
   const [teachers, setTeachers] = useState<Props["teachers"]>([
     { name: "", email: "", subjectIds: [] },
   ]);

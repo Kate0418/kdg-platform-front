@@ -4,7 +4,7 @@ const ReactSelect = dynamic(() => import("react-select"), { ssr: false });
 
 export interface Props extends Omit<SelectProps, "onChange"> {
   multi?: boolean;
-  onChange: ((newValue: unknown) => void) | undefined;
+  onChange?: ((newValue: unknown) => void) | undefined;
 }
 
 const customStyles: StylesConfig = {
@@ -14,11 +14,12 @@ const customStyles: StylesConfig = {
   }),
   control: (provided, state) => ({
     ...provided,
-    borderColor: state.isFocused ? "var(--accent-color)" : "#ccc",
+    borderColor: state.isFocused ? "var(--accent-color)" : "var(--text-color)",
     boxShadow: state.isFocused ? "0 0 0 1px var(--accent-color)" : undefined,
     "&:hover": {
       borderColor: state.isFocused ? "var(--accent-color)" : "#aaa",
     },
+    borderRadius: "8px",
   }),
   option: (provided, state) => ({
     ...provided,

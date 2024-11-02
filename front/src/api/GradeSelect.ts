@@ -2,17 +2,17 @@ import { SelectItem } from "@/config";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export interface SubjectSelectResponse {
+export interface GradeSelectResponse {
   success: boolean;
-  subjects: SelectItem[];
+  grades: SelectItem[];
 }
 
-export async function SubjectSelect(): Promise<SubjectSelectResponse> {
-  const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject/select`;
+export async function GradeSelect(): Promise<GradeSelectResponse> {
+  const api_url = `${process.env.NEXT_PUBLIC_API_URL}/grade/select`;
   const token = Cookies.get("token");
 
   try {
-    const response = await axios.get<SubjectSelectResponse>(api_url, {
+    const response = await axios.get<GradeSelectResponse>(api_url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -22,7 +22,7 @@ export async function SubjectSelect(): Promise<SubjectSelectResponse> {
     console.error(e);
     return {
       success: false,
-      subjects: [],
+      grades: [],
     };
   }
 }

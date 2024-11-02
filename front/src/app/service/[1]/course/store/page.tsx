@@ -1,6 +1,7 @@
 "use client";
 
-import { Response, SubjectSelect } from "@/api/SubjectSelect";
+import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
+import { GradeSelect, GradeSelectResponse } from "@/api/GradeSelect";
 import { ScheduleColumn } from "@/components/course/ScheduleColumn";
 import { Draggable } from "@/components/dnd-kit/Draggable";
 import { Droppable } from "@/components/dnd-kit/Droppable";
@@ -14,30 +15,38 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-type Lessons = {
-  [key: number]: {
-    data: {
-      value: number | null;
-      label: string | null;
-    } | null;
-  };
-};
+interface Lessons {
+  name: string;
+  grade_id: SelectItem;
+  times: Array<{ start: string; end: string }>;
+  schedule: Array<{
+    action: boolean;
+    data: SelectItem;
+  }>;
+}
 
 export default function Page() {
-  const [subjects, setSubjects] = useState<Response["subjects"]>([]);
-  const [lessons, setLessons] = useState<Lessons>(() => {
-    const lessons: Lessons = {};
-    for (let i = 0; i < 7 * 12; i++) {
-      lessons[i] = { data: null };
-    }
-    return lessons;
+  const [grades, setGrades] = useState<GradeSelectResponse["grades"]>([]);
+  const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
+    [],
+  );
+  const [lessons, setLessons] = useState<Lessons>({
+    name: "",
+    grade_id: { value: null, label: null },
+    times: Array.from({ length: 12 }, () => ({ start: "", end: "" })),
+    schedule: Array.from({ length: 7 * 12 }, () => ({
+      action: false,
+      data: { value: null, label: null },
+    })),
   });
 
   useEffect(() => {
-    //セレクトボックスの取得
     const selectApi = async () => {
-      const data = await SubjectSelect();
-      setSubjects(data.subjects);
+      const subjectData = await SubjectSelect();
+      setSubjects(subjectData.subjects);
+
+      const gradeData = await GradeSelect();
+      setGrades(gradeData.grades);
     };
 
     selectApi();
@@ -49,9 +58,12 @@ export default function Page() {
 
     if (overId !== null) {
       setLessons((prevLessons) => {
-        const newLessons = { ...prevLessons };
-        newLessons[overId] = { ...prevLessons[activeId] }; // overIdにactiveIdのデータを設定
-        newLessons[activeId] = { ...prevLessons[overId] }; // activeIdにoverIdのデータを設定
+        const newLessons = {
+          ...prevLessons,
+          schedule: [...prevLessons.schedule],
+        };
+        newLessons.schedule[overId] = { ...prevLessons.schedule[activeId] }; // overIdにactiveIdのデータを設定
+        newLessons.schedule[activeId] = { ...prevLessons.schedule[overId] }; // activeIdにoverIdのデータを設定
         return newLessons;
       });
     }
@@ -63,6 +75,19 @@ export default function Page() {
         <div className="flex items-center pl-2 pb-2">
           <label>コース名：</label>
           <input className="p-1 border border-[var(--text-color)] rounded-lg" />
+          <label className="pl-2">学年：</label>
+          <Select
+            className="w-32"
+            options={grades}
+            value={lessons.grade_id}
+            onChange={(newValue: unknown) => {
+              const data = newValue as SelectItem;
+              setLessons({
+                ...lessons,
+                grade_id: data,
+              });
+            }}
+          />
         </div>
         <DndContext onDragEnd={onDragEnd}>
           <div className="grid lg:grid-cols-[1fr_2fr_2fr_2fr_2fr_2fr_2fr_2fr] gap-4">
@@ -91,34 +116,34 @@ export default function Page() {
                         <Draggable
                           id={`${i * 12 + j}`}
                           key={`${i * 12 + j}`}
-                          lessonFlg={lessons[i * 12 + j].data}
+                          lessonFlg={lessons.schedule[i * 12 + j].action}
                         >
-                          {lessons[i * 12 + j].data ? (
+                          {lessons.schedule[i * 12 + j].action ? (
                             <div className="w-full p-2 flex">
                               <Select
                                 className="text-xs w-5/6 font-bold"
                                 options={subjects}
-                                value={lessons[i * 12 + j].data}
+                                value={lessons.schedule[i * 12 + j].data}
                                 onChange={(newValue: unknown) => {
                                   const data = newValue as SelectItem;
-                                  setLessons({
-                                    ...lessons,
-                                    [i * 12 + j]: {
-                                      data: data,
-                                    },
-                                  });
+                                  const newLessons = { ...lessons };
+                                  newLessons.schedule[i * 12 + j] = {
+                                    ...newLessons.schedule[i * 12 + j],
+                                    data: data,
+                                  };
+                                  setLessons(newLessons);
                                 }}
                               />
                               <button
                                 className="z-10"
                                 type="button"
                                 onClick={() => {
-                                  setLessons({
-                                    ...lessons,
-                                    [i * 12 + j]: {
-                                      data: null,
-                                    },
-                                  });
+                                  const newLessons = { ...lessons };
+                                  newLessons.schedule[i * 12 + j] = {
+                                    action: false,
+                                    data: { value: null, label: null },
+                                  };
+                                  setLessons(newLessons);
                                 }}
                               >
                                 <Image
@@ -134,15 +159,12 @@ export default function Page() {
                               className="relative w-full h-full"
                               type="button"
                               onClick={() => {
-                                setLessons({
-                                  ...lessons,
-                                  [i * 12 + j]: {
-                                    data: {
-                                      value: null,
-                                      label: null,
-                                    },
-                                  },
-                                });
+                                const newLessons = { ...lessons };
+                                newLessons.schedule[i * 12 + j] = {
+                                  ...newLessons.schedule[i * 12 + j],
+                                  action: true,
+                                };
+                                setLessons(newLessons);
                               }}
                             >
                               <div className="absolute inset-0 flex justify-center items-center">
