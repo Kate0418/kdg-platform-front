@@ -15,11 +15,11 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-interface Lessons {
+interface Course {
   name: string | null;
   grade_id: number | null;
   times: Array<{ start: string; end: string }>;
-  schedule: Array<{
+  lessons: Array<{
     action: boolean;
     data: number | null;
   }>;
@@ -30,11 +30,11 @@ export default function Page() {
   const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
     [],
   );
-  const [lessons, setLessons] = useState<Lessons>({
+  const [course, setCourse] = useState<Course>({
     name: null,
     grade_id: null,
     times: Array.from({ length: 12 }, () => ({ start: "", end: "" })),
-    schedule: Array.from({ length: 7 * 12 }, () => ({
+    lessons: Array.from({ length: 7 * 12 }, () => ({
       action: false,
       data: null,
     })),
@@ -57,14 +57,14 @@ export default function Page() {
     const overId = e.over ? Number(e.over.id) : null;
 
     if (overId !== null) {
-      setLessons((prevLessons) => {
-        const newLessons = {
-          ...prevLessons,
-          schedule: [...prevLessons.schedule],
+      setCourse((prevCourse) => {
+        const newCourse = {
+          ...prevCourse,
+          lessons: [...prevCourse.lessons],
         };
-        newLessons.schedule[overId] = prevLessons.schedule[activeId]; // overIdにactiveIdのデータを設定
-        newLessons.schedule[activeId] = prevLessons.schedule[overId]; // activeIdにoverIdのデータを設定
-        return newLessons;
+        newCourse.lessons[overId] = prevCourse.lessons[activeId]; // overIdにactiveIdのデータを設定
+        newCourse.lessons[activeId] = prevCourse.lessons[overId]; // activeIdにoverIdのデータを設定
+        return newCourse;
       });
     }
   };
@@ -79,11 +79,11 @@ export default function Page() {
           <Select
             className="w-32"
             options={grades}
-            value={grades.find((grade) => grade.value === lessons.grade_id)}
+            value={grades.find((grade) => grade.value === course.grade_id)}
             onChange={(newValue: unknown) => {
               const data = newValue as SelectItem;
-              setLessons({
-                ...lessons,
+              setCourse({
+                ...course,
                 grade_id: data.value,
               });
             }}
@@ -116,9 +116,9 @@ export default function Page() {
                         <Draggable
                           id={`${i * 12 + j}`}
                           key={`${i * 12 + j}`}
-                          lessonFlg={lessons.schedule[i * 12 + j].action}
+                          lessonFlg={course.lessons[i * 12 + j].action}
                         >
-                          {lessons.schedule[i * 12 + j].action ? (
+                          {course.lessons[i * 12 + j].action ? (
                             <div className="w-full p-2 flex">
                               <Select
                                 className="text-xs w-5/6 font-bold"
@@ -126,28 +126,28 @@ export default function Page() {
                                 value={subjects.find(
                                   (subject) =>
                                     subject.value ===
-                                    lessons.schedule[i * 12 + j].data,
+                                    course.lessons[i * 12 + j].data,
                                 )}
                                 onChange={(newValue: unknown) => {
                                   const data = newValue as SelectItem;
-                                  const newLessons = { ...lessons };
-                                  newLessons.schedule[i * 12 + j] = {
-                                    ...newLessons.schedule[i * 12 + j],
+                                  const newCourse = { ...course };
+                                  newCourse.lessons[i * 12 + j] = {
+                                    ...newCourse.lessons[i * 12 + j],
                                     data: data.value,
                                   };
-                                  setLessons(newLessons);
+                                  setCourse(newCourse);
                                 }}
                               />
                               <button
                                 className="z-10"
                                 type="button"
                                 onClick={() => {
-                                  const newLessons = { ...lessons };
-                                  newLessons.schedule[i * 12 + j] = {
+                                  const newCourse = { ...course };
+                                  newCourse.lessons[i * 12 + j] = {
                                     action: false,
                                     data: null,
                                   };
-                                  setLessons(newLessons);
+                                  setCourse(newCourse);
                                 }}
                               >
                                 <Image
@@ -163,12 +163,12 @@ export default function Page() {
                               className="relative w-full h-full"
                               type="button"
                               onClick={() => {
-                                const newLessons = { ...lessons };
-                                newLessons.schedule[i * 12 + j] = {
-                                  ...newLessons.schedule[i * 12 + j],
+                                const newCourse = { ...course };
+                                newCourse.lessons[i * 12 + j] = {
+                                  ...newCourse.lessons[i * 12 + j],
                                   action: true,
                                 };
-                                setLessons(newLessons);
+                                setCourse(newCourse);
                               }}
                             >
                               <div className="absolute inset-0 flex justify-center items-center">
