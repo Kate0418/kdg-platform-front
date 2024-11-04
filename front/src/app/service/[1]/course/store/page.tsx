@@ -16,12 +16,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface Lessons {
-  name: string;
-  grade_id: SelectItem;
+  name: string | null;
+  grade_id: number | null;
   times: Array<{ start: string; end: string }>;
   schedule: Array<{
     action: boolean;
-    data: SelectItem;
+    data: number | null;
   }>;
 }
 
@@ -31,12 +31,12 @@ export default function Page() {
     [],
   );
   const [lessons, setLessons] = useState<Lessons>({
-    name: "",
-    grade_id: { value: null, label: null },
+    name: null,
+    grade_id: null,
     times: Array.from({ length: 12 }, () => ({ start: "", end: "" })),
     schedule: Array.from({ length: 7 * 12 }, () => ({
       action: false,
-      data: { value: null, label: null },
+      data: null,
     })),
   });
 
@@ -62,8 +62,8 @@ export default function Page() {
           ...prevLessons,
           schedule: [...prevLessons.schedule],
         };
-        newLessons.schedule[overId] = { ...prevLessons.schedule[activeId] }; // overIdにactiveIdのデータを設定
-        newLessons.schedule[activeId] = { ...prevLessons.schedule[overId] }; // activeIdにoverIdのデータを設定
+        newLessons.schedule[overId] = prevLessons.schedule[activeId]; // overIdにactiveIdのデータを設定
+        newLessons.schedule[activeId] = prevLessons.schedule[overId]; // activeIdにoverIdのデータを設定
         return newLessons;
       });
     }
@@ -79,12 +79,12 @@ export default function Page() {
           <Select
             className="w-32"
             options={grades}
-            value={lessons.grade_id}
+            value={grades.find((grade) => grade.value === lessons.grade_id)}
             onChange={(newValue: unknown) => {
               const data = newValue as SelectItem;
               setLessons({
                 ...lessons,
-                grade_id: data,
+                grade_id: data.value,
               });
             }}
           />
@@ -123,13 +123,17 @@ export default function Page() {
                               <Select
                                 className="text-xs w-5/6 font-bold"
                                 options={subjects}
-                                value={lessons.schedule[i * 12 + j].data}
+                                value={subjects.find(
+                                  (subject) =>
+                                    subject.value ===
+                                    lessons.schedule[i * 12 + j].data,
+                                )}
                                 onChange={(newValue: unknown) => {
                                   const data = newValue as SelectItem;
                                   const newLessons = { ...lessons };
                                   newLessons.schedule[i * 12 + j] = {
                                     ...newLessons.schedule[i * 12 + j],
-                                    data: data,
+                                    data: data.value,
                                   };
                                   setLessons(newLessons);
                                 }}
@@ -141,7 +145,7 @@ export default function Page() {
                                   const newLessons = { ...lessons };
                                   newLessons.schedule[i * 12 + j] = {
                                     action: false,
-                                    data: { value: null, label: null },
+                                    data: null,
                                   };
                                   setLessons(newLessons);
                                 }}
