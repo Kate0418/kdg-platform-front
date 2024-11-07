@@ -3,63 +3,105 @@
 @tailwind utilities;
 
 :root {
-  --accent-color: rgb(180, 188, 78);
-  --base-color: rgb(255, 251, 236);
-  --text-color: rgb(107, 94, 86);
+    --accent-color: rgb(180, 188, 78);
+    --base-color: rgb(255, 251, 236);
+    --text-color: rgb(107, 94, 86);
 
-  --accent-color-60: rgba(180, 188, 78, 0.6);
-  --text-color-60: rgba(107, 94, 86, 0.6);
+    --accent-color-60: rgba(180, 188, 78, 0.6);
+    --text-color-60: rgba(107, 94, 86, 0.6);
 }
 
 body {
-  color: var(--text-color);
-  /* border-color: var(--text-color); */
-  background-color: var(--base-color);
-  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Hiragino Sans", Meiryo, sans-serif;
+    color: var(--text-color);
+    /* border-color: var(--text-color); */
+    background-color: var(--base-color);
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic",
+        "Hiragino Sans", Meiryo, sans-serif;
 }
 
 main {
-  padding-top: 88px;
+    padding-top: 88px;
 }
 
 input {
-  outline: none;
+    outline: none;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }
 
 .square-spin-2 {
-  --size: 120px;
-  --stroke-width: calc(var(--size) / 6);
-  --color: currentColor;
-  --animation-timing-function: linear;
-  --animation-duration: 2s;
-  width: var(--size);
-  height: var(--size);
-  background-image:
-    radial-gradient(circle at var(--stroke-width) var(--stroke-width), var(--color) 0%, var(--color) var(--stroke-width), transparent var(--stroke-width), transparent 100%),
-    radial-gradient(circle at calc(100% - var(--stroke-width)) var(--stroke-width), var(--color) 0%, var(--color) var(--stroke-width), transparent var(--stroke-width), transparent 100%),
-    radial-gradient(circle at calc(100% - var(--stroke-width)) calc(100% - var(--stroke-width)), var(--color) 0%, var(--color) var(--stroke-width), transparent var(--stroke-width), transparent 100%),
-    radial-gradient(circle at var(--stroke-width) calc(100% - var(--stroke-width)), var(--color) 0%, var(--color) var(--stroke-width), transparent var(--stroke-width), transparent 100%);
-  animation: var(--animation-timing-function) var(--animation-duration) infinite square-spin-2-animation;
+    --size: 120px;
+    --stroke-width: calc(var(--size) / 6);
+    --color: currentColor;
+    --animation-timing-function: linear;
+    --animation-duration: 2s;
+    width: var(--size);
+    height: var(--size);
+    background-image: radial-gradient(
+            circle at var(--stroke-width) var(--stroke-width),
+            var(--color) 0%,
+            var(--color) var(--stroke-width),
+            transparent var(--stroke-width),
+            transparent 100%
+        ),
+        radial-gradient(
+            circle at calc(100% - var(--stroke-width)) var(--stroke-width),
+            var(--color) 0%,
+            var(--color) var(--stroke-width),
+            transparent var(--stroke-width),
+            transparent 100%
+        ),
+        radial-gradient(
+            circle at calc(100% - var(--stroke-width))
+                calc(100% - var(--stroke-width)),
+            var(--color) 0%,
+            var(--color) var(--stroke-width),
+            transparent var(--stroke-width),
+            transparent 100%
+        ),
+        radial-gradient(
+            circle at var(--stroke-width) calc(100% - var(--stroke-width)),
+            var(--color) 0%,
+            var(--color) var(--stroke-width),
+            transparent var(--stroke-width),
+            transparent 100%
+        );
+    animation: var(--animation-timing-function) var(--animation-duration)
+        infinite square-spin-2-animation;
+}
+
+.button {
+    margin: 0.5rem; /* m-2に対応 */
+    padding: 0.75rem; /* p-3に対応 */
+    border-radius: 0.5rem; /* rounded-lgに対応 */
+    background-color: var(--accent-color); /* bg-[var(--accent-color)]に対応 */
+    color: var(--base-color); /* text-[var(--base-color)]に対応 */
+}
+
+.a {
+    margin: 0.5rem; /* m-2に対応 */
+    padding: 0.75rem; /* p-3に対応 */
+    border-radius: 0.5rem; /* rounded-lgに対応 */
+    background-color: var(--accent-color); /* bg-[var(--accent-color)]に対応 */
+    color: var(--base-color); /* text-[var(--base-color)]に対応 */
 }
 
 @media (max-width: 480px) {
-  body {
-    font-size: 10px;
-  }
+    body {
+        font-size: 10px;
+    }
 }
 
 @keyframes square-spin-2-animation {
-  from {
-    transform: rotate(0deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
 
-  to {
-    transform: rotate(360deg);
-  }
+    to {
+        transform: rotate(360deg);
+    }
 }

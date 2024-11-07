@@ -1,28 +1,26 @@
 "use client";
 
-import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
 import { GradeSelect, GradeSelectResponse } from "@/api/GradeSelect";
+import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
 import { ScheduleColumn } from "@/components/course/ScheduleColumn";
 import { Draggable } from "@/components/dnd-kit/Draggable";
 import { Droppable } from "@/components/dnd-kit/Droppable";
-import { A } from "@/components/layout/A";
-import { Button } from "@/components/layout/Button";
 import { List } from "@/components/layout/List";
+import { Modal } from "@/components/layout/Modal";
 import { Select } from "@/components/layout/Select";
 import { Title } from "@/components/layout/Title";
 import { daysOfWeek, SelectItem } from "@/config";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Modal } from "@/components/layout/Modal";
 
 interface Course {
   name: string | null;
-  grade_id: number | null;
+  gradeId: number | null;
   times: Array<{ start: string; end: string }>;
   lessons: Array<{
     action: boolean;
-    data: number | null;
+    subjectId: number | null;
   }>;
 }
 
@@ -33,11 +31,11 @@ export default function Page() {
   );
   const [course, setCourse] = useState<Course>({
     name: null,
-    grade_id: null,
+    gradeId: null,
     times: Array.from({ length: 12 }, () => ({ start: "", end: "" })),
     lessons: Array.from({ length: 7 * 12 }, () => ({
       action: false,
-      data: null,
+      subjectId: null,
     })),
   });
   const [modalFlg, setModalFlg] = useState(false);
@@ -84,12 +82,12 @@ export default function Page() {
           <Select
             className="w-32"
             options={grades}
-            value={grades.find((grade) => grade.value === course.grade_id)}
+            value={grades.find((grade) => grade.value === course.gradeId)}
             onChange={(newValue: unknown) => {
               const data = newValue as SelectItem;
               setCourse({
                 ...course,
-                grade_id: data.value,
+                gradeId: data.value,
               });
             }}
           />
@@ -145,14 +143,14 @@ export default function Page() {
                                 value={subjects.find(
                                   (subject) =>
                                     subject.value ===
-                                    course.lessons[i * 12 + j].data,
+                                    course.lessons[i * 12 + j].subjectId,
                                 )}
                                 onChange={(newValue: unknown) => {
                                   const data = newValue as SelectItem;
                                   const newCourse = { ...course };
                                   newCourse.lessons[i * 12 + j] = {
                                     ...newCourse.lessons[i * 12 + j],
-                                    data: data.value,
+                                    subjectId: data.value,
                                   };
                                   setCourse(newCourse);
                                 }}
@@ -164,7 +162,7 @@ export default function Page() {
                                   const newCourse = { ...course };
                                   newCourse.lessons[i * 12 + j] = {
                                     action: false,
-                                    data: null,
+                                    subjectId: null,
                                   };
                                   setCourse(newCourse);
                                 }}
@@ -212,17 +210,35 @@ export default function Page() {
         </DndContext>
       </List>
       <div className="flex justify-between w-full">
-        <A href="/service/1/course">キャンセル</A>
+        <a className="a" href="/service/1/course">
+          キャンセル
+        </a>
 
         <div>
-          <Button
+          <button
+            className="button"
             type="button"
             onClick={() => {
+              if (!course.name || !course.gradeId) {
+                alert("コース名,学年が入力されていません");
+                return;
+              }
+              for (let i = 0; i < 7; i++) {
+                for (let j = 0; j < 12; j++) {
+                  if (course.times[j].start && course.times[j].end) {
+                    break;
+                  } else if (course.lessons[i * 12 + j].action) {
+                    alert("時間が入力されていません");
+                    return;
+                  }
+                }
+              }
+
               setModalFlg(true);
             }}
           >
             確認
-          </Button>
+          </button>
         </div>
       </div>
 
@@ -230,7 +246,7 @@ export default function Page() {
         <div className="w-full pl-2 pb-2">
           コース名: {course.name}
           <br />
-          学年: {grades.find((grade) => grade.value === course.grade_id)?.label}
+          学年: {grades.find((grade) => grade.value === course.gradeId)?.label}
         </div>
 
         <div className="w-full grid lg:grid-cols-[1fr_2fr_2fr_2fr_2fr_2fr_2fr_2fr] gap-4">
@@ -257,10 +273,10 @@ export default function Page() {
               {Array.from({ length: 12 }).map((_, j) => (
                 <div
                   key={j}
-                  className={`flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20
+                  className={`flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20 overflow-y-auto
                     ${
                       (!course.lessons[i * 12 + j].action ||
-                        !course.lessons[i * 12 + j].data) &&
+                        !course.lessons[i * 12 + j].subjectId) &&
                       "bg-[var(--text-color-60)]"
                     }`}
                 >
@@ -268,7 +284,8 @@ export default function Page() {
                     {
                       subjects.find(
                         (subject) =>
-                          subject.value === course.lessons[i * 12 + j].data,
+                          subject.value ===
+                          course.lessons[i * 12 + j].subjectId,
                       )?.label
                     }
                   </div>
@@ -278,17 +295,18 @@ export default function Page() {
           ))}
         </div>
         <div className="flex justify-end w-full">
-          <Button
+          <button
+            className="button"
             type="button"
             onClick={() => {
               setModalFlg(false);
             }}
           >
             戻る
-          </Button>
-          <Button type="button" onClick={() => {}}>
+          </button>
+          <button className="button" type="button" onClick={() => {}}>
             登録
-          </Button>
+          </button>
         </div>
       </Modal>
     </>
