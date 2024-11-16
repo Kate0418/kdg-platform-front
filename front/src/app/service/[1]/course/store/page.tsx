@@ -19,12 +19,14 @@ interface Course {
   gradeId: number | null;
   times: Array<{ start: string; end: string }>;
   lessons: Array<{
-    action: boolean;
+    dayOfWeek: number;
+    period: number;
     subjectId: number | null;
   }>;
 }
 
 export default function Page() {
+  const period = 12;
   const [grades, setGrades] = useState<GradeSelectResponse["grades"]>([]);
   const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
     [],
@@ -32,11 +34,8 @@ export default function Page() {
   const [course, setCourse] = useState<Course>({
     name: null,
     gradeId: null,
-    times: Array.from({ length: 12 }, () => ({ start: "", end: "" })),
-    lessons: Array.from({ length: 7 * 12 }, () => ({
-      action: false,
-      subjectId: null,
-    })),
+    times: Array.from({ length: period }, () => ({ start: "", end: "" })),
+    lessons: [],
   });
   const [modalFlg, setModalFlg] = useState(false);
 
@@ -52,22 +51,64 @@ export default function Page() {
     selectApi();
   }, []);
 
+  const getLessonIndex = (i: number, j: number) => {
+    return course.lessons.findIndex(
+      (lesson) => lesson.dayOfWeek === i && lesson.period === j,
+    );
+  };
+  const getLessonFlg = (i: number, j: number) => {
+    return course.lessons.some(
+      (lesson) => lesson.dayOfWeek === i && lesson.period === j,
+    );
+  };
+
   const onDragEnd = (e: DragEndEvent) => {
-    const activeId = Number(e.active.id);
-    const overId = e.over ? Number(e.over.id) : null;
+    const activeId = e.active.id;
+    const overId = e.over ? e.over.id : null;
 
     if (overId !== null) {
-      setCourse((prevCourse) => {
-        const newCourse = {
-          ...prevCourse,
-          lessons: [...prevCourse.lessons],
+      const [, activeDayOfWeek, activePeriod] = String(activeId).split("-");
+      const [, overDayOfWeek, overPeriod] = String(overId).split("-");
+
+      const activeIndex = getLessonIndex(
+        Number(activeDayOfWeek),
+        Number(activePeriod),
+      );
+      // -1の場合がある
+      const overIndex = getLessonIndex(
+        Number(overDayOfWeek),
+        Number(overPeriod),
+      );
+
+      // lessonsの配列を新しく作成
+      let newLessons = [...course.lessons];
+
+      if (overIndex === -1) {
+        newLessons = newLessons.filter((_, index) => index !== activeIndex);
+        newLessons.push({
+          dayOfWeek: Number(overDayOfWeek),
+          period: Number(overPeriod),
+          subjectId: course.lessons[activeIndex].subjectId,
+        });
+      } else {
+        // 要素の入れ替え
+        const tempSubjectId = newLessons[activeIndex].subjectId;
+        newLessons[activeIndex] = {
+          ...newLessons[activeIndex],
+          subjectId: newLessons[overIndex].subjectId,
         };
-        newCourse.lessons[overId] = prevCourse.lessons[activeId]; // overIdにactiveIdのデータを設定
-        newCourse.lessons[activeId] = prevCourse.lessons[overId]; // activeIdにoverIdのデータを設定
-        return newCourse;
+        newLessons[overIndex] = {
+          ...newLessons[overIndex],
+          subjectId: tempSubjectId,
+        };
+      }
+      setCourse({
+        ...course,
+        lessons: newLessons,
       });
     }
   };
+
   return (
     <>
       <Title title="コース登録ページ" />
@@ -95,7 +136,7 @@ export default function Page() {
         <DndContext onDragEnd={onDragEnd}>
           <div className="grid lg:grid-cols-[1fr_2fr_2fr_2fr_2fr_2fr_2fr_2fr] gap-4">
             <ScheduleColumn head="時間">
-              {Array.from({ length: 12 }).map((_, j) => (
+              {Array.from({ length: period }).map((_, j) => (
                 <div
                   key={j}
                   className="flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20"
@@ -123,33 +164,38 @@ export default function Page() {
             </ScheduleColumn>
             {Array.from({ length: 7 }).map((_, i) => (
               <ScheduleColumn head={daysOfWeek[i]} key={i}>
-                {Array.from({ length: 12 }).map((_, j) => (
+                {Array.from({ length: period }).map((_, j) => (
                   <div
                     key={j}
                     className="flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20"
                   >
                     <div className="w-full px-1">
-                      <Droppable id={`${i * 12 + j}`} key={`${i * 12 + j}`}>
+                      <Droppable id={`drop-${i}-${j}`} key={j}>
                         <Draggable
-                          id={`${i * 12 + j}`}
-                          key={`${i * 12 + j}`}
-                          lessonFlg={course.lessons[i * 12 + j].action}
+                          id={`drag-${i}-${j}`}
+                          key={j}
+                          lessonFlg={getLessonFlg(i, j)}
                         >
-                          {course.lessons[i * 12 + j].action ? (
+                          {getLessonFlg(i, j) ? (
                             <div className="w-full p-2 flex">
                               <Select
                                 className="text-xs w-5/6 font-bold"
                                 options={subjects}
-                                value={subjects.find(
-                                  (subject) =>
-                                    subject.value ===
-                                    course.lessons[i * 12 + j].subjectId,
-                                )}
+                                value={(() => {
+                                  const lessonIndex = getLessonIndex(i, j);
+                                  const subjectId =
+                                    course.lessons[lessonIndex]?.subjectId;
+                                  return (
+                                    subjects.find(
+                                      (subject) => subject.value === subjectId,
+                                    ) || null
+                                  );
+                                })()}
                                 onChange={(newValue: unknown) => {
                                   const data = newValue as SelectItem;
                                   const newCourse = { ...course };
-                                  newCourse.lessons[i * 12 + j] = {
-                                    ...newCourse.lessons[i * 12 + j],
+                                  newCourse.lessons[getLessonIndex(i, j)] = {
+                                    ...newCourse.lessons[getLessonIndex(i, j)],
                                     subjectId: data.value,
                                   };
                                   setCourse(newCourse);
@@ -160,10 +206,10 @@ export default function Page() {
                                 type="button"
                                 onClick={() => {
                                   const newCourse = { ...course };
-                                  newCourse.lessons[i * 12 + j] = {
-                                    action: false,
-                                    subjectId: null,
-                                  };
+                                  newCourse.lessons.splice(
+                                    getLessonIndex(i, j),
+                                    1,
+                                  );
                                   setCourse(newCourse);
                                 }}
                               >
@@ -181,10 +227,11 @@ export default function Page() {
                               type="button"
                               onClick={() => {
                                 const newCourse = { ...course };
-                                newCourse.lessons[i * 12 + j] = {
-                                  ...newCourse.lessons[i * 12 + j],
-                                  action: true,
-                                };
+                                newCourse.lessons.push({
+                                  dayOfWeek: i,
+                                  period: j,
+                                  subjectId: null,
+                                });
                                 setCourse(newCourse);
                               }}
                             >
@@ -224,10 +271,12 @@ export default function Page() {
                 return;
               }
               for (let i = 0; i < 7; i++) {
-                for (let j = 0; j < 12; j++) {
+                for (let j = 0; j < period; j++) {
                   if (course.times[j].start && course.times[j].end) {
                     break;
-                  } else if (course.lessons[i * 12 + j].action) {
+                  } else if (
+                    course.lessons.some((lesson) => lesson.period === j)
+                  ) {
                     alert("時間が入力されていません");
                     return;
                   }
@@ -251,7 +300,7 @@ export default function Page() {
 
         <div className="w-full grid lg:grid-cols-[1fr_2fr_2fr_2fr_2fr_2fr_2fr_2fr] gap-4">
           <ScheduleColumn head="時間">
-            {Array.from({ length: 12 }).map((_, j) => (
+            {Array.from({ length: period }).map((_, j) => (
               <div
                 key={j}
                 className="flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20"
@@ -270,13 +319,13 @@ export default function Page() {
           </ScheduleColumn>
           {Array.from({ length: 7 }).map((_, i) => (
             <ScheduleColumn head={daysOfWeek[i]} key={i}>
-              {Array.from({ length: 12 }).map((_, j) => (
+              {Array.from({ length: period }).map((_, j) => (
                 <div
                   key={j}
                   className={`flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20 overflow-y-auto
                     ${
-                      (!course.lessons[i * 12 + j].action ||
-                        !course.lessons[i * 12 + j].subjectId) &&
+                      (!getLessonFlg(i, j) ||
+                        !course.lessons[getLessonIndex(i, j)]?.subjectId) &&
                       "bg-[var(--text-color-60)]"
                     }`}
                 >
@@ -285,7 +334,7 @@ export default function Page() {
                       subjects.find(
                         (subject) =>
                           subject.value ===
-                          course.lessons[i * 12 + j].subjectId,
+                          course.lessons[getLessonIndex(i, j)]?.subjectId,
                       )?.label
                     }
                   </div>

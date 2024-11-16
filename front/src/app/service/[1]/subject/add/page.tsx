@@ -39,7 +39,7 @@ export default function Page() {
     };
 
     selectApi();
-  });
+  }, []);
 
   const handleInputChange = (index: number, field: string, value: any) => {
     const updatedTables = [...subjects];
