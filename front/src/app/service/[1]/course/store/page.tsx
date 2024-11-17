@@ -1,5 +1,6 @@
 "use client";
 
+import { CourseStore, CourseStoreProps } from "@/api/CourseStore";
 import { GradeSelect, GradeSelectResponse } from "@/api/GradeSelect";
 import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
 import { ScheduleColumn } from "@/components/course/ScheduleColumn";
@@ -13,17 +14,9 @@ import { daysOfWeek, SelectItem } from "@/config";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
-interface Course {
-  name: string | null;
-  gradeId: number | null;
-  times: Array<{ start: string; end: string }>;
-  lessons: Array<{
-    dayOfWeek: number;
-    period: number;
-    subjectId: number | null;
-  }>;
-}
+import { useRouter } from "next/navigation";
+import { Token } from "@/api/Token";
+import { Loader } from "@/components/layout/Loader";
 
 export default function Page() {
   const period = 12;
@@ -31,13 +24,19 @@ export default function Page() {
   const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
     [],
   );
-  const [course, setCourse] = useState<Course>({
+  const [course, setCourse] = useState<CourseStoreProps["course"]>({
     name: null,
     gradeId: null,
-    times: Array.from({ length: period }, () => ({ start: "", end: "" })),
+    times: Array.from({ length: period }, (_, index) => ({
+      period: index,
+      startTime: "",
+      endTime: "",
+    })),
     lessons: [],
   });
   const [modalFlg, setModalFlg] = useState(false);
+  const [loaderFlg, setLoaderFlg] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const selectApi = async () => {
@@ -109,6 +108,29 @@ export default function Page() {
     }
   };
 
+  const storeApi = async () => {
+    setLoaderFlg(true);
+    const token = await Token();
+    if (!token.success) {
+      router.push("/site/login");
+      setLoaderFlg(false);
+    }
+
+    const storeCourse = {
+      ...course,
+      times: course.times.filter((time) => time.startTime && time.endTime),
+    };
+    const subjectAdd = await CourseStore({ course: storeCourse });
+    alert(subjectAdd.message);
+    if (subjectAdd.success) {
+      router.push("/service/1/course");
+    } else {
+      setLoaderFlg(false);
+    }
+  };
+
+  if (loaderFlg) return <Loader />;
+
   return (
     <>
       <Title title="コース登録ページ" />
@@ -146,7 +168,7 @@ export default function Page() {
                       type="time"
                       onChange={(e) => {
                         const newCourse = { ...course };
-                        newCourse.times[j].start = e.target.value;
+                        newCourse.times[j].startTime = e.target.value;
                         setCourse(newCourse);
                       }}
                     />
@@ -154,7 +176,7 @@ export default function Page() {
                       type="time"
                       onChange={(e) => {
                         const newCourse = { ...course };
-                        newCourse.times[j].end = e.target.value;
+                        newCourse.times[j].endTime = e.target.value;
                         setCourse(newCourse);
                       }}
                     />
@@ -272,7 +294,7 @@ export default function Page() {
               }
               for (let i = 0; i < 7; i++) {
                 for (let j = 0; j < period; j++) {
-                  if (course.times[j].start && course.times[j].end) {
+                  if (course.times[j].startTime && course.times[j].endTime) {
                     break;
                   } else if (
                     course.lessons.some((lesson) => lesson.period === j)
@@ -305,13 +327,13 @@ export default function Page() {
                 key={j}
                 className="flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20"
               >
-                {course.times[j].start && course.times[j].end && (
+                {course.times[j].startTime && course.times[j].endTime && (
                   <div className="w-full px-1 text-center">
-                    {course.times[j].start}
+                    {course.times[j].startTime}
                     <br />
                     ︙
                     <br />
-                    {course.times[j].end}
+                    {course.times[j].endTime}
                   </div>
                 )}
               </div>
@@ -353,7 +375,13 @@ export default function Page() {
           >
             戻る
           </button>
-          <button className="button" type="button" onClick={() => {}}>
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              storeApi();
+            }}
+          >
             登録
           </button>
         </div>
