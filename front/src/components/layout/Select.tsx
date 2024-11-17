@@ -1,26 +1,28 @@
+import { SelectItem } from "@/config";
 import dynamic from "next/dynamic";
-import { Props as SelectProps, StylesConfig } from "react-select";
+import { Props as SelectProps, StylesConfig, ActionMeta } from "react-select";
 const ReactSelect = dynamic(() => import("react-select"), { ssr: false });
 
-export interface Props extends Omit<SelectProps, "onChange"> {
-  multi?: boolean;
-  onChange?: ((newValue: unknown) => void) | undefined;
+export interface Props<IsMulti extends boolean = false>
+  extends Omit<SelectProps, "onChange"> {
+  multi?: IsMulti;
+  onChange?: (e: IsMulti extends true ? SelectItem[] : SelectItem) => void;
 }
 
 const customStyles: StylesConfig = {
   input: (provided) => ({
     ...provided,
-    width: "100%", // 幅を100%に設定
+    width: "100%",
   }),
   control: (provided, state) => ({
     ...provided,
-    borderColor: state.isFocused ? "var(--accent-color)" : "var(--text-color)",
-    boxShadow: state.isFocused ? "0 0 0 1px var(--accent-color)" : undefined,
+    border: "none", // ボーダーを削除
+    boxShadow: "none", // 通常時のボックスシャドウも削除
     "&:hover": {
-      borderColor: state.isFocused ? "var(--accent-color)" : "#aaa",
+      border: "none", // ホバー時のボーダーも削除
     },
-    borderRadius: "8px",
   }),
+  // 他のスタイル設定は同じ
   option: (provided, state) => ({
     ...provided,
     color: "var(--text-color)",
@@ -28,21 +30,31 @@ const customStyles: StylesConfig = {
   }),
   menu: (provided) => ({
     ...provided,
-    zIndex: 1000, // z-indexを設定
+    zIndex: 1000,
     position: "absolute",
     top: "100%",
     left: 0,
   }),
   dropdownIndicator: (provided) => ({
     ...provided,
-    display: "none", // これで下矢印を非表示にします
+    display: "none",
   }),
   indicatorSeparator: () => ({
-    display: "none", // 区切り線を非表示に
+    display: "none",
   }),
 };
 
-export function Select(props: Props) {
+export function Select<IsMulti extends boolean = false>(props: Props<IsMulti>) {
+  const handleChange = (newValue: unknown, actionMeta: ActionMeta<unknown>) => {
+    if (props.onChange) {
+      if (props.multi) {
+        (props.onChange as (e: SelectItem[]) => void)(newValue as SelectItem[]);
+      } else {
+        (props.onChange as (e: SelectItem) => void)(newValue as SelectItem);
+      }
+    }
+  };
+
   return (
     <ReactSelect
       className={`relative ${props.className}`}
@@ -51,7 +63,8 @@ export function Select(props: Props) {
       maxMenuHeight={120}
       styles={customStyles}
       value={props.value}
-      onChange={props.onChange}
+      onChange={handleChange}
+      placeholder={props.placeholder || "選択なし"}
     />
   );
 }

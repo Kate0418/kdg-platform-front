@@ -69,7 +69,7 @@ export default function Page() {
               検索
             </Button>
           </form>
-          <A className="!p-1 lg:!p-2" href="/service/1/teacher/add">
+          <A className="!p-1 lg:!p-2" href="/service/1/teacher/store">
             新規作成
           </A>
         </div>

@@ -1,27 +1,26 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export interface Props {
+export interface SubjectProps {
   subjects: Array<{
     name: string;
-    teacherId: {
-      value: number;
-      label: string;
-    } | null;
+    teacherId: number | null;
   }>;
 }
 
-export interface Response {
+export interface SubjectResponse {
   success: boolean;
   message: string;
 }
 
-export async function SubjectStore({ subjects }: Props): Promise<Response> {
+export async function SubjectStore({
+  subjects,
+}: SubjectProps): Promise<SubjectResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject`;
   const token = Cookies.get("token");
 
   try {
-    const response = await axios.post<{ success: boolean; message: string }>(
+    const response = await axios.post<SubjectResponse>(
       api_url,
       {
         subjects: subjects,

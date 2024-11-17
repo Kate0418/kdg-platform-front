@@ -5,17 +5,16 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
 import { List } from "@/components/layout/List";
-import { SubjectStore, Props } from "@/api/SubjectStore";
+import { SubjectStore, SubjectProps } from "@/api/SubjectStore";
 import { Title } from "@/components/layout/Title";
-import { Button } from "@/components/layout/Button";
-import { A } from "@/components/layout/A";
 import { Select } from "@/components/layout/Select";
 import { TeacherSelect, Response } from "@/api/TeacherSelect";
 import { Modal } from "@/components/layout/Modal";
+import { SelectItem } from "@/config";
 
 export default function Page() {
   const [teachers, setTeachers] = useState<Response["teachers"]>([]);
-  const [subjects, setSubjects] = useState<Props["subjects"]>([
+  const [subjects, setSubjects] = useState<SubjectProps["subjects"]>([
     { name: "", teacherId: null },
   ]);
 
@@ -41,12 +40,6 @@ export default function Page() {
     selectApi();
   }, []);
 
-  const handleInputChange = (index: number, field: string, value: any) => {
-    const updatedTables = [...subjects];
-    updatedTables[index] = { ...updatedTables[index], [field]: value };
-    setSubjects(updatedTables);
-  };
-
   const storeApi = async () => {
     setLoaderFlg(true);
     const token = await Token();
@@ -64,9 +57,7 @@ export default function Page() {
     }
   };
 
-  if (loaderFlg) {
-    return <Loader />;
-  }
+  if (loaderFlg) return <Loader />;
 
   return (
     <>
@@ -89,16 +80,30 @@ export default function Page() {
                     type="text"
                     className="w-full p-1 font-bold"
                     value={subject.name}
-                    onChange={(e) =>
-                      handleInputChange(index, "name", e.target.value)
-                    }
+                    onChange={(e) => {
+                      const newSubjects = [...subjects];
+                      newSubjects[index] = {
+                        ...newSubjects[index],
+                        name: e.target.value,
+                      };
+                      setSubjects(newSubjects);
+                    }}
                   />
                 </td>
                 <td className="border border-[var(--text-color)]">
                   <Select
                     options={teachers}
-                    value={subject.teacherId}
-                    onChange={(e) => handleInputChange(index, "teacherId", e)}
+                    value={teachers.find(
+                      (teacher) => teacher.value === subject.teacherId,
+                    )}
+                    onChange={(e: SelectItem) => {
+                      const newSubjects = [...subjects];
+                      newSubjects[index] = {
+                        ...newSubjects[index],
+                        teacherId: e.value,
+                      };
+                      setSubjects(newSubjects);
+                    }}
                   />
                 </td>
               </tr>
@@ -108,26 +113,31 @@ export default function Page() {
       </List>
 
       <div className="flex justify-between w-full">
-        <A href="/service/1/subject">戻る</A>
+        <a className="a" href="/service/1/subject">
+          キャンセル
+        </a>
 
         <div className="flex">
-          <Button
+          <button
+            className="button"
             type="button"
             onClick={() =>
               setSubjects([...subjects, { name: "", teacherId: null }])
             }
           >
             追加
-          </Button>
-          <Button
+          </button>
+          <button
+            className="button"
             type="button"
             onClick={() =>
               subjects.length > 1 && setSubjects(subjects.slice(0, -1))
             }
           >
             削除
-          </Button>
-          <Button
+          </button>
+          <button
+            className="button"
             type="button"
             onClick={() =>
               addFlg
@@ -136,11 +146,11 @@ export default function Page() {
             }
           >
             確認
-          </Button>
+          </button>
         </div>
       </div>
 
-      <Modal modalFlg={modalFlg}>
+      <Modal modalFlg={modalFlg} setModalFlg={setModalFlg}>
         <table className="w-full mb-5">
           <thead>
             <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
@@ -157,29 +167,33 @@ export default function Page() {
                   {subject.name}
                 </td>
                 <td className="border border-[var(--text-color)] p-1">
-                  {subject.teacherId ? subject.teacherId.label : ""}
+                  {teachers.find(
+                    (teacher) => teacher.value === subject.teacherId,
+                  )?.label ?? ""}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         <div className="flex justify-end w-full">
-          <Button
-            type="submit"
+          <button
+            className="button"
+            type="button"
             onClick={() => {
               setModalFlg(false);
             }}
           >
             戻る
-          </Button>
-          <Button
-            type="submit"
+          </button>
+          <button
+            className="button"
+            type="button"
             onClick={() => {
               storeApi();
             }}
           >
             登録
-          </Button>
+          </button>
         </div>
       </Modal>
     </>

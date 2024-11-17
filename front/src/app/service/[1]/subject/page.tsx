@@ -1,8 +1,6 @@
 "use client";
 
 import { Subject } from "@/api/Subject";
-import { A } from "@/components/layout/A";
-import { Button } from "@/components/layout/Button";
 import { List } from "@/components/layout/List";
 import { Pagination } from "@/components/layout/Pagination";
 import { Title } from "@/components/layout/Title";
@@ -52,13 +50,13 @@ export default function Page() {
               name="keyWord"
               defaultValue={keyWord}
             />
-            <Button className="!p-1 lg:!p-2" type="submit">
+            <button className="button !p-1 lg:!p-2" type="submit">
               検索
-            </Button>
+            </button>
           </form>
-          <A className="!p-1 lg:!p-2" href="/service/1/subject/add">
+          <a className="a !p-1 lg:!p-2" href="/service/1/subject/store">
             新規作成
-          </A>
+          </a>
         </div>
         <table className="w-full">
           <thead>

@@ -143,14 +143,13 @@ export default function Page() {
           />
           <label className="pl-2">学年：</label>
           <Select
-            className="w-32"
+            className="w-32 border border-[var(--text-color)] rounded-lg px-2"
             options={grades}
             value={grades.find((grade) => grade.value === course.gradeId)}
-            onChange={(newValue: unknown) => {
-              const data = newValue as SelectItem;
+            onChange={(e: SelectItem) => {
               setCourse({
                 ...course,
-                gradeId: data.value,
+                gradeId: e.value,
               });
             }}
           />
