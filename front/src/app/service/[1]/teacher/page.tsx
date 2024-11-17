@@ -5,9 +5,6 @@ import { useState, useEffect, useCallback } from "react";
 import { Title } from "@/components/layout/Title";
 import { List } from "@/components/layout/List";
 import { Teacher, Response } from "@/api/Teacher";
-import { Button } from "@/components/layout/Button";
-import { A } from "@/components/layout/A";
-import { Loader } from "@/components/layout/Loader";
 import { Pagination } from "@/components/layout/Pagination";
 import Image from "next/image";
 
@@ -50,28 +47,25 @@ export default function Page() {
     );
   };
 
-  if (loaderFlg) {
-    return <Loader />;
-  }
-
   return (
     <>
       <Title title="講師情報管理ページ" />
-      <List title="講師一覧" h={520}>
+      <List title="講師一覧" h={520} loaderFlg={loaderFlg}>
         <div className="flex justify-end items-center">
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
               className="p-1 border border-[var(--text-color)]"
+              name="keyWord"
               defaultValue={keyWord}
             />
-            <Button className="!p-1 lg:!p-2" type="submit">
+            <button className="button !p-1 lg:!p-2" type="submit">
               検索
-            </Button>
+            </button>
           </form>
-          <A className="!p-1 lg:!p-2" href="/service/1/teacher/store">
+          <a className="a !p-1 lg:!p-2" href="/service/1/teacher/store">
             新規作成
-          </A>
+          </a>
         </div>
         <table className="w-full">
           <thead>

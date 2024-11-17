@@ -6,12 +6,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
 import React from "react";
-import { TeacherStore, Props } from "@/api/TeacherStore";
+import { TeacherStore, TeacherStoreProps } from "@/api/TeacherStore";
 import { Title } from "@/components/layout/Title";
 import { Select } from "@/components/layout/Select";
 import { List } from "@/components/layout/List";
-import { A } from "@/components/layout/A";
-import { Button } from "@/components/layout/Button";
 import { Modal } from "@/components/layout/Modal";
 import { SelectItem } from "@/config";
 
@@ -19,7 +17,7 @@ export default function Page() {
   const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
     [],
   );
-  const [teachers, setTeachers] = useState<Props["teachers"]>([
+  const [teachers, setTeachers] = useState<TeacherStoreProps["teachers"]>([
     { name: "", email: "", subjectIds: [] },
   ]);
   const [modalFlg, setModalFlg] = useState(false);
@@ -122,10 +120,17 @@ export default function Page() {
                       <Select
                         multi={true}
                         options={subjects}
-                        value={teacher.subjectIds}
-                        onChange={(e) =>
-                          handleInputChange(index, "subjectIds", e)
-                        }
+                        value={subjects.filter((subject) =>
+                          teacher.subjectIds.includes(subject.value),
+                        )}
+                        onChange={(e: SelectItem[]) => {
+                          const newTeachers = [...teachers];
+                          newTeachers[index] = {
+                            ...newTeachers[index],
+                            subjectIds: e.map((item) => item.value),
+                          };
+                          setTeachers(newTeachers);
+                        }}
                       />
                     </div>
                   </div>
@@ -137,10 +142,13 @@ export default function Page() {
       </List>
 
       <div className="flex justify-between w-full">
-        <A href="/service/1/teacher">戻る</A>
+        <a className="a" href="/service/1/teacher">
+          キャンセル
+        </a>
 
         <div className="flex">
-          <Button
+          <button
+            className="button"
             type="button"
             onClick={() =>
               setTeachers([
@@ -150,16 +158,18 @@ export default function Page() {
             }
           >
             追加
-          </Button>
-          <Button
+          </button>
+          <button
+            className="button"
             type="button"
             onClick={() =>
               teachers.length > 1 && setTeachers(teachers.slice(0, -1))
             }
           >
             削除
-          </Button>
-          <Button
+          </button>
+          <button
+            className="button"
             type="button"
             onClick={() =>
               teachers.length === adds
@@ -168,11 +178,11 @@ export default function Page() {
             }
           >
             確認
-          </Button>
+          </button>
         </div>
       </div>
 
-      <Modal modalFlg={modalFlg}>
+      <Modal modalFlg={modalFlg} setModalFlg={setModalFlg}>
         {teachers.map((teacher, index) => (
           <table key={index} className="w-full mb-16">
             <thead>
@@ -199,8 +209,11 @@ export default function Page() {
                       科目
                     </div>
                     <div className="w-5/6 p-1">
-                      {teacher.subjectIds
-                        .map((subject) => subject.label)
+                      {subjects
+                        .filter((subject) =>
+                          teacher.subjectIds.includes(subject.value),
+                        )
+                        .map((item) => item.label)
                         .join(", ")}
                     </div>
                   </div>
@@ -210,22 +223,24 @@ export default function Page() {
           </table>
         ))}
         <div className="flex justify-end w-full">
-          <Button
+          <button
+            className="button"
             type="button"
             onClick={() => {
               setModalFlg(false);
             }}
           >
             戻る
-          </Button>
-          <Button
+          </button>
+          <button
+            className="button"
             type="button"
             onClick={() => {
               storeApi();
             }}
           >
             登録
-          </Button>
+          </button>
         </div>
       </Modal>
     </>
