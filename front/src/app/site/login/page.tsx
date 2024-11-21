@@ -1,6 +1,6 @@
 "use client";
 
-import Login from "@/api/Login";
+import { Login } from "@/api/Login";
 import { Loader } from "@/components/layout/Loader";
 import Image from "next/image";
 import { useState } from "react";
@@ -15,8 +15,10 @@ export default function Page() {
 
   const LoginApi = async () => {
     setLoading(true);
-    const response = await Login(email, password);
+    const response = await Login({ email, password });
     if (response.success) {
+      if (response.token) localStorage.setItem("token", response.token);
+      if (response.token) localStorage.setItem("type", String(response.type));
       router.push(`/service/${response.type}/top`);
     } else {
       setLoading(false);

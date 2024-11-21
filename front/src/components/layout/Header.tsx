@@ -2,10 +2,17 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Header() {
   const [menu, setMenu] = useState(false);
   const site_flg = usePathname().startsWith("/site/");
+  const pages = [
+    { name: "生徒情報管理", type: "student" },
+    { name: "講師情報管理", type: "teacher" },
+    { name: "科目情報管理", type: "subject" },
+    { name: "コース情報管理", type: "course" },
+  ];
 
   return (
     <>
@@ -14,11 +21,18 @@ export default function Header() {
           <img className="h-[45px]" src="/img/logo.svg" alt="logo" />
           <div className={`flex justify-end w-full ${site_flg && "hidden"}`}>
             <button
+              className="border"
               onClick={function () {
                 setMenu(true);
               }}
             >
-              <img className="p-2 border" src="/img/menu.svg" alt="menu" />
+              <Image
+                className="p-2"
+                src="/img/menu.svg"
+                alt="close"
+                width={42}
+                height={42}
+              />
             </button>
           </div>
         </div>
@@ -26,16 +40,43 @@ export default function Header() {
       </header>
 
       <div className={`w-screen h-full" ${menu ? "" : "hidden"}`}>
-        <div className="fixed w-full h-full z-40 bg-text-0.6"></div>
-        <div className="fixed right-0 w-80 h-full z-50 bg-base p-6">
-          <button
-            className="fixed right-6"
-            onClick={function () {
-              setMenu(false);
-            }}
-          >
-            <img className="p-2" src="/img/close.svg" alt="close" />
-          </button>
+        <div
+          className="fixed w-screen h-screen z-30 bg-text-0.6 flex justify-end"
+          onClick={() => setMenu(false)}
+        >
+          <div className="w-80 bg-base p-6">
+            <button
+              className="fixed right-6"
+              onClick={function () {
+                setMenu(false);
+              }}
+            >
+              <Image
+                className="p-2"
+                src="/img/close.svg"
+                alt="close"
+                width={42}
+                height={42}
+              />
+            </button>
+            <div className="flex flex-col gap-4 pt-12">
+              {pages.map((page) => (
+                <a
+                  href={`/service/${localStorage.getItem("type")}/${page.type}`}
+                >
+                  <div className="flex text-xl gap-1 pb-1 border-b border-text">
+                    <Image
+                      src={`/img/${page.type}.svg`}
+                      alt={page.type}
+                      width={20}
+                      height={20}
+                    />
+                    {page.name}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </>

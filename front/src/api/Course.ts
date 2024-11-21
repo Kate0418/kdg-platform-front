@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
 export interface CourseProps {
   keyWord: string;
@@ -21,7 +20,7 @@ export async function Course({
   pageCount,
 }: CourseProps): Promise<CourseResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/course`;
-  const token = Cookies.get("token");
+  const token = localStorage.getItem("token");
 
   try {
     const response = await axios.get<CourseResponse>(api_url, {

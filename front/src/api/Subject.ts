@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
 export interface Props {
   keyWord: string;
@@ -21,7 +20,7 @@ export async function Subject({
   pageCount,
 }: Props): Promise<Response> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject`;
-  const token = Cookies.get("token");
+  const token = localStorage.getItem("token");
 
   try {
     const response = await axios.get<Response>(api_url, {

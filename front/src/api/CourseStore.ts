@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
 export interface CourseStoreProps {
   course: {
@@ -27,7 +26,7 @@ export async function CourseStore({
   course,
 }: CourseStoreProps): Promise<CourseStoreResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/course`;
-  const token = Cookies.get("token");
+  const token = localStorage.getItem("token");
 
   try {
     const response = await axios.post<CourseStoreResponse>(
