@@ -1,49 +1,48 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export default async function Student(
-  key_word: string | null,
-  course_id: number | null,
-): Promise<
-  {
+export interface StudentProps {
+  keyWord: string;
+  pageCount: number;
+}
+
+export interface StudentResponse {
+  success: boolean;
+  students: Array<{
     id: number;
     name: string;
     email: string;
-    course_id: number | null;
-    zoom: boolean;
-  }[]
-> {
-  const api_url = `${process.env.NEXT_PUBLIC_API_URL}/student/get_users`;
+    courseName: string;
+    gradeName: string;
+    yearName: string;
+  }>;
+  total: number;
+}
+
+export async function Student({
+  keyWord,
+  pageCount,
+}: StudentProps): Promise<StudentResponse> {
+  const api_url = `${process.env.NEXT_PUBLIC_API_URL}/student`;
   const token = Cookies.get("token");
 
-  if (!token) {
-    return [];
-  }
-
   try {
-    const response = await axios.post(
-      api_url,
-      {
-        key_word: key_word,
-        course_id: course_id,
+    const response = await axios.get<StudentResponse>(api_url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      params: {
+        keyWord: keyWord,
+        pageCount: pageCount,
       },
-    );
-    if (response.data) {
-      const users = response.data.map((user: any) => ({
-        ...user,
-        zoom: false,
-      }));
-      return users;
-    }
+    });
+    return response.data;
   } catch (e) {
-    console.log(e);
-    return [];
+    console.error(e);
+    return {
+      success: false,
+      students: [],
+      total: 0,
+    };
   }
-
-  return [];
 }

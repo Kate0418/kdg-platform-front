@@ -2,7 +2,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export interface StudentStoreProps {
-  students: Array<{ name: string; email: string; courseId: number | null }>;
+  students: Array<{
+    name: string;
+    email: string;
+    courseId: number | null;
+    gradeId: number | null;
+    yearId: number | null;
+  }>;
 }
 
 export interface StudentStoreResponse {
@@ -13,11 +19,11 @@ export interface StudentStoreResponse {
 export async function StudentStore({
   students,
 }: StudentStoreProps): Promise<StudentStoreResponse> {
-  const api_url = `${process.env.NEXT_PUBLIC_API_URL}/student/add`;
+  const api_url = `${process.env.NEXT_PUBLIC_API_URL}/student`;
   const token = Cookies.get("token");
 
   try {
-    const response = await axios.post<{ success: boolean; message: string }>(
+    const response = await axios.post<StudentStoreResponse>(
       api_url,
       {
         students: students,
