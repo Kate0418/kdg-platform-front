@@ -133,17 +133,17 @@ export default function Page() {
 
   return (
     <>
-      <Title title="コース登録ページ" />
+      <Title title="コース登録" icon="course" />
       <List title="登録コース" h={520}>
         <div className="flex items-center pl-2 pb-2">
           <label>コース名：</label>
           <input
-            className="p-1 border border-[var(--text-color)] rounded-lg"
+            className="p-1 border border-text rounded-lg"
             onChange={(e) => setCourse({ ...course, name: e.target.value })}
           />
           <label className="pl-2">学年：</label>
           <Select
-            className="w-32 border border-[var(--text-color)] rounded-lg px-2"
+            className="w-32 border border-text rounded-lg px-2"
             options={grades}
             value={grades.find((grade) => grade.value === course.gradeId)}
             onChange={(e: SelectItem) => {
@@ -160,7 +160,7 @@ export default function Page() {
               {Array.from({ length: period }).map((_, j) => (
                 <div
                   key={j}
-                  className="flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20"
+                  className="flex flex-col justify-center items-center border-b border-text h-20"
                 >
                   <div className="w-full px-1">
                     <input
@@ -188,7 +188,7 @@ export default function Page() {
                 {Array.from({ length: period }).map((_, j) => (
                   <div
                     key={j}
-                    className="flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20"
+                    className="flex flex-col justify-center items-center border-b border-text h-20"
                   >
                     <div className="w-full px-1">
                       <Droppable id={`drop-${i}-${j}`} key={j}>
@@ -324,7 +324,7 @@ export default function Page() {
             {Array.from({ length: period }).map((_, j) => (
               <div
                 key={j}
-                className="flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20"
+                className="flex flex-col justify-center items-center border-b border-text h-20"
               >
                 {course.times[j].startTime && course.times[j].endTime && (
                   <div className="w-full px-1 text-center">
@@ -343,7 +343,7 @@ export default function Page() {
               {Array.from({ length: period }).map((_, j) => (
                 <div
                   key={j}
-                  className={`flex flex-col justify-center items-center border-b border-[var(--text-color)] h-20 overflow-y-auto
+                  className={`flex flex-col justify-center items-center border-b border-text h-20 overflow-y-auto
                     ${
                       (!getLessonFlg(i, j) ||
                         !course.lessons[getLessonIndex(i, j)]?.subjectId) &&

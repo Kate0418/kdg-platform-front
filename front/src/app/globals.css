@@ -78,16 +78,16 @@ input {
     margin: 0.5rem; /* m-2に対応 */
     padding: 0.75rem; /* p-3に対応 */
     border-radius: 0.5rem; /* rounded-lgに対応 */
-    background-color: var(--accent-color); /* bg-[var(--accent-color)]に対応 */
-    color: var(--base-color); /* text-[var(--base-color)]に対応 */
+    background-color: var(--accent-color); /* bg-accentに対応 */
+    color: var(--base-color); /* text-baseに対応 */
 }
 
 .a {
     margin: 0.5rem; /* m-2に対応 */
     padding: 0.75rem; /* p-3に対応 */
     border-radius: 0.5rem; /* rounded-lgに対応 */
-    background-color: var(--accent-color); /* bg-[var(--accent-color)]に対応 */
-    color: var(--base-color); /* text-[var(--base-color)]に対応 */
+    background-color: var(--accent-color); /* bg-accentに対応 */
+    color: var(--base-color); /* text-baseに対応 */
 }
 
 @media (max-width: 480px) {

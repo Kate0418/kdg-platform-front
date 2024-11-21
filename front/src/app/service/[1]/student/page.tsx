@@ -51,14 +51,14 @@ export default function Page() {
 
   return (
     <>
-      <Title title="生徒情報管理ページ" />
+      <Title title="生徒情報管理" icon="student" />
       <div className="flex"></div>
       <List title="生徒一覧" h={520} loaderFlg={loaderFlg}>
         <div className="flex justify-end items-center">
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-[var(--text-color)]"
+              className="p-1 border border-text"
               name="keyWord"
               defaultValue={keyWord}
             />
@@ -72,11 +72,9 @@ export default function Page() {
         </div>
         <table className="w-full mb-16">
           <thead>
-            <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-              <td className="border-r border-[var(--base-color)] p-1">名前</td>
-              <td className="border-r border-[var(--base-color)] p-1">
-                メールアドレス
-              </td>
+            <tr className="border border-text bg-text text-base">
+              <td className="border-r border-base p-1">名前</td>
+              <td className="border-r border-base p-1">メールアドレス</td>
               <td className="w-[50px] lg:w-[100px]"></td>
             </tr>
           </thead>
@@ -84,13 +82,9 @@ export default function Page() {
             {students.map((student) => (
               <React.Fragment key={student.id}>
                 <tr>
-                  <td className="border border-[var(--text-color)] lg:p-2">
-                    {student.name}
-                  </td>
-                  <td className="border border-[var(--text-color)] lg:p-2">
-                    {student.email}
-                  </td>
-                  <td className="border border-[var(--text-color)] lg:p-2">
+                  <td className="border border-text lg:p-2">{student.name}</td>
+                  <td className="border border-text lg:p-2">{student.email}</td>
+                  <td className="border border-text lg:p-2">
                     <button
                       type="button"
                       onClick={() => {
@@ -113,13 +107,10 @@ export default function Page() {
                 </tr>
                 {student.zoom && (
                   <tr>
-                    <td
-                      className="border border-[var(--text-color)]"
-                      colSpan={2}
-                    >
+                    <td className="border border-text" colSpan={2}>
                       <div className="grid lg:grid-cols-[5fr_3fr_3fr_auto]">
                         <div className="flex">
-                          <div className="w-16 bg-[var(--text-color)] text-[var(--base-color)] text-center p-1 lg:py-3">
+                          <div className="w-16 bg-text text-base text-center p-1 lg:py-3">
                             コース
                           </div>
                           <div className="flex items-center py-1 px-6">
@@ -127,7 +118,7 @@ export default function Page() {
                           </div>
                         </div>
                         <div className="flex">
-                          <div className="w-14 bg-[var(--text-color)] text-[var(--base-color)] text-center p-1 lg:py-3">
+                          <div className="w-14 bg-text text-base text-center p-1 lg:py-3">
                             年次
                           </div>
                           <div className="flex items-center py-1 px-6">
@@ -135,7 +126,7 @@ export default function Page() {
                           </div>
                         </div>
                         <div className="flex">
-                          <div className="w-14 bg-[var(--text-color)] text-[var(--base-color)] text-center p-1 lg:py-3">
+                          <div className="w-14 bg-text text-base text-center p-1 lg:py-3">
                             年制
                           </div>
                           <div className="flex items-center py-1 px-6">
@@ -144,9 +135,9 @@ export default function Page() {
                         </div>
                       </div>
                     </td>
-                    <td className="border border-[var(--text-color)] p-1 lg:p-3">
+                    <td className="border border-text p-1 lg:p-3">
                       <a
-                        className="p-1 lg:p-3 rounded-lg bg-[var(--accent-color)] text-[var(--base-color)]"
+                        className="p-1 lg:p-3 rounded-lg bg-accent text-base"
                         href=""
                       >
                         編集

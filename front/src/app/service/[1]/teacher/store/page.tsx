@@ -75,21 +75,19 @@ export default function Page() {
 
   return (
     <>
-      <Title title="講師登録ページ" />
+      <Title title="講師登録" icon="teacher" />
       <List title="登録講師一覧" h={520}>
         {teachers.map((teacher, index) => (
           <table key={index} className="w-full mb-16">
             <thead>
-              <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-                <td className="border-r border-[var(--base-color)] p-1 w-5/12">
-                  名前
-                </td>
+              <tr className="border border-text bg-text text-base">
+                <td className="border-r border-base p-1 w-5/12">名前</td>
                 <td className="p-1 w-7/12">メールアドレス</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border border-[var(--text-color)]">
+                <td className="border border-text">
                   <input
                     type="text"
                     className="w-full p-1"
@@ -99,7 +97,7 @@ export default function Page() {
                     }
                   />
                 </td>
-                <td className="border border-[var(--text-color)]">
+                <td className="border border-text">
                   <input
                     type="text"
                     className="w-full p-1"
@@ -111,9 +109,9 @@ export default function Page() {
                 </td>
               </tr>
               <tr>
-                <td className="border border-[var(--text-color)]" colSpan={2}>
+                <td className="border border-text" colSpan={2}>
                   <div className="flex">
-                    <div className="bg-[var(--text-color)] text-[var(--base-color)] p-1 w-1/6 text-center">
+                    <div className="bg-text text-base p-1 w-1/6 text-center">
                       科目
                     </div>
                     <div className="w-5/6">
@@ -186,26 +184,20 @@ export default function Page() {
         {teachers.map((teacher, index) => (
           <table key={index} className="w-full mb-16">
             <thead>
-              <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-                <td className="border-r border-[var(--base-color)] p-1 w-5/12">
-                  名前
-                </td>
+              <tr className="border border-text bg-text text-base">
+                <td className="border-r border-base p-1 w-5/12">名前</td>
                 <td className="p-1 w-7/12">メールアドレス</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border border-[var(--text-color)] p-1">
-                  {teacher.name}
-                </td>
-                <td className="border border-[var(--text-color)] p-1">
-                  {teacher.email}
-                </td>
+                <td className="border border-text p-1">{teacher.name}</td>
+                <td className="border border-text p-1">{teacher.email}</td>
               </tr>
               <tr>
-                <td className="border border-[var(--text-color)]" colSpan={2}>
+                <td className="border border-text" colSpan={2}>
                   <div className="flex">
-                    <div className="bg-[var(--text-color)] text-[var(--base-color)] p-1 w-1/6 text-center">
+                    <div className="bg-text text-base p-1 w-1/6 text-center">
                       科目
                     </div>
                     <div className="w-5/6 p-1">

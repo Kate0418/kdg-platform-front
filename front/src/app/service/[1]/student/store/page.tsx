@@ -61,21 +61,19 @@ export default function () {
 
   return (
     <>
-      <Title title="生徒登録ページ" />
+      <Title title="生徒登録" icon="student" />
       <List title="登録生徒一覧" h={520}>
         {students.map((student, index) => (
           <table key={index} className="w-full mb-16">
             <thead>
-              <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-                <td className="border-r border-[var(--base-color)] p-1 w-5/12">
-                  名前
-                </td>
+              <tr className="border border-text bg-text text-base">
+                <td className="border-r border-base p-1 w-5/12">名前</td>
                 <td className="p-1 w-7/12">メールアドレス</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border border-[var(--text-color)]">
+                <td className="border border-text">
                   <input
                     type="text"
                     className="w-full p-1"
@@ -90,7 +88,7 @@ export default function () {
                     }}
                   />
                 </td>
-                <td className="border border-[var(--text-color)]">
+                <td className="border border-text">
                   <input
                     type="text"
                     className="w-full p-1"
@@ -107,10 +105,10 @@ export default function () {
                 </td>
               </tr>
               <tr>
-                <td className="border border-[var(--text-color)]" colSpan={2}>
+                <td className="border border-text" colSpan={2}>
                   <div className="grid lg:grid-cols-[5fr_3fr_3fr]">
                     <div className="flex">
-                      <div className="w-16 bg-[var(--text-color)] text-[var(--base-color)] p-1 flex items-center justify-center">
+                      <div className="w-16 bg-text text-base p-1 flex items-center justify-center">
                         コース
                       </div>
                       <div className="w-full">
@@ -131,7 +129,7 @@ export default function () {
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="w-14 bg-[var(--text-color)] text-[var(--base-color)] p-2 flex items-center justify-center">
+                      <div className="w-14 bg-text text-base p-2 flex items-center justify-center">
                         年次
                       </div>
                       <div className="w-full">
@@ -152,7 +150,7 @@ export default function () {
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="w-14 bg-[var(--text-color)] text-[var(--base-color)] p-2 flex items-center justify-center">
+                      <div className="w-14 bg-text text-base p-2 flex items-center justify-center">
                         年制
                       </div>
                       <div className="w-full">
@@ -236,27 +234,25 @@ export default function () {
         {students.map((student, index) => (
           <table key={index} className="w-full mb-16">
             <thead>
-              <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-                <td className="border-r border-[var(--base-color)] p-1">
-                  名前
-                </td>
+              <tr className="border border-text bg-text text-base">
+                <td className="border-r border-base p-1">名前</td>
                 <td className="p-1 min-w-36">メールアドレス</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="w-full p-1 border border-[var(--text-color)]">
+                <td className="w-full p-1 border border-text">
                   {student.name}
                 </td>
-                <td className="w-full p-1 border border-[var(--text-color)]">
+                <td className="w-full p-1 border border-text">
                   {student.email}
                 </td>
               </tr>
               <tr>
-                <td className="border border-[var(--text-color)]" colSpan={2}>
+                <td className="border border-text" colSpan={2}>
                   <div className="grid lg:grid-cols-[5fr_3fr_3fr]">
                     <div className="flex">
-                      <div className="w-16 bg-[var(--text-color)] text-[var(--base-color)] p-1 flex items-center justify-center">
+                      <div className="w-16 bg-text text-base p-1 flex items-center justify-center">
                         コース
                       </div>
                       <div className="w-full flex items-center">
@@ -266,7 +262,7 @@ export default function () {
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="w-14 bg-[var(--text-color)] text-[var(--base-color)] p-2 flex items-center justify-center">
+                      <div className="w-14 bg-text text-base p-2 flex items-center justify-center">
                         年次
                       </div>
                       <div className="w-full flex items-center">
@@ -276,7 +272,7 @@ export default function () {
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="w-14 bg-[var(--text-color)] text-[var(--base-color)] p-2 flex items-center justify-center">
+                      <div className="w-14 bg-text text-base p-2 flex items-center justify-center">
                         年制
                       </div>
                       <div className="w-full flex items-center">

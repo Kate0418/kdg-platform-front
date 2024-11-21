@@ -5,8 +5,7 @@ export interface Props {
 }
 
 export function Pagination({ total, pageCount, setPageCount }: Props) {
-  const action =
-    "border rounded-full bg-[var(--text-color)] text-[var(--base-color)]";
+  const action = "border rounded-full bg-text text-base";
 
   let pageCounts: (number | null)[] = Array(5).fill(null);
   let setPageCounts: (() => false | void)[] = Array(5).fill(() => {});
@@ -52,7 +51,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
   return (
     <div className="flex justify-center">
       <button
-        className="border border-[var(--text-color)] rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
+        className="border border-text rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
         onClick={() => pageCount - 1 > 0 && setPageCount(pageCount - 1)}
       >
         ＜
@@ -99,7 +98,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
       </div>
       <button
-        className="border border-[var(--text-color)] rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
+        className="border border-text rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
         onClick={() => pageCount + 1 <= total && setPageCount(pageCount + 1)}
       >
         ＞

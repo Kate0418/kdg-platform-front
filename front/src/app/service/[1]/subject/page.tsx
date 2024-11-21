@@ -40,13 +40,13 @@ export default function Page() {
 
   return (
     <>
-      <Title title="科目情報管理ページ" />
+      <Title title="科目情報管理" icon="subject" />
       <List title="科目一覧" loaderFlg={loaderFlg} h={550}>
         <div className="flex justify-end items-center">
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-[var(--text-color)]"
+              className="p-1 border border-text"
               name="keyWord"
               defaultValue={keyWord}
             />
@@ -60,13 +60,9 @@ export default function Page() {
         </div>
         <table className="w-full">
           <thead>
-            <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-              <td className="border-r border-[var(--base-color)] p-1">
-                科目名
-              </td>
-              <td className="border-r border-[var(--base-color)] p-1">
-                講師名
-              </td>
+            <tr className="border border-text bg-text text-base">
+              <td className="border-r border-base p-1">科目名</td>
+              <td className="border-r border-base p-1">講師名</td>
               <td className="w-[50px] lg:w-[100px]"></td>
             </tr>
           </thead>
@@ -74,15 +70,13 @@ export default function Page() {
             {Array.isArray(subjects) &&
               subjects.map((subject, index) => (
                 <tr key={index}>
-                  <td className="border border-[var(--text-color)] p-2">
-                    {subject.name}
-                  </td>
-                  <td className="border border-[var(--text-color)] p-2">
+                  <td className="border border-text p-2">{subject.name}</td>
+                  <td className="border border-text p-2">
                     {subject.teacher_name ?? ""}
                   </td>
-                  <td className="border border-[var(--text-color)] p-1 lg:p-3">
+                  <td className="border border-text p-1 lg:p-3">
                     <a
-                      className="p-1 lg:p-3 rounded-lg bg-[var(--accent-color)] text-[var(--base-color)]"
+                      className="p-1 lg:p-3 rounded-lg bg-accent text-base"
                       href=""
                     >
                       編集

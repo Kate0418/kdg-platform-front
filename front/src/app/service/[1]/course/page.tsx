@@ -41,13 +41,13 @@ export default function Page() {
 
   return (
     <>
-      <Title title="コース情報管理ページ" />
+      <Title title="コース情報管理" icon="course" />
       <List title="コース一覧" loaderFlg={loaderFlg} h={550}>
         <div className="flex justify-end items-center">
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-[var(--text-color)]"
+              className="p-1 border border-text"
               name="keyWord"
               defaultValue={keyWord}
             />
@@ -62,11 +62,9 @@ export default function Page() {
 
         <table className="w-full">
           <thead>
-            <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-              <td className="border-r border-[var(--base-color)] p-1">
-                コース名
-              </td>
-              <td className="border-r border-[var(--base-color)] p-1">学年</td>
+            <tr className="border border-text bg-text text-base">
+              <td className="border-r border-base p-1">コース名</td>
+              <td className="border-r border-base p-1">学年</td>
               <td className="w-[50px] lg:w-[100px]"></td>
             </tr>
           </thead>
@@ -74,15 +72,11 @@ export default function Page() {
             {Array.isArray(courses) &&
               courses.map((course, index) => (
                 <tr key={index}>
-                  <td className="border border-[var(--text-color)] p-2">
-                    {course.name}
-                  </td>
-                  <td className="border border-[var(--text-color)] p-2">
-                    {course.gradeName}
-                  </td>
-                  <td className="border border-[var(--text-color)] p-1 lg:p-3">
+                  <td className="border border-text p-2">{course.name}</td>
+                  <td className="border border-text p-2">{course.gradeName}</td>
+                  <td className="border border-text p-1 lg:p-3">
                     <a
-                      className="p-1 lg:p-3 rounded-lg bg-[var(--accent-color)] text-[var(--base-color)]"
+                      className="p-1 lg:p-3 rounded-lg bg-accent text-base"
                       href=""
                     >
                       編集

@@ -21,7 +21,7 @@ export function Draggable(props) {
     >
       {props.lessonFlg ? (
         <div {...listeners}>
-          <div className="absolute top-0 left-0 w-full h-2 bg-[var(--text-color)] rounded-t-lg z-10" />
+          <div className="absolute top-0 left-0 w-full h-2 bg-text rounded-t-lg z-10" />
           <div className="absolute top-0 left-0 w-full h-full bg-[var(--accent-color-60)] rounded-t-xl rounded-b-lg" />
         </div>
       ) : (

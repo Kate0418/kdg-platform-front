@@ -61,21 +61,19 @@ export default function Page() {
 
   return (
     <>
-      <Title title="科目登録ページ" />
+      <Title title="科目登録" icon="subject" />
       <List title="登録科目一覧" h={520}>
         <table className="w-full mb-5 mt-2">
           <thead>
-            <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-              <td className="border-r border-[var(--base-color)] p-1 w-1/2">
-                科目名
-              </td>
+            <tr className="border border-text bg-text text-base">
+              <td className="border-r border-base p-1 w-1/2">科目名</td>
               <td className="p-1 w-1/2">講師</td>
             </tr>
           </thead>
           <tbody className="overflow-auto">
             {subjects.map((subject, index) => (
               <tr key={index}>
-                <td className="border border-[var(--text-color)]">
+                <td className="border border-text">
                   <input
                     type="text"
                     className="w-full p-1 font-bold"
@@ -90,7 +88,7 @@ export default function Page() {
                     }}
                   />
                 </td>
-                <td className="border border-[var(--text-color)]">
+                <td className="border border-text">
                   <Select
                     options={teachers}
                     value={teachers.find(
@@ -153,20 +151,16 @@ export default function Page() {
       <Modal modalFlg={modalFlg} setModalFlg={setModalFlg}>
         <table className="w-full mb-5">
           <thead>
-            <tr className="border border-[var(--text-color)] bg-[var(--text-color)] text-[var(--base-color)]">
-              <td className="border-r border-[var(--base-color)] p-1 w-1/2">
-                科目名
-              </td>
+            <tr className="border border-text bg-text text-base">
+              <td className="border-r border-base p-1 w-1/2">科目名</td>
               <td className="p-1 w-1/2">講師名</td>
             </tr>
           </thead>
           <tbody>
             {subjects.map((subject, index) => (
               <tr key={index}>
-                <td className="border border-[var(--text-color)] p-1">
-                  {subject.name}
-                </td>
-                <td className="border border-[var(--text-color)] p-1">
+                <td className="border border-text p-1">{subject.name}</td>
+                <td className="border border-text p-1">
                   {teachers.find(
                     (teacher) => teacher.value === subject.teacherId,
                   )?.label ?? ""}
