@@ -51,7 +51,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
   return (
     <div className="flex justify-center">
       <button
-        className="border border-text rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
+        className="border border-text text-text rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
         onClick={() => pageCount - 1 > 0 && setPageCount(pageCount - 1)}
       >
         ＜
@@ -98,7 +98,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
       </div>
       <button
-        className="border border-text rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
+        className="border border-text text-text rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
         onClick={() => pageCount + 1 <= total && setPageCount(pageCount + 1)}
       >
         ＞
