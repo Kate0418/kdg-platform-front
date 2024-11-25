@@ -13,7 +13,7 @@ import { Select } from "@/components/layout/Select";
 import { GradeSelect, GradeSelectResponse } from "@/api/GradeSelect";
 import { YearSelect, YearSelectResponse } from "@/api/YearSelect";
 
-export default function () {
+export default function Page() {
   const [courses, setCourses] = useState<CourseSelectResponse["courses"]>([]);
   const [grades, setGrades] = useState<GradeSelectResponse["grades"]>([]);
   const [years, setYears] = useState<YearSelectResponse["years"]>([]);
