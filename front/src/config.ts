@@ -12,3 +12,5 @@ export const daysOfWeek = [
   "金曜日",
   "土曜日",
 ];
+
+export type WithZoom<T> = T & { zoom: boolean };

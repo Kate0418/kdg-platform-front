@@ -1,9 +1,12 @@
-export interface Props {
+export interface StoreModalControllerProps {
   setModalFlg: React.Dispatch<React.SetStateAction<boolean>>;
   storeOnClick: () => void;
 }
 
-export function StoreModalController({ setModalFlg, storeOnClick }: Props) {
+export function StoreModalController({
+  setModalFlg,
+  storeOnClick,
+}: StoreModalControllerProps) {
   return (
     <div className="flex justify-end w-full">
       <button

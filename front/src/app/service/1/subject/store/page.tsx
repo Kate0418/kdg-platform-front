@@ -84,9 +84,7 @@ export default function Page() {
         <SubjectFormTable
           subjects={subjects}
           setSubjects={setSubjects}
-          select={{
-            teachers: teachers,
-          }}
+          select={{ teachers }}
           modalFlg={modalFlg}
         />
         <StoreModalController

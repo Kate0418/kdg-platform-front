@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export interface Props {
+export interface TeacherProps {
   keyWord: string;
   pageCount: number;
 }
 
-export interface Response {
+export interface TeacherResponse {
   success: boolean;
   teachers: Array<{
     id: number;
@@ -22,12 +22,12 @@ export interface Response {
 export async function Teacher({
   keyWord,
   pageCount,
-}: Props): Promise<Response> {
+}: TeacherProps): Promise<TeacherResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/teacher`;
   const token = localStorage.getItem("token");
 
   try {
-    const response = await axios.get<Response>(api_url, {
+    const response = await axios.get<TeacherResponse>(api_url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

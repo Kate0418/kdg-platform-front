@@ -1,4 +1,4 @@
-export interface Props {
+export interface StoreFormControllerProps {
   cancelUrl: string;
   addOnClick: () => void;
   deleteOnClick: () => void;
@@ -10,7 +10,7 @@ export function StoreFormController({
   addOnClick,
   deleteOnClick,
   confirmOnClick,
-}: Props) {
+}: StoreFormControllerProps) {
   return (
     <div className="flex justify-between w-full">
       <a className="a" href={cancelUrl}>

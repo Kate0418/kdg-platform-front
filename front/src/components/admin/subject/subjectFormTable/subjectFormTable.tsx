@@ -3,7 +3,7 @@ import { TeacherSelectResponse } from "@/api/TeacherSelect";
 import { Select } from "@/components/layout/Select";
 import { SelectItem } from "@/config";
 
-export interface SubjectFormTable {
+interface SubjectFormTableProps {
   subjects: SubjectStoreProps["subjects"];
   setSubjects: React.Dispatch<
     React.SetStateAction<SubjectStoreProps["subjects"]>
@@ -19,7 +19,7 @@ export function SubjectFormTable({
   setSubjects,
   select,
   modalFlg = false,
-}: SubjectFormTable) {
+}: SubjectFormTableProps) {
   return (
     <table className="w-full mb-5 mt-2">
       <thead>

@@ -1,10 +1,10 @@
 import { SubjectResponse } from "@/api/Subject";
 
-interface StudentListTableProps {
+interface SubjectListTableProps {
   subjects: SubjectResponse["subjects"];
 }
 
-export function SubjectListTable({ subjects }: StudentListTableProps) {
+export function SubjectListTable({ subjects }: SubjectListTableProps) {
   return (
     <table className="w-full">
       <thead>
