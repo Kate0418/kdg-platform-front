@@ -46,7 +46,7 @@ export default function Page() {
     const response = await TeacherStore({ teachers });
     alert(response.message);
     if (response.success) {
-      router.push("/service/1/teacher");
+      router.push("/service/admin/teacher");
     } else {
       setLoading(false);
     }
@@ -68,7 +68,7 @@ export default function Page() {
       </List>
 
       <StoreFormController
-        cancelUrl="/service/1/teacher"
+        cancelUrl="/service/admin/teacher"
         addOnClick={() =>
           setTeachers([...teachers, { name: "", email: "", subjectIds: [] }])
         }

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/layout/Button";
+import { userTypes } from "@/config";
 
 export default function Page() {
   const [email, setEmail] = useState("");
@@ -17,9 +18,12 @@ export default function Page() {
     setLoading(true);
     const response = await Login({ email, password });
     if (response.success) {
-      if (response.token) localStorage.setItem("token", response.token);
-      if (response.token) localStorage.setItem("type", String(response.type));
-      router.push(`/service/${response.type}/top`);
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("type", String(response.type));
+      }
+      if (response.type)
+        router.push(`/service/${userTypes[response.type]}/top`);
     } else {
       setLoading(false);
       alert("メールアドレスもしくはパスワードが間違っています。");

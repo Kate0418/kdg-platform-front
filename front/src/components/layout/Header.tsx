@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { userTypes } from "@/config";
 
 export default function Header() {
   const [menu, setMenu] = useState(false);
   const site_flg = usePathname().startsWith("/site/");
+  const type = Number(localStorage.getItem("type"));
   const pages = [
     [],
     [
@@ -23,7 +25,7 @@ export default function Header() {
     <>
       <header className="bg-text border-base w-screen h-20 p-4 fixed">
         <div className="flex items-center px-2">
-          <a href={`/service/${localStorage.getItem("type")}/top`}>
+          <a href={site_flg ? "site/login" : `/service/${userTypes[type]}/top`}>
             <Image src="/img/logo.svg" alt="logo" width={280} height={45} />
           </a>
           <div className={`flex justify-end w-full ${site_flg && "hidden"}`}>
@@ -67,24 +69,22 @@ export default function Header() {
               />
             </button>
             <div className="flex flex-col gap-4 pt-12">
-              {pages[Number(localStorage.getItem("type"))].map(
-                (page, index) => (
-                  <a
-                    key={index}
-                    href={`/service/${localStorage.getItem("type")}/${page.type}`}
-                  >
-                    <div className="flex text-xl gap-1 pb-1 border-b border-text">
-                      <Image
-                        src={`/img/${page.type}.svg`}
-                        alt={page.type}
-                        width={20}
-                        height={20}
-                      />
-                      {page.name}
-                    </div>
-                  </a>
-                ),
-              )}
+              {pages[type].map((page, index) => (
+                <a
+                  key={index}
+                  href={`/service/${userTypes[type]}/${page.type}`}
+                >
+                  <div className="flex text-xl gap-1 pb-1 border-b border-text">
+                    <Image
+                      src={`/img/${page.type}.svg`}
+                      alt={page.type}
+                      width={20}
+                      height={20}
+                    />
+                    {page.name}
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </div>

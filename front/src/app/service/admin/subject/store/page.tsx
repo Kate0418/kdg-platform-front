@@ -45,7 +45,7 @@ export default function Page() {
     const subjectAdd = await SubjectStore({ subjects });
     alert(subjectAdd.message);
     if (subjectAdd.success) {
-      router.push("/service/1/subject");
+      router.push("/service/admin/subject");
     } else {
       setLoaderFlg(false);
     }
@@ -66,7 +66,7 @@ export default function Page() {
         />
       </List>
       <StoreFormController
-        cancelUrl="/service/1/subject"
+        cancelUrl="/service/admin/subject"
         addOnClick={() =>
           setSubjects([...subjects, { name: "", teacherId: null }])
         }
