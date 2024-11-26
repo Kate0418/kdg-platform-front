@@ -1,10 +1,10 @@
 import { SelectItem } from "@/config";
 import dynamic from "next/dynamic";
-import { Props as SelectProps, StylesConfig, ActionMeta } from "react-select";
+import { Props as ReactSelectProps, StylesConfig } from "react-select";
 const ReactSelect = dynamic(() => import("react-select"), { ssr: false });
 
-export interface Props<IsMulti extends boolean = false>
-  extends Omit<SelectProps, "onChange"> {
+export interface SelectProps<IsMulti extends boolean = false>
+  extends Omit<ReactSelectProps, "onChange"> {
   multi?: IsMulti;
   onChange?: (e: IsMulti extends true ? SelectItem[] : SelectItem) => void;
 }
@@ -14,7 +14,7 @@ const customStyles: StylesConfig = {
     ...provided,
     width: "100%",
   }),
-  control: (provided, state) => ({
+  control: (provided) => ({
     ...provided,
     border: "none", // ボーダーを削除
     boxShadow: "none", // 通常時のボックスシャドウも削除
@@ -44,8 +44,10 @@ const customStyles: StylesConfig = {
   }),
 };
 
-export function Select<IsMulti extends boolean = false>(props: Props<IsMulti>) {
-  const handleChange = (newValue: unknown, actionMeta: ActionMeta<unknown>) => {
+export function Select<IsMulti extends boolean = false>(
+  props: SelectProps<IsMulti>,
+) {
+  const handleChange = (newValue: unknown) => {
     if (props.onChange) {
       if (props.multi) {
         (props.onChange as (e: SelectItem[]) => void)(newValue as SelectItem[]);

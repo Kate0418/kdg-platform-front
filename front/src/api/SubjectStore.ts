@@ -1,25 +1,25 @@
 import axios from "axios";
 
-export interface SubjectProps {
+export interface SubjectStoreProps {
   subjects: Array<{
     name: string;
     teacherId: number | null;
   }>;
 }
 
-export interface SubjectResponse {
+export interface SubjectStoreResponse {
   success: boolean;
   message: string;
 }
 
 export async function SubjectStore({
   subjects,
-}: SubjectProps): Promise<SubjectResponse> {
+}: SubjectStoreProps): Promise<SubjectStoreResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject`;
   const token = localStorage.getItem("token");
 
   try {
-    const response = await axios.post<SubjectResponse>(
+    const response = await axios.post<SubjectStoreResponse>(
       api_url,
       {
         subjects: subjects,
