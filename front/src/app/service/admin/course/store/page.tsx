@@ -123,7 +123,7 @@ export default function Page() {
     const subjectAdd = await CourseStore({ course: storeCourse });
     alert(subjectAdd.message);
     if (subjectAdd.success) {
-      router.push("/service/1/course");
+      router.push("/service/admin/course");
     } else {
       setLoaderFlg(false);
     }
@@ -278,7 +278,7 @@ export default function Page() {
         </DndContext>
       </List>
       <div className="flex justify-between w-full">
-        <a className="a" href="/service/1/course">
+        <a className="a" href="/service/admin/course">
           キャンセル
         </a>
 

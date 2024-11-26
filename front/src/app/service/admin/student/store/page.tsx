@@ -51,7 +51,7 @@ export default function Page() {
     const studentStore = await StudentStore({ students });
     alert(studentStore.message);
     if (studentStore.success) {
-      router.push("/service/1/student");
+      router.push("/service/admin/student");
     } else {
       setLoaderFlg(false);
     }
@@ -178,7 +178,7 @@ export default function Page() {
         ))}
       </List>
       <div className="flex justify-between w-full">
-        <a className="a" href="/service/1/student">
+        <a className="a" href="/service/admin/student">
           キャンセル
         </a>
 

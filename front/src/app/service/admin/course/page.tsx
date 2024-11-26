@@ -55,7 +55,7 @@ export default function Page() {
               検索
             </button>
           </form>
-          <a className="a !p-1 lg:!p-2" href="/service/1/course/store">
+          <a className="a !p-1 lg:!p-2" href="/service/admin/course/store">
             新規作成
           </a>
         </div>
