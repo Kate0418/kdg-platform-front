@@ -9,7 +9,7 @@ import { SubjectStore, SubjectStoreProps } from "@/api/SubjectStore";
 import { Title } from "@/components/layout/Title";
 import { TeacherSelect, TeacherSelectResponse } from "@/api/TeacherSelect";
 import { Modal } from "@/components/layout/Modal";
-import { SubjectFormTable } from "@/components/admin/subject/subjectFormTable/subjectFormTable";
+import { SubjectFormTable } from "@/components/service/admin/subject/subjectFormTable/subjectFormTable";
 import { StoreFormController } from "@/components/layout/StoreFormController/StoreFormController";
 import { StoreModalController } from "@/components/layout/StoreModalController/StoreModalController";
 

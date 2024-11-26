@@ -6,7 +6,7 @@ import { Title } from "@/components/layout/Title";
 import { List } from "@/components/layout/List";
 import { Teacher, TeacherResponse } from "@/api/Teacher";
 import { Pagination } from "@/components/layout/Pagination";
-import { TeacherListTable } from "@/components/admin/teacher/teacherListTable/teacherListTable";
+import { TeacherListTable } from "@/components/service/admin/teacher/teacherListTable/teacherListTable";
 import { WithZoom } from "@/config";
 
 type TeachersWithZoom = WithZoom<TeacherResponse["teachers"][number]>;

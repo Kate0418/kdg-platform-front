@@ -1,7 +1,7 @@
 "use client";
 
 import { Course, CourseResponse } from "@/api/Course";
-import { CourseListTable } from "@/components/admin/course/courseListTable/courseListTable";
+import { CourseListTable } from "@/components/service/admin/course/courseListTable/courseListTable";
 import { List } from "@/components/layout/List";
 import { Pagination } from "@/components/layout/Pagination";
 import { Title } from "@/components/layout/Title";

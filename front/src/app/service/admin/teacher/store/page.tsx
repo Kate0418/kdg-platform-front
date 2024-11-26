@@ -10,7 +10,7 @@ import { TeacherStore, TeacherStoreProps } from "@/api/TeacherStore";
 import { Title } from "@/components/layout/Title";
 import { List } from "@/components/layout/List";
 import { Modal } from "@/components/layout/Modal";
-import { TeacherFormTable } from "@/components/admin/teacher/teacherFormTable/teacherFormTable";
+import { TeacherFormTable } from "@/components/service/admin/teacher/teacherFormTable/teacherFormTable";
 import { StoreFormController } from "@/components/layout/StoreFormController/StoreFormController";
 import { StoreModalController } from "@/components/layout/StoreModalController/StoreModalController";
 

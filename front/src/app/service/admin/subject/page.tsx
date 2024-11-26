@@ -1,7 +1,7 @@
 "use client";
 
 import { Subject, SubjectResponse } from "@/api/Subject";
-import { SubjectListTable } from "@/components/admin/subject/subjectListTable/subjectListTable";
+import { SubjectListTable } from "@/components/service/admin/subject/subjectListTable/subjectListTable";
 import { List } from "@/components/layout/List";
 import { Pagination } from "@/components/layout/Pagination";
 import { Title } from "@/components/layout/Title";
