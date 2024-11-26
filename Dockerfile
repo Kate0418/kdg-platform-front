@@ -1,6 +1,8 @@
 FROM node:22.5-slim
 WORKDIR /front
-COPY ./front ./
+
+COPY . .
+WORKDIR /front/next-app
 RUN npm install
-EXPOSE 3000
 CMD ["npm", "run", "dev"]
+EXPOSE 3000
