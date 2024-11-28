@@ -34,6 +34,7 @@ const customStyles: StylesConfig = {
     position: "absolute",
     top: "100%",
     left: 0,
+    width: "150%",
   }),
   dropdownIndicator: (provided) => ({
     ...provided,

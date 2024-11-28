@@ -89,7 +89,7 @@ export default function Page() {
         />
         <StoreModalController
           setModalFlg={setModalFlg}
-          storeOnClick={() => storeApi}
+          storeOnClick={() => storeApi()}
         />
       </Modal>
     </>

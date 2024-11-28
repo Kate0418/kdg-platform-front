@@ -1,9 +1,15 @@
 import React from "react";
 import { useDraggable } from "@dnd-kit/core";
 
-export function Draggable(props) {
+export interface DraggableProps {
+  id: string;
+  lessonFlg: boolean;
+  children: React.ReactNode;
+}
+
+export function Draggable({ id, lessonFlg, children }: DraggableProps) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: props.id,
+    id: id,
   });
   const style = {
     transform: transform
@@ -19,7 +25,7 @@ export function Draggable(props) {
       style={style}
       {...attributes}
     >
-      {props.lessonFlg ? (
+      {lessonFlg ? (
         <div {...listeners}>
           <div className="absolute top-0 left-0 w-full h-2 bg-text rounded-t-lg z-10" />
           <div className="absolute top-0 left-0 w-full h-full bg-[var(--accent-color-60)] rounded-t-xl rounded-b-lg" />
@@ -27,7 +33,7 @@ export function Draggable(props) {
       ) : (
         <div className="absolute top-0 left-0 w-full h-full bg-[var(--text-color-60)] rounded-lg" />
       )}
-      {props.children}
+      {children}
     </div>
   );
 }

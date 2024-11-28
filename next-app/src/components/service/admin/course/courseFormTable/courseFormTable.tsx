@@ -8,7 +8,6 @@ import { ScheduleColumn } from "../scheduleColumn/scheduleColumn";
 import { Droppable } from "../droppable/droppable";
 import { Draggable } from "../draggable/draggable";
 import Image from "next/image";
-import { mainModule } from "process";
 
 export interface CourseFormTableProps {
   course: CourseStoreProps["course"];
@@ -152,7 +151,7 @@ export function CourseFormTable({
                 >
                   <div className="w-full px-1">
                     {modalFlg ? (
-                      <div>
+                      <div className="flex justify-center overflow-y-auto max-h-[80px]">
                         {
                           select.subjects.find(
                             (subject) =>

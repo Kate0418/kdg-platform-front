@@ -10,7 +10,9 @@ export function SubjectListTable({ subjects }: SubjectListTableProps) {
       <thead>
         <tr className="border border-text bg-text text-base">
           <td className="border-r border-base p-1">科目名</td>
-          <td className="border-r border-base p-1">講師名</td>
+          <td className="border-r border-base p-1 w-[100px] lg:w-[200px]">
+            講師名
+          </td>
           <td className="w-[50px] lg:w-[100px]"></td>
         </tr>
       </thead>
