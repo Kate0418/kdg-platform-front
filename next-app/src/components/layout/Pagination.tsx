@@ -5,7 +5,7 @@ export interface Props {
 }
 
 export function Pagination({ total, pageCount, setPageCount }: Props) {
-  const action = "border rounded-full bg-text text-base";
+  const action = "border rounded-full bg-text !text-base";
 
   let pageCounts: (number | null)[] = Array(5).fill(null);
   let setPageCounts: (() => false | void)[] = Array(5).fill(() => {});
@@ -58,7 +58,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
       </button>
       <div className="flex px-2">
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-base
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
               ${actionFlg1 && action}`}
           onClick={setPageCounts[0]}
         >
@@ -66,7 +66,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
 
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-base
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
                     ${actionFlg2 && action}`}
           onClick={setPageCounts[1]}
         >
@@ -74,7 +74,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
 
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-base
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
                     ${actionFlg3 && action}`}
           onClick={setPageCounts[2]}
         >
@@ -82,7 +82,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
 
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-base
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
                     ${actionFlg4 && action}`}
           onClick={setPageCounts[3]}
         >
@@ -90,7 +90,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
 
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-base
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
                     ${actionFlg5 && action}`}
           onClick={setPageCounts[4]}
         >

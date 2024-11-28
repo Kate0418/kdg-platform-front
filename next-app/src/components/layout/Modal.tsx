@@ -15,7 +15,7 @@ export function Modal({ className, modalFlg, setModalFlg, children }: Props) {
         onClick={() => setModalFlg(false)}
       ></div>
       <div
-        className={`relative z-50 bg-white p-4 lg:p-8 rounded-lg w-full h-[600px] overflow-auto mx-8 lg:mx-20 flex flex-col items-center ${className}`}
+        className={`relative z-50 bg-white p-4 lg:p-8 rounded-lg w-full h-[600px] overflow-auto mx-8 lg:mx-20 ${className}`}
       >
         {children}
       </div>

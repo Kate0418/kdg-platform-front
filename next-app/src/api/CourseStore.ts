@@ -2,7 +2,7 @@ import axios from "axios";
 
 export interface CourseStoreProps {
   course: {
-    name: string | null;
+    name: string;
     gradeId: number | null;
     times: Array<{
       period: number;

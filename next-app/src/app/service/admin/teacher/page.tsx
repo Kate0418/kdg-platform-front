@@ -51,7 +51,7 @@ export default function Page() {
   return (
     <>
       <Title title="講師情報管理" icon="teacher" />
-      <List title="講師一覧" h={520} loaderFlg={loaderFlg}>
+      <List title="講師一覧" h={550} loaderFlg={loaderFlg}>
         <div className="flex justify-end items-center">
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
