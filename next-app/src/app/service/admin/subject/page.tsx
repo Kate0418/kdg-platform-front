@@ -9,10 +9,15 @@ import { useState, useEffect, useCallback } from "react";
 
 export default function Page() {
   const [subjects, setSubjects] = useState<SubjectResponse["subjects"]>([]);
+  const [subjectIds, setSubjectIds] = useState<SubjectResponse["subjectIds"]>(
+    [],
+  );
 
   const [keyWord, setKeyWord] = useState("");
   const [pageCount, setPageCount] = useState(1);
   const [total, setTotal] = useState(0);
+
+  const [checkIds, setCheckIds] = useState<number[]>([]);
 
   const [loaderFlg, setLoaderFlg] = useState(false);
 
@@ -21,6 +26,7 @@ export default function Page() {
     const response = await Subject({ keyWord: keyWord, pageCount: pageCount });
     if (response.success) {
       setSubjects(response.subjects);
+      setSubjectIds(response.subjectIds);
       setTotal(response.total);
     }
     setLoaderFlg(false);
@@ -35,6 +41,7 @@ export default function Page() {
     const formData = new FormData(e.currentTarget);
     const searchWord = formData.get("keyWord") as string;
     setKeyWord(searchWord);
+    setCheckIds([]);
   };
 
   return (
@@ -57,7 +64,12 @@ export default function Page() {
             新規作成
           </a>
         </div>
-        <SubjectListTable subjects={subjects} />
+        <SubjectListTable
+          subjects={subjects}
+          checkIds={checkIds}
+          setCheckIds={setCheckIds}
+          subjectIds={subjectIds}
+        />
       </List>
       <Pagination
         total={total}

@@ -12,6 +12,7 @@ export interface SubjectResponse {
     name: string;
     teacher_name: string;
   }>;
+  subjectIds: number[];
   total: number;
 }
 
@@ -38,6 +39,7 @@ export async function Subject({
     return {
       success: false,
       subjects: [],
+      subjectIds: [],
       total: 0,
     };
   }
