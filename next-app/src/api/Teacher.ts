@@ -16,6 +16,7 @@ export interface TeacherResponse {
       label: string;
     }>;
   }>;
+  teacherIds: number[];
   total: number;
 }
 
@@ -42,6 +43,7 @@ export async function Teacher({
     return {
       success: false,
       teachers: [],
+      teacherIds: [],
       total: 0,
     };
   }

@@ -15,8 +15,12 @@ export default function Page() {
   const [keyWord, setKeyWord] = useState("");
   const [pageCount, setPageCount] = useState(1);
   const [teachers, setTeachers] = useState<TeachersWithZoom[]>([]);
+  const [teacherIds, setTeacherIds] = useState<TeacherResponse["teacherIds"]>(
+    [],
+  );
   const [loaderFlg, setLoaderFlg] = useState(false);
   const [total, setTotal] = useState(0);
+  const [checkIds, setCheckIds] = useState<number[]>([]);
 
   const indexApi = useCallback(async () => {
     setLoaderFlg(true);
@@ -27,6 +31,7 @@ export default function Page() {
         zoom: false,
       })),
     );
+    setTeacherIds(response.teacherIds);
     setTotal(response.total);
     setLoaderFlg(false);
   }, [keyWord, pageCount]);
@@ -40,6 +45,7 @@ export default function Page() {
     const formData = new FormData(e.currentTarget);
     const searchWord = formData.get("keyWord") as string;
     setKeyWord(searchWord);
+    setCheckIds([]);
   };
 
   const setZoom = (id: TeachersWithZoom["id"]) => {
@@ -68,7 +74,13 @@ export default function Page() {
             新規作成
           </a>
         </div>
-        <TeacherListTable teachers={teachers} setZoom={setZoom} />
+        <TeacherListTable
+          teachers={teachers}
+          setZoom={setZoom}
+          checkIds={checkIds}
+          setCheckIds={setCheckIds}
+          teacherIds={teacherIds}
+        />
       </List>
       <Pagination
         total={total}
