@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
 import { Loader } from "@/components/layout/Loader";
 import { CourseFormTable } from "@/components/service/admin/course/courseFormTable/courseFormTable";
-import { StoreModalController } from "@/components/layout/StoreModalController/StoreModalController";
+import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
 
 export default function Page() {
   const period = 12;

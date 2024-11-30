@@ -11,8 +11,8 @@ import { Title } from "@/components/layout/Title";
 import { List } from "@/components/layout/List";
 import { Modal } from "@/components/layout/Modal";
 import { TeacherFormTable } from "@/components/service/admin/teacher/teacherFormTable/teacherFormTable";
-import { StoreFormController } from "@/components/layout/StoreFormController/StoreFormController";
-import { StoreModalController } from "@/components/layout/StoreModalController/StoreModalController";
+import { StoreFormController } from "@/components/layout/storeFormController/storeFormController";
+import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
 
 export default function Page() {
   const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(

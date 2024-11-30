@@ -10,8 +10,8 @@ import { Title } from "@/components/layout/Title";
 import { TeacherSelect, TeacherSelectResponse } from "@/api/TeacherSelect";
 import { Modal } from "@/components/layout/Modal";
 import { SubjectFormTable } from "@/components/service/admin/subject/subjectFormTable/subjectFormTable";
-import { StoreFormController } from "@/components/layout/StoreFormController/StoreFormController";
-import { StoreModalController } from "@/components/layout/StoreModalController/StoreModalController";
+import { StoreFormController } from "@/components/layout/storeFormController/storeFormController";
+import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
 
 export default function Page() {
   const [teachers, setTeachers] = useState<TeacherSelectResponse["teachers"]>(
