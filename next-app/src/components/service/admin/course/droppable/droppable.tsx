@@ -1,5 +1,5 @@
 import React from "react";
-import { useDroppable } from "@dnd-kit/core";
+import { useDroppable } from "@dnd-kit/core"; //ライブラリ
 
 export interface DroppableProps {
   id: string;

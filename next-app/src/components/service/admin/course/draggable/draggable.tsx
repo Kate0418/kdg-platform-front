@@ -1,5 +1,5 @@
 import React from "react";
-import { useDraggable } from "@dnd-kit/core";
+import { useDraggable } from "@dnd-kit/core"; //ライブラリ
 
 export interface DraggableProps {
   id: string;
@@ -15,7 +15,7 @@ export function Draggable({ id, lessonFlg, children }: DraggableProps) {
     transform: transform
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : undefined,
-    // zIndex: transform ? 99 : undefined, // transformがある場合はzIndexを99に設定
+    zIndex: transform ? 99 : undefined, // transformがある場合はzIndexを99に設定
   };
 
   return (

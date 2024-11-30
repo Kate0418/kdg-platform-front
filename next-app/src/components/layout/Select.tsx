@@ -1,6 +1,6 @@
 import { SelectItem } from "@/config";
 import dynamic from "next/dynamic";
-import { Props as ReactSelectProps, StylesConfig } from "react-select";
+import { Props as ReactSelectProps, StylesConfig } from "react-select"; //ライブラリ
 const ReactSelect = dynamic(() => import("react-select"), { ssr: false });
 
 export interface SelectProps<IsMulti extends boolean = false>

@@ -6,8 +6,8 @@ export interface CourseStoreProps {
     gradeId: number | null;
     times: Array<{
       period: number;
-      startTime: string;
-      endTime: string;
+      startTime: Date | null;
+      endTime: Date | null;
     }>;
     lessons: Array<{
       dayOfWeek: number;

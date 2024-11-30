@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
 import { Loader } from "@/components/layout/Loader";
 import { CourseFormTable } from "@/components/service/admin/course/courseFormTable/courseFormTable";
+import { StoreModalController } from "@/components/layout/StoreModalController/StoreModalController";
 
 export default function Page() {
   const period = 12;
@@ -23,8 +24,8 @@ export default function Page() {
     gradeId: null,
     times: Array.from({ length: period }, (_, index) => ({
       period: index,
-      startTime: "",
-      endTime: "",
+      startTime: null,
+      endTime: null,
     })),
     lessons: [],
   });
@@ -119,26 +120,10 @@ export default function Page() {
           select={{ grades, subjects }}
           modalFlg={modalFlg}
         />
-        <div className="flex justify-end w-full">
-          <button
-            className="button"
-            type="button"
-            onClick={() => {
-              setModalFlg(false);
-            }}
-          >
-            戻る
-          </button>
-          <button
-            className="button"
-            type="button"
-            onClick={() => {
-              storeApi();
-            }}
-          >
-            登録
-          </button>
-        </div>
+        <StoreModalController
+          setModalFlg={setModalFlg}
+          storeOnClick={() => storeApi()}
+        />
       </Modal>
     </>
   );

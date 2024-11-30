@@ -3,11 +3,12 @@ import { GradeSelectResponse } from "@/api/GradeSelect";
 import { SubjectSelectResponse } from "@/api/SubjectSelect";
 import { Select } from "@/components/layout/Select";
 import { daysOfWeek, SelectItem } from "@/config";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, DragEndEvent } from "@dnd-kit/core"; //ライブラリ
 import { ScheduleColumn } from "../scheduleColumn/scheduleColumn";
 import { Droppable } from "../droppable/droppable";
 import { Draggable } from "../draggable/draggable";
 import Image from "next/image";
+import { TimePicker } from "../timePicker/timePicker";
 
 export interface CourseFormTableProps {
   course: CourseStoreProps["course"];
@@ -110,34 +111,51 @@ export function CourseFormTable({
         />
       </div>
       <DndContext onDragEnd={onDragEnd}>
-        <div className="grid lg:grid-cols-[1fr_2fr_2fr_2fr_2fr_2fr_2fr_2fr] gap-4">
+        <div className="grid lg:grid-cols-[2fr_3fr_3fr_3fr_3fr_3fr_3fr_3fr] gap-2">
           <ScheduleColumn head="時間">
             {Array.from({ length: period }).map((_, j) => (
               <div
                 key={j}
                 className="flex flex-col justify-center items-center border-b border-text h-20"
               >
-                <div className="w-full px-1">
-                  <input
-                    type="time"
-                    value={course.times[j].startTime}
-                    onChange={(e) => {
-                      const newCourse = { ...course };
-                      newCourse.times[j].startTime = e.target.value;
-                      setCourse(newCourse);
-                    }}
-                    readOnly={modalFlg}
-                  />
-                  <input
-                    type="time"
-                    value={course.times[j].endTime}
-                    onChange={(e) => {
-                      const newCourse = { ...course };
-                      newCourse.times[j].endTime = e.target.value;
-                      setCourse(newCourse);
-                    }}
-                    readOnly={modalFlg}
-                  />
+                <div className="w-full px-1 flex flex-col gap-1">
+                  <div className="flex gap-1">
+                    <Image
+                      src="/img/time.svg"
+                      alt="time"
+                      width={20}
+                      height={20}
+                    />
+                    <TimePicker
+                      value={course.times[j].startTime}
+                      onChange={(time) => {
+                        if (time) {
+                          const newCourse = { ...course };
+                          newCourse.times[j].startTime = time;
+                          setCourse(newCourse);
+                          console.log(newCourse);
+                        }
+                      }}
+                      readOnly={modalFlg}
+                    />
+                  </div>
+                  <div className="flex gap-1">
+                    <Image
+                      src="/img/time.svg"
+                      alt="time"
+                      width={20}
+                      height={20}
+                    />
+                    <TimePicker
+                      value={course.times[j].endTime}
+                      onChange={(time) => {
+                        const newCourse = { ...course };
+                        newCourse.times[j].endTime = time;
+                        setCourse(newCourse);
+                      }}
+                      readOnly={modalFlg}
+                    />
+                  </div>
                 </div>
               </div>
             ))}
