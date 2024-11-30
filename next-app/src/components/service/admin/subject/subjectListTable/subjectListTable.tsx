@@ -17,9 +17,9 @@ export function SubjectListTable({
   const [allCheckFlg, setAllCheckFlg] = useState(false);
 
   const getAllCheckFlg = useCallback(() => {
-    const sortSubjectsIds = [...subjectIds].sort((a, b) => a - b);
+    const sortSubjectIds = [...subjectIds].sort((a, b) => a - b);
     const sortCheckIds = [...checkIds].sort((a, b) => a - b);
-    return JSON.stringify(sortSubjectsIds) !== JSON.stringify(sortCheckIds);
+    return JSON.stringify(sortSubjectIds) !== JSON.stringify(sortCheckIds);
   }, [subjectIds, checkIds]);
 
   useEffect(() => {

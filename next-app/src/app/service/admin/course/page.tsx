@@ -9,10 +9,12 @@ import { useEffect, useState, useCallback } from "react";
 
 export default function Page() {
   const [courses, setCourses] = useState<CourseResponse["courses"]>([]);
+  const [courseIds, setCourseIds] = useState<CourseResponse["courseIds"]>([]);
 
   const [keyWord, setKeyWord] = useState("");
   const [pageCount, setPageCount] = useState(1);
   const [total, setTotal] = useState(0);
+  const [checkIds, setCheckIds] = useState<number[]>([]);
 
   const [loaderFlg, setLoaderFlg] = useState(false);
 
@@ -24,6 +26,7 @@ export default function Page() {
     });
     if (response.success) {
       setCourses(response.courses);
+      setCourseIds(response.courseIds);
       setTotal(response.total);
     }
     setLoaderFlg(false);
@@ -38,6 +41,7 @@ export default function Page() {
     const formData = new FormData(e.currentTarget);
     const searchWord = formData.get("keyWord") as string;
     setKeyWord(searchWord);
+    setCheckIds([]);
   };
 
   return (
@@ -61,7 +65,12 @@ export default function Page() {
           </a>
         </div>
 
-        <CourseListTable courses={courses} />
+        <CourseListTable
+          courses={courses}
+          checkIds={checkIds}
+          setCheckIds={setCheckIds}
+          courseIds={courseIds}
+        />
       </List>
       <Pagination
         total={total}

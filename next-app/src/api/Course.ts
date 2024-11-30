@@ -12,6 +12,7 @@ export interface CourseResponse {
     name: string;
     gradeName: string;
   }>;
+  courseIds: number[];
   total: number;
 }
 
@@ -38,6 +39,7 @@ export async function Course({
     return {
       success: false,
       courses: [],
+      courseIds: [],
       total: 0,
     };
   }

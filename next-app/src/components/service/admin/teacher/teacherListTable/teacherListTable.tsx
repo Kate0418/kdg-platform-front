@@ -23,9 +23,9 @@ export function TeacherListTable({
 }: TeacherListTableProps) {
   const [allCheckFlg, setAllCheckFlg] = useState(false);
   const getAllCheckFlg = useCallback(() => {
-    const sortSubjectsIds = [...teacherIds].sort((a, b) => a - b);
+    const sortTeacherIds = [...teacherIds].sort((a, b) => a - b);
     const sortCheckIds = [...checkIds].sort((a, b) => a - b);
-    return JSON.stringify(sortSubjectsIds) !== JSON.stringify(sortCheckIds);
+    return JSON.stringify(sortTeacherIds) !== JSON.stringify(sortCheckIds);
   }, [teacherIds, checkIds]);
 
   useEffect(() => {
