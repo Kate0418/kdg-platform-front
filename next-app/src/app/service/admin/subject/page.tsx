@@ -6,6 +6,13 @@ import { List } from "@/components/layout/List";
 import { Pagination } from "@/components/layout/Pagination";
 import { Title } from "@/components/layout/Title";
 import { useState, useEffect, useCallback } from "react";
+import { Modal } from "@/components/layout/Modal";
+import { SubjectUpdateModalTable } from "@/components/service/admin/subject/subjectUpdateModalTable/subjectUpdateModalTable";
+import { UpdateController } from "@/components/layout/updateController/updateController";
+import { Token } from "@/api/Token";
+import { useRouter } from "next/navigation";
+import { SubjectUpdate, SubjectUpdateProps } from "@/api/SubjectUpdate";
+import { Loader } from "@/components/layout/Loader";
 
 export default function Page() {
   const [subjects, setSubjects] = useState<SubjectResponse["subjects"]>([]);
@@ -20,6 +27,13 @@ export default function Page() {
   const [checkIds, setCheckIds] = useState<number[]>([]);
 
   const [loaderFlg, setLoaderFlg] = useState(false);
+  const [updateModalFlg, setUpdateModalFlg] = useState(false);
+  const [updateSubject, setUpdateSubject] = useState<
+    SubjectUpdateProps["subjects"][number]
+  >({ id: 0, name: "", teacherId: null });
+  const [updateFlg, setUpdateFlg] = useState(false);
+
+  const router = useRouter();
 
   const indexApi = useCallback(async () => {
     setLoaderFlg(true);
@@ -32,6 +46,23 @@ export default function Page() {
     setLoaderFlg(false);
   }, [keyWord, pageCount]);
 
+  const updateApi = async () => {
+    setUpdateFlg(true);
+    const token = await Token();
+    if (!token.success) {
+      router.push("/site/login");
+      setUpdateFlg(false);
+    }
+
+    const response = await SubjectUpdate({ subjects: [updateSubject] });
+    alert(response.message);
+    if (response.success) {
+      router.push("/service/admin/subject");
+    }
+    setUpdateFlg(false);
+    indexApi();
+  };
+
   useEffect(() => {
     indexApi();
   }, [indexApi]);
@@ -43,6 +74,8 @@ export default function Page() {
     setKeyWord(searchWord);
     setCheckIds([]);
   };
+
+  if (updateFlg) return <Loader />;
 
   return (
     <>
@@ -69,6 +102,8 @@ export default function Page() {
           checkIds={checkIds}
           setCheckIds={setCheckIds}
           subjectIds={subjectIds}
+          setUpdateSubject={setUpdateSubject}
+          setUpdateModalFlg={setUpdateModalFlg}
         />
       </List>
       <Pagination
@@ -76,6 +111,26 @@ export default function Page() {
         pageCount={pageCount}
         setPageCount={setPageCount}
       />
+
+      <Modal
+        className="!w-96 !h-64"
+        modalFlg={updateModalFlg}
+        setModalFlg={setUpdateModalFlg}
+      >
+        <div className="flex flex-col gap-4">
+          <SubjectUpdateModalTable
+            updateSubject={updateSubject}
+            setUpdateSubject={setUpdateSubject}
+          />
+          <UpdateController
+            setModalFlg={setUpdateModalFlg}
+            updateOnClick={() => {
+              console.log(updateSubject);
+              updateApi();
+            }}
+          />
+        </div>
+      </Modal>
     </>
   );
 }

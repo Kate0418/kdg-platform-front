@@ -1,4 +1,5 @@
 import { SubjectResponse } from "@/api/Subject";
+import { SubjectUpdateProps } from "@/api/SubjectUpdate";
 import { useEffect, useState, useCallback } from "react";
 
 interface SubjectListTableProps {
@@ -6,6 +7,10 @@ interface SubjectListTableProps {
   subjectIds: SubjectResponse["subjectIds"];
   checkIds: number[];
   setCheckIds: React.Dispatch<React.SetStateAction<number[]>>;
+  setUpdateSubject: React.Dispatch<
+    React.SetStateAction<SubjectUpdateProps["subjects"][number]>
+  >;
+  setUpdateModalFlg: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function SubjectListTable({
@@ -13,6 +18,8 @@ export function SubjectListTable({
   subjectIds,
   checkIds,
   setCheckIds,
+  setUpdateSubject,
+  setUpdateModalFlg,
 }: SubjectListTableProps) {
   const [allCheckFlg, setAllCheckFlg] = useState(false);
 
@@ -72,9 +79,23 @@ export function SubjectListTable({
                   />
                 </div>
               </td>
-              <td className="border border-text p-2">{subject.name}</td>
               <td className="border border-text p-2">
-                {subject.teacher_name ?? ""}
+                <button
+                  className="text-text-0.6 hover:text-text underline"
+                  onClick={() => {
+                    setUpdateSubject({
+                      id: subject.id,
+                      name: subject.name,
+                      teacherId: subject.teacher?.id ?? null,
+                    });
+                    setUpdateModalFlg(true);
+                  }}
+                >
+                  {subject.name}
+                </button>
+              </td>
+              <td className="border border-text p-2">
+                {subject.teacher ? subject.teacher.name : ""}
               </td>
             </tr>
           ))}

@@ -10,7 +10,10 @@ export interface SubjectResponse {
   subjects: Array<{
     id: number;
     name: string;
-    teacher_name: string;
+    teacher: {
+      id: number;
+      name: string;
+    } | null;
   }>;
   subjectIds: number[];
   total: number;
