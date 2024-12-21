@@ -15,6 +15,8 @@ import { UpdateController } from "@/components/layout/updateController/updateCon
 import { Token } from "@/api/Token";
 import { useRouter } from "next/navigation";
 import { Loader } from "@/components/layout/Loader";
+import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
+import { TeacherDestroy } from "@/api/TeacherDestroy";
 
 type TeachersWithZoom = WithZoom<TeacherResponse["teachers"][number]>;
 
@@ -71,6 +73,21 @@ export default function Page() {
     setUpdateFlg(false);
     indexApi();
   };
+
+  const destroyApi = async() => {
+    setUpdateFlg(true);
+    const token = await Token();
+    if (!token.success) {
+      router.push("/site/login");
+      setUpdateFlg(false);
+    }
+
+    const response = await TeacherDestroy({ teacherIds: checkIds});
+    alert(response.message);
+    setCheckIds([]);
+    setUpdateFlg(false);
+    indexApi();
+  }
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -142,6 +159,12 @@ export default function Page() {
           />
         </div>
       </Modal>
+
+      <EditToolbar
+        isShow={checkIds.length !== 0}
+        onClickEdit={() => console.log()}
+        onClickDelete={() => destroyApi()}
+      />
     </>
   );
 }

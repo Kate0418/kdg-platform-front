@@ -6,6 +6,11 @@ import { List } from "@/components/layout/List";
 import { Pagination } from "@/components/layout/Pagination";
 import { Title } from "@/components/layout/Title";
 import { useEffect, useState, useCallback } from "react";
+import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
+import { Loader } from "@/components/layout/Loader";
+import { Token } from "@/api/Token";
+import { useRouter } from "next/navigation";
+import { CourseDestroy } from "@/api/CourseDestroy";
 
 export default function Page() {
   const [courses, setCourses] = useState<CourseResponse["courses"]>([]);
@@ -17,6 +22,8 @@ export default function Page() {
   const [checkIds, setCheckIds] = useState<number[]>([]);
 
   const [loaderFlg, setLoaderFlg] = useState(false);
+  const [updateFlg, setUpdateFlg] = useState(false);
+  const router = useRouter();
 
   const indexApi = useCallback(async () => {
     setLoaderFlg(true);
@@ -36,6 +43,21 @@ export default function Page() {
     indexApi();
   }, [indexApi]);
 
+  const destroyApi = async() => {
+    setUpdateFlg(true);
+    const token = await Token();
+    if (!token.success) {
+      router.push("/site/login");
+      setUpdateFlg(false);
+    }
+
+    const response = await CourseDestroy({ courseIds: checkIds});
+    alert(response.message);
+    setCheckIds([]);
+    setUpdateFlg(false);
+    indexApi();
+  }
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -43,6 +65,8 @@ export default function Page() {
     setKeyWord(searchWord);
     setCheckIds([]);
   };
+
+  if (updateFlg) return <Loader />;
 
   return (
     <>
@@ -76,6 +100,13 @@ export default function Page() {
         total={total}
         pageCount={pageCount}
         setPageCount={setPageCount}
+      />
+
+      <EditToolbar
+        isShow={checkIds.length !== 0}
+        isHiddenEdit={true}
+        onClickEdit={() => console.log()}
+        onClickDelete={() => destroyApi()}
       />
     </>
   );

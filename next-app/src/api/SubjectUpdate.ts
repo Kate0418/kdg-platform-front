@@ -33,7 +33,7 @@ export async function SubjectUpdate({
     console.error(e);
     return {
       success: false,
-      message: "保存に失敗しました",
+      message: "更新に失敗しました",
     };
   }
 }

@@ -13,11 +13,13 @@ import { Token } from "@/api/Token";
 import { useRouter } from "next/navigation";
 import { SubjectUpdate, SubjectUpdateProps } from "@/api/SubjectUpdate";
 import { Loader } from "@/components/layout/Loader";
+import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
+import { SubjectDestroy } from "@/api/SubjectDestroy";
 
 export default function Page() {
   const [subjects, setSubjects] = useState<SubjectResponse["subjects"]>([]);
   const [subjectIds, setSubjectIds] = useState<SubjectResponse["subjectIds"]>(
-    [],
+    []
   );
 
   const [keyWord, setKeyWord] = useState("");
@@ -56,12 +58,24 @@ export default function Page() {
 
     const response = await SubjectUpdate({ subjects: [updateSubject] });
     alert(response.message);
-    if (response.success) {
-      router.push("/service/admin/subject");
-    }
     setUpdateFlg(false);
     indexApi();
   };
+
+  const destroyApi = async() => {
+    setUpdateFlg(true);
+    const token = await Token();
+    if (!token.success) {
+      router.push("/site/login");
+      setUpdateFlg(false);
+    }
+
+    const response = await SubjectDestroy({ subjectIds: checkIds});
+    alert(response.message);
+    setCheckIds([]);
+    setUpdateFlg(false);
+    indexApi();
+  }
 
   useEffect(() => {
     indexApi();
@@ -131,6 +145,12 @@ export default function Page() {
           />
         </div>
       </Modal>
+
+      <EditToolbar
+        isShow={checkIds.length !== 0}
+        onClickEdit={() => console.log()}
+        onClickDelete={() => destroyApi()}
+      />
     </>
   );
 }
