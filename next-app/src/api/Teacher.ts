@@ -11,9 +11,9 @@ export interface TeacherResponse {
     id: number;
     name: string;
     email: string;
-    subjectNames: Array<{
-      value: number;
-      label: string;
+    subjects: Array<{
+      id: number;
+      name: string;
     }>;
   }>;
   teacherIds: number[];

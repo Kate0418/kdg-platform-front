@@ -1,6 +1,6 @@
 export interface SelectItem {
-  value: number | null;
-  label: string | null;
+  value: number;
+  label: string;
 }
 
 export const daysOfWeek = [

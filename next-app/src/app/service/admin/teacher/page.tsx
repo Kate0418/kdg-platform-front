@@ -8,6 +8,13 @@ import { Teacher, TeacherResponse } from "@/api/Teacher";
 import { Pagination } from "@/components/layout/Pagination";
 import { TeacherListTable } from "@/components/service/admin/teacher/teacherListTable/teacherListTable";
 import { WithZoom } from "@/config";
+import { TeacherUpdate, TeacherUpdateProps } from "@/api/TeacherUpdate";
+import { Modal } from "@/components/layout/Modal";
+import { TeacherUpdateModalTable } from "@/components/service/admin/teacher/teacherUpdateModalTable/teacherUpdateModalTable";
+import { UpdateController } from "@/components/layout/updateController/updateController";
+import { Token } from "@/api/Token";
+import { useRouter } from "next/navigation";
+import { Loader } from "@/components/layout/Loader";
 
 type TeachersWithZoom = WithZoom<TeacherResponse["teachers"][number]>;
 
@@ -19,8 +26,16 @@ export default function Page() {
     [],
   );
   const [loaderFlg, setLoaderFlg] = useState(false);
+  const [updateModalFlg, setUpdateModalFlg] = useState(false);
+  const [updateTeacher, setUpdateTeacher] = useState<
+    TeacherUpdateProps["teachers"][number]
+  >({ id: 0, name: "", email: "",subjectIds: null});
+  const [updateFlg, setUpdateFlg] = useState(false);
+
   const [total, setTotal] = useState(0);
   const [checkIds, setCheckIds] = useState<number[]>([]);
+
+  const router = useRouter();
 
   const indexApi = useCallback(async () => {
     setLoaderFlg(true);
@@ -40,6 +55,23 @@ export default function Page() {
     indexApi();
   }, [indexApi]);
 
+  const updateApi = async () => {
+    setUpdateFlg(true);
+    const token = await Token();
+    if (!token.success) {
+      router.push("/site/login");
+      setUpdateFlg(false);
+    }
+
+    const response = await TeacherUpdate({ teachers: [updateTeacher] });
+    alert(response.message);
+    if (response.success) {
+      router.push("/service/admin/teacher");
+    }
+    setUpdateFlg(false);
+    indexApi();
+  };
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -53,6 +85,8 @@ export default function Page() {
       rows.map((row) => (row.id === id ? { ...row, zoom: !row.zoom } : row)),
     );
   };
+
+  if (updateFlg) return <Loader />;
 
   return (
     <>
@@ -79,6 +113,8 @@ export default function Page() {
           setZoom={setZoom}
           checkIds={checkIds}
           setCheckIds={setCheckIds}
+          setUpdateTeacher={setUpdateTeacher}
+          setUpdateModalFlg={setUpdateModalFlg}
           teacherIds={teacherIds}
         />
       </List>
@@ -87,6 +123,25 @@ export default function Page() {
         pageCount={pageCount}
         setPageCount={setPageCount}
       />
+
+      <Modal
+        className="!w-[720px] !h-64"
+        modalFlg={updateModalFlg}
+        setModalFlg={setUpdateModalFlg}
+      >
+        <div className="flex flex-col gap-4">
+          <TeacherUpdateModalTable
+            updateTeacher={updateTeacher}
+            setUpdateTeacher={setUpdateTeacher}
+          />
+          <UpdateController
+            setModalFlg={setUpdateModalFlg}
+            updateOnClick={() => {
+              updateApi();
+            }}
+          />
+        </div>
+      </Modal>
     </>
   );
 }

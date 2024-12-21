@@ -4,7 +4,7 @@ export interface TeacherStoreProps {
   teachers: Array<{
     name: string;
     email: string;
-    subjectIds: (number | null)[];
+    subjectIds: number[] | null;
   }>;
 }
 

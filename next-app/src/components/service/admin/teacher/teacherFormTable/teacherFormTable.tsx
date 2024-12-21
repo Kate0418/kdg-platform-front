@@ -82,7 +82,7 @@ export function TeacherFormTable({
                       <div className="p-1">
                         {select.subjects
                           .filter((subject) =>
-                            teacher.subjectIds.includes(subject.value),
+                            teacher.subjectIds?.includes(subject.value),
                           )
                           .map((item) => item.label)
                           .join(", ")}
@@ -92,7 +92,7 @@ export function TeacherFormTable({
                         multi={true}
                         options={select.subjects}
                         value={select.subjects.filter((subject) =>
-                          teacher.subjectIds.includes(subject.value),
+                          teacher.subjectIds?.includes(subject.value),
                         )}
                         onChange={(e: SelectItem[]) => {
                           const newTeachers = [...teachers];
