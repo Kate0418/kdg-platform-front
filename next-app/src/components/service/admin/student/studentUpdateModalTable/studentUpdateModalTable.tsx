@@ -41,11 +41,35 @@ export function StudentUpdateModalTable({
       <tbody>
         <tr>
           <td className={`${theadTd} border-b`}>名前</td>
-          <td className="tbody-td">{updatStudent.name}</td>
+          <td className="tbody-td !p-0">
+            <input
+                type="text"
+                value={updatStudent.name}
+                className="w-full p-2"
+                onChange={(e) => {
+                    setUpdatStudent({
+                        ...updatStudent,
+                        name: e.target.value,
+                    });
+                }}
+            />
+            </td>
         </tr>
         <tr>
           <td className={`${theadTd} border-b`}>メールアドレス</td>
-          <td className="tbody-td">{updatStudent.email}</td>
+          <td className="tbody-td !p-0">
+            <input
+                type="text"
+                value={updatStudent.email}
+                className="w-full p-2"
+                onChange={(e) => {
+                    setUpdatStudent({
+                        ...updatStudent,
+                        email: e.target.value,
+                    });
+                }}
+            />
+          </td>
         </tr>
         <tr>
           <td className={`${theadTd} border-b`}>コース</td>

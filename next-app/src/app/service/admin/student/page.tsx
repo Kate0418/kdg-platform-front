@@ -16,6 +16,7 @@ import { Token } from "@/api/Token";
 import { useRouter } from "next/navigation";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { StudentDestroy } from "@/api/StudentDestroy";
+import { set } from "react-datepicker/dist/date_utils";
 
 type StudentsWithZoom = StudentResponse["students"][number] & { zoom: boolean };
 
@@ -74,6 +75,7 @@ export default function Page() {
     if (response.success) {
       router.push("/service/admin/student");
     }
+    setUpdateModalFlg(false);
     setUpdateFlg(false);
     indexApi();
   };
