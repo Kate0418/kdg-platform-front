@@ -11,10 +11,20 @@ export interface StudentResponse {
     id: number;
     name: string;
     email: string;
-    courseName: string;
-    gradeName: string;
-    yearName: string;
+    course: {
+      id: number;
+      name: string;
+    } | null;
+    grade: {
+      id: number;
+      name: string;
+    };
+    year: {
+      id: number;
+      name: string;
+    };
   }>;
+  studentIds: number[];
   total: number;
 }
 
@@ -41,6 +51,7 @@ export async function Student({
     return {
       success: false,
       students: [],
+      studentIds: [],
       total: 0,
     };
   }

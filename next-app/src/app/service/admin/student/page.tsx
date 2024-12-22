@@ -5,8 +5,17 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { Title } from "@/components/layout/Title";
 import { List } from "@/components/layout/List";
-import Image from "next/image";
 import { Pagination } from "@/components/layout/Pagination";
+import { StudentListTable } from "@/components/service/admin/student/studentListTable/studentListTable";
+import { StudentUpdate, StudentUpdateProps } from "@/api/StudentUpdate";
+import { Loader } from "@/components/layout/Loader";
+import { Modal } from "@/components/layout/Modal";
+import { StudentUpdateModalTable } from "@/components/service/admin/student/studentUpdateModalTable/studentUpdateModalTable";
+import { UpdateController } from "@/components/layout/updateController/updateController";
+import { Token } from "@/api/Token";
+import { useRouter } from "next/navigation";
+import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
+import { StudentDestroy } from "@/api/StudentDestroy";
 
 type StudentsWithZoom = StudentResponse["students"][number] & { zoom: boolean };
 
@@ -16,6 +25,23 @@ export default function Page() {
   const [students, setStudents] = useState<StudentsWithZoom[]>([]);
   const [loaderFlg, setLoaderFlg] = useState(false);
   const [total, setTotal] = useState(0);
+  const [studentIds, setStudentIds] = useState<StudentResponse["studentIds"]>(
+    []
+  );
+  const [checkIds, setCheckIds] = useState<number[]>([]);
+  const [updateModalFlg, setUpdateModalFlg] = useState(false);
+  const [updateStudent, setUpdateStudent] = useState<
+    StudentUpdateProps["students"][number]
+  >({
+    id: 0,
+    name: "",
+    email: "",
+    courseId: null,
+    gradeId: null,
+    yearId: null,
+  });
+  const [updateFlg, setUpdateFlg] = useState(false);
+  const router = useRouter();
 
   const indexApi = useCallback(async () => {
     setLoaderFlg(true);
@@ -24,8 +50,9 @@ export default function Page() {
       response.students.map((student) => ({
         ...student,
         zoom: false,
-      })),
+      }))
     );
+    setStudentIds(response.studentIds);
     setTotal(response.total);
     setLoaderFlg(false);
   }, [keyWord, pageCount]);
@@ -33,6 +60,38 @@ export default function Page() {
   useEffect(() => {
     indexApi();
   }, [indexApi]);
+
+  const updateApi = async () => {
+    setUpdateFlg(true);
+    const token = await Token();
+    if (!token.success) {
+      router.push("/site/login");
+      setUpdateFlg(false);
+    }
+
+    const response = await StudentUpdate({ students: [updateStudent] });
+    alert(response.message);
+    if (response.success) {
+      router.push("/service/admin/student");
+    }
+    setUpdateFlg(false);
+    indexApi();
+  };
+
+  const destroyApi = async () => {
+    setUpdateFlg(true);
+    const token = await Token();
+    if (!token.success) {
+      router.push("/site/login");
+      setUpdateFlg(false);
+    }
+
+    const response = await StudentDestroy({ studentIds: checkIds });
+    alert(response.message);
+    setCheckIds([]);
+    setUpdateFlg(false);
+    indexApi();
+  };
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,10 +103,12 @@ export default function Page() {
   const setZoom = (id: number) => {
     setStudents((students) =>
       students.map((student) =>
-        student.id === id ? { ...student, zoom: !student.zoom } : student,
-      ),
+        student.id === id ? { ...student, zoom: !student.zoom } : student
+      )
     );
   };
+
+  if (updateFlg) return <Loader />;
 
   return (
     <>
@@ -70,90 +131,41 @@ export default function Page() {
             新規作成
           </a>
         </div>
-        <table className="w-full mb-16">
-          <thead>
-            <tr className="border border-text bg-text text-base">
-              <td className="border-r border-base p-1">名前</td>
-              <td className="border-r border-base p-1">メールアドレス</td>
-              <td className="w-[50px] lg:w-[100px]"></td>
-            </tr>
-          </thead>
-          <tbody>
-            {students.map((student) => (
-              <React.Fragment key={student.id}>
-                <tr>
-                  <td className="border border-text lg:p-2">{student.name}</td>
-                  <td className="border border-text lg:p-2">{student.email}</td>
-                  <td className="border border-text lg:p-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setZoom(student.id);
-                      }}
-                    >
-                      <Image
-                        className="lg:w-8"
-                        src={
-                          student.zoom
-                            ? "/img/zoom_out.svg"
-                            : "/img/zoom_in.svg"
-                        }
-                        alt="zoom"
-                        width={24}
-                        height={24}
-                      />
-                    </button>
-                  </td>
-                </tr>
-                {student.zoom && (
-                  <tr>
-                    <td className="border border-text" colSpan={2}>
-                      <div className="grid lg:grid-cols-[5fr_3fr_3fr_auto]">
-                        <div className="flex">
-                          <div className="w-16 bg-text text-base text-center p-1 lg:py-3">
-                            コース
-                          </div>
-                          <div className="flex items-center py-1 px-6">
-                            {student.courseName}
-                          </div>
-                        </div>
-                        <div className="flex">
-                          <div className="w-14 bg-text text-base text-center p-1 lg:py-3">
-                            年次
-                          </div>
-                          <div className="flex items-center py-1 px-6">
-                            {student.gradeName}
-                          </div>
-                        </div>
-                        <div className="flex">
-                          <div className="w-14 bg-text text-base text-center p-1 lg:py-3">
-                            年制
-                          </div>
-                          <div className="flex items-center py-1 px-6">
-                            {student.yearName}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="border border-text p-1 lg:p-3">
-                      <a
-                        className="p-1 lg:p-3 rounded-lg bg-accent text-base"
-                        href=""
-                      >
-                        編集
-                      </a>
-                    </td>
-                  </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
+        <StudentListTable
+          students={students}
+          setZoom={setZoom}
+          studentIds={studentIds}
+          checkIds={checkIds}
+          setCheckIds={setCheckIds}
+          setUpdateModalFlg={setUpdateModalFlg}
+          setUpdateStudent={setUpdateStudent}
+        />
       </List>
       <Pagination
         total={total}
         pageCount={pageCount}
         setPageCount={setPageCount}
+      />
+
+      <Modal
+        className="!w-[720px] !h-96"
+        modalFlg={updateModalFlg}
+        setModalFlg={setUpdateModalFlg}
+      >
+        <StudentUpdateModalTable
+          updatStudent={updateStudent}
+          setUpdatStudent={setUpdateStudent}
+        />
+        <UpdateController
+          setModalFlg={setUpdateModalFlg}
+          updateOnClick={() => updateApi()}
+        />
+      </Modal>
+
+      <EditToolbar
+        isShow={checkIds.length > 0}
+        onClickEdit={() => console.log()}
+        onClickDelete={() => destroyApi()}
       />
     </>
   );

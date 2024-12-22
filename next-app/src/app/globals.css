@@ -90,6 +90,18 @@ input {
     color: var(--base-color); /* text-baseに対応 */
 }
 
+.thead-td {
+    @apply [&:not(:last-child)]:border-r border-base p-2
+}
+
+.thead-tr {
+    @apply border border-text bg-text text-base
+}
+
+.tbody-td {
+    @apply border border-text p-2
+}
+
 @media (max-width: 480px) {
     body {
         font-size: 10px;
