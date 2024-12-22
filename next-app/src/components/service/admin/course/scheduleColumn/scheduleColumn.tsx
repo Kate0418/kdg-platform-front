@@ -4,12 +4,12 @@ interface Props {
 }
 export function ScheduleColumn({ head, children }: Props) {
   return (
-    <div className="border border-text rounded-xl">
-      <div className="bg-text text-base rounded-t-lg text-center h-6">
+    <div className="border border-text-800 rounded-xl">
+      <div className="bg-text-800 text-base-800 rounded-t-lg text-center h-6">
         {head}
       </div>
       <div>{children}</div>
-      <div className="bg-text rounded-b-lg text-center h-6" />
+      <div className="bg-text-800 rounded-b-lg text-center h-6" />
     </div>
   );
 }

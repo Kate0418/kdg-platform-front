@@ -90,7 +90,7 @@ export function CourseFormTable({
       <div className="flex items-center pl-2 pb-2">
         <label>コース名：</label>
         <input
-          className="p-1 border border-text rounded-lg"
+          className="p-1 border border-text-800 rounded-lg"
           value={course.name}
           onChange={(e) => setCourse({ ...course, name: e.target.value })}
           readOnly={modalFlg}
@@ -98,7 +98,7 @@ export function CourseFormTable({
         <label className="pl-2">学年：</label>
 
         <Select
-          className="w-32 border border-text rounded-lg px-2"
+          className="w-32 border border-text-800 rounded-lg px-2"
           options={select.grades}
           value={select.grades.find((grade) => grade.value === course.gradeId)}
           onChange={(e: SelectItem) => {
@@ -116,7 +116,7 @@ export function CourseFormTable({
             {Array.from({ length: period }).map((_, j) => (
               <div
                 key={j}
-                className="flex flex-col justify-center items-center border-b border-text h-20"
+                className="flex flex-col justify-center items-center border-b border-text-800 h-20"
               >
                 <div className="w-full px-1 flex flex-col gap-1">
                   <div className="flex gap-1">
@@ -165,7 +165,7 @@ export function CourseFormTable({
               {Array.from({ length: period }).map((_, j) => (
                 <div
                   key={j}
-                  className="flex flex-col justify-center items-center border-b border-text h-20"
+                  className="flex flex-col justify-center items-center border-b border-text-800 h-20"
                 >
                   <div className="w-full px-1">
                     {modalFlg ? (

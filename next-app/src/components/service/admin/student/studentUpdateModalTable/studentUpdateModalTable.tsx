@@ -35,7 +35,7 @@ export function StudentUpdateModalTable({
     selectApi();
   }, []);
 
-  const theadTd = "bg-text text-base border-base p-2";
+  const theadTd = "bg-text-800 text-base-800 border-base-800 p-2";
   return (
     <table className="w-full">
       <tbody>
@@ -43,31 +43,31 @@ export function StudentUpdateModalTable({
           <td className={`${theadTd} border-b`}>名前</td>
           <td className="tbody-td !p-0">
             <input
-                type="text"
-                value={updatStudent.name}
-                className="w-full p-2"
-                onChange={(e) => {
-                    setUpdatStudent({
-                        ...updatStudent,
-                        name: e.target.value,
-                    });
-                }}
+              type="text"
+              value={updatStudent.name}
+              className="w-full p-2"
+              onChange={(e) => {
+                setUpdatStudent({
+                  ...updatStudent,
+                  name: e.target.value,
+                });
+              }}
             />
-            </td>
+          </td>
         </tr>
         <tr>
           <td className={`${theadTd} border-b`}>メールアドレス</td>
           <td className="tbody-td !p-0">
             <input
-                type="text"
-                value={updatStudent.email}
-                className="w-full p-2"
-                onChange={(e) => {
-                    setUpdatStudent({
-                        ...updatStudent,
-                        email: e.target.value,
-                    });
-                }}
+              type="text"
+              value={updatStudent.email}
+              className="w-full p-2"
+              onChange={(e) => {
+                setUpdatStudent({
+                  ...updatStudent,
+                  email: e.target.value,
+                });
+              }}
             />
           </td>
         </tr>
@@ -77,7 +77,7 @@ export function StudentUpdateModalTable({
             <Select
               options={courses}
               value={courses.find(
-                (course) => course.value === updatStudent.courseId
+                (course) => course.value === updatStudent.courseId,
               )}
               onChange={(e) => {
                 setUpdatStudent({
@@ -94,7 +94,7 @@ export function StudentUpdateModalTable({
             <Select
               options={grades}
               value={grades.find(
-                (grade) => grade.value === updatStudent.gradeId
+                (grade) => grade.value === updatStudent.gradeId,
               )}
               onChange={(e) => {
                 setUpdatStudent({

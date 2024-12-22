@@ -31,7 +31,7 @@ export default function Page() {
   const [updateModalFlg, setUpdateModalFlg] = useState(false);
   const [updateTeacher, setUpdateTeacher] = useState<
     TeacherUpdateProps["teachers"][number]
-  >({ id: 0, name: "", email: "",subjectIds: null});
+  >({ id: 0, name: "", email: "", subjectIds: null });
   const [updateFlg, setUpdateFlg] = useState(false);
 
   const [total, setTotal] = useState(0);
@@ -74,7 +74,7 @@ export default function Page() {
     indexApi();
   };
 
-  const destroyApi = async() => {
+  const destroyApi = async () => {
     setUpdateFlg(true);
     const token = await Token();
     if (!token.success) {
@@ -82,12 +82,12 @@ export default function Page() {
       setUpdateFlg(false);
     }
 
-    const response = await TeacherDestroy({ teacherIds: checkIds});
+    const response = await TeacherDestroy({ teacherIds: checkIds });
     alert(response.message);
     setCheckIds([]);
     setUpdateFlg(false);
     indexApi();
-  }
+  };
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -113,7 +113,7 @@ export default function Page() {
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-text"
+              className="p-1 border border-text-800"
               name="keyWord"
               defaultValue={keyWord}
             />

@@ -32,10 +32,10 @@ export function SubjectUpdateModalTable({
     <table className="w-full">
       <tbody>
         <tr>
-          <td className="text-base bg-text border border-text p-2 border-b-base">
+          <td className="text-base-800 bg-text-800 border border-text-800 p-2 border-b-base-800">
             科目名
           </td>
-          <td className="border border-text p-2">
+          <td className="border border-text-800 p-2">
             <input
               value={updateSubject.name}
               onChange={(e) =>
@@ -45,8 +45,10 @@ export function SubjectUpdateModalTable({
           </td>
         </tr>
         <tr>
-          <td className="text-base bg-text border border-text p-2">講師名</td>
-          <td className="border border-text p-2">
+          <td className="text-base-800 bg-text-800 border border-text-800 p-2">
+            講師名
+          </td>
+          <td className="border border-text-800 p-2">
             <Select
               options={teachers}
               value={teachers.find(

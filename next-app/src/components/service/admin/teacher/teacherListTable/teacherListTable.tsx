@@ -12,7 +12,9 @@ interface TeacherListTableProps {
   setZoom: (e: TeachersWithZoom["id"]) => void;
   teacherIds: TeacherResponse["teacherIds"];
   checkIds: number[];
-  setUpdateTeacher: React.Dispatch<React.SetStateAction<TeacherUpdateProps["teachers"][number]>>;
+  setUpdateTeacher: React.Dispatch<
+    React.SetStateAction<TeacherUpdateProps["teachers"][number]>
+  >;
   setUpdateModalFlg: React.Dispatch<React.SetStateAction<boolean>>;
   setCheckIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
@@ -40,12 +42,12 @@ export function TeacherListTable({
   return (
     <table className="w-full">
       <thead>
-        <tr className="border border-text bg-text text-base">
-          <td className="border-r border-base p-2 w-10">
+        <tr className="border border-text-800 bg-text-800 text-base-800">
+          <td className="border-r border-base-800 p-2 w-10">
             <div className="flex justify-center items-center">
               <input
                 type="checkbox"
-                className="scale-[2] accent-lime-600"
+                className="scale-[2] accent-accent-800"
                 checked={allCheckFlg}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAllCheckFlg(e.target.checked);
@@ -54,8 +56,8 @@ export function TeacherListTable({
               />
             </div>
           </td>
-          <td className="border-r border-base p-2">名前</td>
-          <td className="border-r border-base p-2">メールアドレス</td>
+          <td className="border-r border-base-800 p-2">名前</td>
+          <td className="border-r border-base-800 p-2">メールアドレス</td>
           <td className="w-[50px] lg:w-[100px]"></td>
         </tr>
       </thead>
@@ -63,11 +65,11 @@ export function TeacherListTable({
         {teachers.map((teacher, index) => (
           <React.Fragment key={index}>
             <tr>
-              <td className="border border-text p-2">
+              <td className="border border-text-800 p-2">
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    className="scale-[2] accent-lime-600"
+                    className="scale-[2] accent-accent-800"
                     checked={checkIds.includes(teacher.id)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       let newCheckIds;
@@ -84,9 +86,9 @@ export function TeacherListTable({
                   />
                 </div>
               </td>
-              <td className="border border-text lg:p-2">
-              <button
-                  className="text-text-0.6 hover:text-text underline"
+              <td className="border border-text-800 lg:p-2">
+                <button
+                  className="text-text-800 hover:text-text-800 underline"
                   onClick={() => {
                     setUpdateTeacher({
                       id: teacher.id,
@@ -100,8 +102,8 @@ export function TeacherListTable({
                   {teacher.name}
                 </button>
               </td>
-              <td className="border border-text lg:p-2">{teacher.email}</td>
-              <td className="border border-text lg:p-2">
+              <td className="border border-text-800 lg:p-2">{teacher.email}</td>
+              <td className="border border-text-800 lg:p-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -121,9 +123,9 @@ export function TeacherListTable({
               </td>
             </tr>
             <tr className={teacher.zoom ? "" : "hidden"}>
-              <td className="border border-text" colSpan={4}>
+              <td className="-800" colSpan={4}>
                 <div className="flex">
-                  <div className="bg-text text-base w-1/6 text-center p-1 lg:py-3 ">
+                  <div className="bg-text-800 text-base-800 w-1/6 text-center p-1 lg:py-3 ">
                     科目
                   </div>
                   <div className="flex items-center py-1 px-6">

@@ -5,7 +5,7 @@ export interface Props {
 }
 
 export function Pagination({ total, pageCount, setPageCount }: Props) {
-  const action = "border rounded-full bg-text !text-base";
+  const action = "border rounded-full bg-text-800 !text-base-800";
 
   let pageCounts: (number | null)[] = Array(5).fill(null);
   let setPageCounts: (() => false | void)[] = Array(5).fill(() => {});
@@ -51,14 +51,14 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
   return (
     <div className="flex justify-center">
       <button
-        className="border border-text text-text rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
+        className="border border-text-800 text-text-800 rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base-800"
         onClick={() => pageCount - 1 > 0 && setPageCount(pageCount - 1)}
       >
         ＜
       </button>
       <div className="flex px-2">
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text-800
               ${actionFlg1 && action}`}
           onClick={setPageCounts[0]}
         >
@@ -66,7 +66,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
 
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text-800
                     ${actionFlg2 && action}`}
           onClick={setPageCounts[1]}
         >
@@ -74,7 +74,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
 
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text-800
                     ${actionFlg3 && action}`}
           onClick={setPageCounts[2]}
         >
@@ -82,7 +82,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
 
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text-800
                     ${actionFlg4 && action}`}
           onClick={setPageCounts[3]}
         >
@@ -90,7 +90,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
 
         <button
-          className={`w-10 h-10 flex items-center justify-center mx-1 text-text
+          className={`w-10 h-10 flex items-center justify-center mx-1 text-text-800
                     ${actionFlg5 && action}`}
           onClick={setPageCounts[4]}
         >
@@ -98,7 +98,7 @@ export function Pagination({ total, pageCount, setPageCount }: Props) {
         </button>
       </div>
       <button
-        className="border border-text text-text rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base"
+        className="border border-text-800 text-text-800 rounded-full w-10 h-10 flex items-center justify-center mx-1 text-base-800"
         onClick={() => pageCount + 1 <= total && setPageCount(pageCount + 1)}
       >
         ＞

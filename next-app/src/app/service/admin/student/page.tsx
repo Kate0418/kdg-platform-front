@@ -16,7 +16,6 @@ import { Token } from "@/api/Token";
 import { useRouter } from "next/navigation";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { StudentDestroy } from "@/api/StudentDestroy";
-import { set } from "react-datepicker/dist/date_utils";
 
 type StudentsWithZoom = StudentResponse["students"][number] & { zoom: boolean };
 
@@ -27,7 +26,7 @@ export default function Page() {
   const [loaderFlg, setLoaderFlg] = useState(false);
   const [total, setTotal] = useState(0);
   const [studentIds, setStudentIds] = useState<StudentResponse["studentIds"]>(
-    []
+    [],
   );
   const [checkIds, setCheckIds] = useState<number[]>([]);
   const [updateModalFlg, setUpdateModalFlg] = useState(false);
@@ -51,7 +50,7 @@ export default function Page() {
       response.students.map((student) => ({
         ...student,
         zoom: false,
-      }))
+      })),
     );
     setStudentIds(response.studentIds);
     setTotal(response.total);
@@ -105,8 +104,8 @@ export default function Page() {
   const setZoom = (id: number) => {
     setStudents((students) =>
       students.map((student) =>
-        student.id === id ? { ...student, zoom: !student.zoom } : student
-      )
+        student.id === id ? { ...student, zoom: !student.zoom } : student,
+      ),
     );
   };
 
@@ -121,7 +120,7 @@ export default function Page() {
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-text"
+              className="p-1 border border-text-800"
               name="keyWord"
               defaultValue={keyWord}
             />

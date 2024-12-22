@@ -89,17 +89,17 @@ export function StudentFromTable({
               </td>
             </tr>
             <tr>
-              <td className="border border-text" colSpan={2}>
+              <td className="border border-text-800" colSpan={2}>
                 <div className="grid lg:grid-cols-[5fr_3fr_3fr]">
                   <div className="flex">
-                    <div className="w-16 bg-text text-base p-1 flex items-center justify-center">
+                    <div className="w-16 bg-text-800 text-base-800 p-1 flex items-center justify-center">
                       コース
                     </div>
                     {readOnly ? (
                       <div className="p-2">
                         {
                           courses.find(
-                            (course) => course.value === student.courseId
+                            (course) => course.value === student.courseId,
                           )?.label
                         }
                       </div>
@@ -108,7 +108,7 @@ export function StudentFromTable({
                         <Select
                           options={courses}
                           value={courses.find(
-                            (course) => course.value === student.courseId
+                            (course) => course.value === student.courseId,
                           )}
                           onChange={(e) => {
                             const newStudents = [...students];
@@ -123,14 +123,14 @@ export function StudentFromTable({
                     )}
                   </div>
                   <div className="flex">
-                    <div className="w-14 bg-text text-base p-2 flex items-center justify-center">
+                    <div className="w-14 bg-text-800 text-base-800 p-2 flex items-center justify-center">
                       年次
                     </div>
                     {readOnly ? (
                       <div className="p-2">
                         {
                           grades.find(
-                            (grades) => grades.value === student.gradeId
+                            (grades) => grades.value === student.gradeId,
                           )?.label
                         }
                       </div>
@@ -139,7 +139,7 @@ export function StudentFromTable({
                         <Select
                           options={grades}
                           value={grades.find(
-                            (grades) => grades.value === student.gradeId
+                            (grades) => grades.value === student.gradeId,
                           )}
                           onChange={(e) => {
                             const newStudents = [...students];
@@ -154,7 +154,7 @@ export function StudentFromTable({
                     )}
                   </div>
                   <div className="flex">
-                    <div className="w-14 bg-text text-base p-2 flex items-center justify-center">
+                    <div className="w-14 bg-text-800 text-base-800 p-2 flex items-center justify-center">
                       年制
                     </div>
                     {readOnly ? (
@@ -169,7 +169,7 @@ export function StudentFromTable({
                         <Select
                           options={years}
                           value={years.find(
-                            (year) => year.value === student.yearId
+                            (year) => year.value === student.yearId,
                           )}
                           onChange={(e) => {
                             const newStudents = [...students];

@@ -25,8 +25,8 @@ const customStyles: StylesConfig = {
   // 他のスタイル設定は同じ
   option: (provided, state) => ({
     ...provided,
-    color: "var(--text-color)",
-    backgroundColor: state.isFocused ? "var(--accent-color-60)" : undefined,
+    color: "var(--text-800)",
+    backgroundColor: state.isFocused ? "var(--accent-800)" : undefined,
   }),
   menu: (provided) => ({
     ...provided,

@@ -43,7 +43,7 @@ export default function Page() {
     indexApi();
   }, [indexApi]);
 
-  const destroyApi = async() => {
+  const destroyApi = async () => {
     setUpdateFlg(true);
     const token = await Token();
     if (!token.success) {
@@ -51,12 +51,12 @@ export default function Page() {
       setUpdateFlg(false);
     }
 
-    const response = await CourseDestroy({ courseIds: checkIds});
+    const response = await CourseDestroy({ courseIds: checkIds });
     alert(response.message);
     setCheckIds([]);
     setUpdateFlg(false);
     indexApi();
-  }
+  };
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,7 +76,7 @@ export default function Page() {
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-text"
+              className="p-1 border border-text-800"
               name="keyWord"
               defaultValue={keyWord}
             />

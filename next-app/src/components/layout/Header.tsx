@@ -23,7 +23,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-text border-base w-screen h-20 p-4 fixed">
+      <header className="bg-text-800 border-base-800 w-screen h-20 p-4 fixed">
         <div className="flex items-center px-2">
           <a href={site_flg ? "site/login" : `/service/${userTypes[type]}/top`}>
             <Image src="/img/logo.svg" alt="logo" width={280} height={45} />
@@ -45,15 +45,15 @@ export default function Header() {
             </button>
           </div>
         </div>
-        <div className="border-b border-base h-2"></div>
+        <div className="border-b border-base-800 h-2"></div>
       </header>
 
       <div className={`w-screen h-full" ${menu ? "" : "hidden"}`}>
         <div
-          className="fixed w-screen h-screen z-30 bg-text-0.6 flex justify-end"
+          className="fixed w-screen h-screen z-30 bg-text-800 flex justify-end"
           onClick={() => setMenu(false)}
         >
-          <div className="w-80 bg-base p-6">
+          <div className="w-80 bg-base-800 p-6">
             <button
               className="fixed right-6"
               onClick={function () {
@@ -74,7 +74,7 @@ export default function Header() {
                   key={index}
                   href={`/service/${userTypes[type]}/${page.type}`}
                 >
-                  <div className="flex text-xl gap-1 pb-1 border-b border-text">
+                  <div className="flex text-xl gap-1 pb-1 border-b border-text-800">
                     <Image
                       src={`/img/${page.type}.svg`}
                       alt={page.type}

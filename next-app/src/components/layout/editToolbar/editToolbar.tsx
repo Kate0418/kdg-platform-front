@@ -14,7 +14,7 @@ export function EditToolbar({
   return (
     <>
       {isShow && (
-        <div className="fixed rounded-lg bg-white bottom-5 right-5 p-2 z-20 border border-text">
+        <div className="fixed rounded-lg bg-white bottom-5 right-5 p-2 z-20 border border-text-800">
           {isHiddenEdit || (
             <button className="button" onClick={onClickEdit}>
               一括編集

@@ -46,7 +46,7 @@ export function StudentListTable({
             <div className="flex justify-center items-center">
               <input
                 type="checkbox"
-                className="scale-[2] accent-lime-600"
+                className="scale-[2] accent-accent-800"
                 checked={allCheckFlg}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAllCheckFlg(e.target.checked);
@@ -64,11 +64,11 @@ export function StudentListTable({
         {students.map((student) => (
           <React.Fragment key={student.id}>
             <tr>
-              <td className="border border-text p-2">
+              <td className="-800">
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    className="scale-[2] accent-lime-600"
+                    className="scale-[2] accent-accent-800"
                     checked={checkIds.includes(student.id)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       let newCheckIds;
@@ -77,7 +77,7 @@ export function StudentListTable({
                       } else {
                         setAllCheckFlg(false);
                         newCheckIds = checkIds.filter(
-                          (id) => id !== student.id
+                          (id) => id !== student.id,
                         );
                       }
                       setCheckIds(newCheckIds);
@@ -85,9 +85,9 @@ export function StudentListTable({
                   />
                 </div>
               </td>
-              <td className="border border-text lg:p-2">
+              <td className="border border-text-800 lg:p-2">
                 <button
-                  className="text-text-0.6 hover:text-text underline"
+                  className="text-text-800 hover:text-text-800 underline"
                   onClick={() => {
                     setUpdateStudent({
                       id: student.id,
@@ -103,8 +103,8 @@ export function StudentListTable({
                   {student.name}
                 </button>
               </td>
-              <td className="border border-text lg:p-2">{student.email}</td>
-              <td className="border border-text lg:p-2">
+              <td className="border border-text-800 lg:p-2">{student.email}</td>
+              <td className="border border-text-800 lg:p-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -125,10 +125,10 @@ export function StudentListTable({
             </tr>
             {student.zoom && (
               <tr>
-                <td className="border border-text" colSpan={4}>
+                <td className="border border-text-800" colSpan={4}>
                   <div className="grid lg:grid-cols-[5fr_3fr_3fr_auto]">
                     <div className="flex">
-                      <div className="w-16 bg-text text-base text-center p-1 lg:py-3">
+                      <div className="w-16 bg-text-800 text-base-800 text-center p-1 lg:py-3">
                         コース
                       </div>
                       <div className="flex items-center py-1 px-6">
@@ -136,7 +136,7 @@ export function StudentListTable({
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="w-14 bg-text text-base text-center p-1 lg:py-3">
+                      <div className="w-14 bg-text-800 text-base-800 text-center p-1 lg:py-3">
                         年次
                       </div>
                       <div className="flex items-center py-1 px-6">
@@ -144,7 +144,7 @@ export function StudentListTable({
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="w-14 bg-text text-base text-center p-1 lg:py-3">
+                      <div className="w-14 bg-text-800 text-base-800 text-center p-1 lg:py-3">
                         年制
                       </div>
                       <div className="flex items-center py-1 px-6">

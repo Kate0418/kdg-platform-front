@@ -19,7 +19,7 @@ import { SubjectDestroy } from "@/api/SubjectDestroy";
 export default function Page() {
   const [subjects, setSubjects] = useState<SubjectResponse["subjects"]>([]);
   const [subjectIds, setSubjectIds] = useState<SubjectResponse["subjectIds"]>(
-    []
+    [],
   );
 
   const [keyWord, setKeyWord] = useState("");
@@ -62,7 +62,7 @@ export default function Page() {
     indexApi();
   };
 
-  const destroyApi = async() => {
+  const destroyApi = async () => {
     setUpdateFlg(true);
     const token = await Token();
     if (!token.success) {
@@ -70,12 +70,12 @@ export default function Page() {
       setUpdateFlg(false);
     }
 
-    const response = await SubjectDestroy({ subjectIds: checkIds});
+    const response = await SubjectDestroy({ subjectIds: checkIds });
     alert(response.message);
     setCheckIds([]);
     setUpdateFlg(false);
     indexApi();
-  }
+  };
 
   useEffect(() => {
     indexApi();
@@ -99,7 +99,7 @@ export default function Page() {
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-text"
+              className="p-1 border border-text-800"
               name="keyWord"
               defaultValue={keyWord}
             />

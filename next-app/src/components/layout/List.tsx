@@ -10,10 +10,12 @@ export function List({ title, loaderFlg = false, children, h }: Props) {
   return (
     <div className="py-5">
       <div
-        className="border border-text rounded-xl bg-white"
+        className="border border-text-800 rounded-xl bg-white"
         style={{ height: `${h}px` }}
       >
-        <div className="bg-text text-base p-1 rounded-t-lg">{title}</div>
+        <div className="bg-text-800 text-base-800 p-1 rounded-t-lg">
+          {title}
+        </div>
         <div
           className="px-2 pt-2 lg:px-8 lg:pt-5 overflow-y-auto"
           style={{ height: `${in_h}px` }}
