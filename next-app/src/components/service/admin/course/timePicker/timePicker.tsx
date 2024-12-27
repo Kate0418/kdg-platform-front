@@ -3,19 +3,21 @@ import "react-datepicker/dist/react-datepicker.css"; //ライブラリ
 import "./timePicker.css";
 
 export interface TimePickerProps {
+  className?: string;
   value: Date | null;
   onChange: (time: Date | null) => void;
   readOnly?: boolean;
 }
 
 export function TimePicker({
+  className,
   value,
   onChange,
   readOnly = false,
 }: TimePickerProps) {
   return (
     <DatePicker
-      className="w-full border border-text-500 p-1 rounded-lg"
+      className={`border border-text-500 p-1 rounded-lg ${className}`}
       dateFormat="HH:mm" // 時刻フォーマット
       selected={value} // 選択された日時
       onChange={onChange} // 変更時のハンドラ

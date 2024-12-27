@@ -1,32 +1,46 @@
 import { CourseStoreProps } from "@/api/CourseStore";
-import { GradeSelectResponse } from "@/api/GradeSelect";
-import { SubjectSelectResponse } from "@/api/SubjectSelect";
+import { GradeSelect, GradeSelectResponse } from "@/api/GradeSelect";
+import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
 import { Select } from "@/components/layout/Select";
 import { daysOfWeek, SelectItem } from "@/config";
 import { DndContext, DragEndEvent } from "@dnd-kit/core"; //ライブラリ
 import { ScheduleColumn } from "../scheduleColumn/scheduleColumn";
 import { Droppable } from "../droppable/droppable";
 import { Draggable } from "../draggable/draggable";
-import Image from "next/image";
 import { TimePicker } from "../timePicker/timePicker";
+import { TimeIcon } from "@/components/layout/icons/timeIcon/timeIcon";
+import { DeleteIcon } from "@/components/layout/icons/deleteIcon/deleteIcon";
+import { PlusIcon } from "@/components/layout/icons/plusIcon/plusIcon";
+import { useEffect, useState } from "react";
 
 export interface CourseFormTableProps {
   course: CourseStoreProps["course"];
   setCourse: React.Dispatch<React.SetStateAction<CourseStoreProps["course"]>>;
-  select: {
-    grades: GradeSelectResponse["grades"];
-    subjects: SubjectSelectResponse["subjects"];
-  };
   modalFlg?: boolean;
 }
 
 export function CourseFormTable({
   course,
   setCourse,
-  select,
   modalFlg = false,
 }: CourseFormTableProps) {
+  const [grades, setGrades] = useState<GradeSelectResponse["grades"]>([]);
+  const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
+    [],
+  );
   const period = 12;
+
+  useEffect(() => {
+    const selectApi = async () => {
+      const subjectData = await SubjectSelect();
+      setSubjects(subjectData.subjects);
+
+      const gradeData = await GradeSelect();
+      setGrades(gradeData.grades);
+    };
+
+    selectApi();
+  }, []);
 
   const getLessonIndex = (i: number, j: number) => {
     return course.lessons.findIndex(
@@ -99,12 +113,12 @@ export function CourseFormTable({
 
         <Select
           className="w-32 border border-text-500 rounded-lg px-2"
-          options={select.grades}
-          value={select.grades.find((grade) => grade.value === course.gradeId)}
+          options={grades}
+          value={grades.find((grade) => grade.value === course.gradeId)}
           onChange={(e: SelectItem) => {
             setCourse({
               ...course,
-              gradeId: e.value,
+              gradeId: e?.value ?? null,
             });
           }}
           isDisabled={modalFlg}
@@ -118,35 +132,26 @@ export function CourseFormTable({
                 key={j}
                 className="flex flex-col justify-center items-center border-b border-text-500 h-20"
               >
-                <div className="w-full px-1 flex flex-col gap-1">
-                  <div className="flex gap-1">
-                    <Image
-                      src="/img/time.svg"
-                      alt="time"
-                      width={20}
-                      height={20}
-                    />
+                <div className="w-full flex flex-col gap-1 px-1">
+                  <div className="flex gap-1 items-center">
+                    <TimeIcon />
                     <TimePicker
+                      className="w-16"
                       value={course.times[j].startTime}
                       onChange={(time) => {
                         if (time) {
                           const newCourse = { ...course };
                           newCourse.times[j].startTime = time;
                           setCourse(newCourse);
-                          console.log(newCourse);
                         }
                       }}
                       readOnly={modalFlg}
                     />
                   </div>
-                  <div className="flex gap-1">
-                    <Image
-                      src="/img/time.svg"
-                      alt="time"
-                      width={20}
-                      height={20}
-                    />
+                  <div className="flex gap-1 items-center">
+                    <TimeIcon />
                     <TimePicker
+                      className="w-16"
                       value={course.times[j].endTime}
                       onChange={(time) => {
                         const newCourse = { ...course };
@@ -171,7 +176,7 @@ export function CourseFormTable({
                     {modalFlg ? (
                       <div className="flex justify-center overflow-y-auto max-h-[80px]">
                         {
-                          select.subjects.find(
+                          subjects.find(
                             (subject) =>
                               subject.value ===
                               course.lessons[getLessonIndex(i, j)]?.subjectId,
@@ -189,13 +194,13 @@ export function CourseFormTable({
                             <div className="w-full p-2 flex">
                               <Select
                                 className="text-xs w-5/6 font-bold"
-                                options={select.subjects}
+                                options={subjects}
                                 value={(() => {
                                   const lessonIndex = getLessonIndex(i, j);
                                   const subjectId =
                                     course.lessons[lessonIndex]?.subjectId;
                                   return (
-                                    select.subjects.find(
+                                    subjects.find(
                                       (subject) => subject.value === subjectId,
                                     ) || null
                                   );
@@ -205,7 +210,7 @@ export function CourseFormTable({
                                   const newCourse = { ...course };
                                   newCourse.lessons[getLessonIndex(i, j)] = {
                                     ...newCourse.lessons[getLessonIndex(i, j)],
-                                    subjectId: data.value,
+                                    subjectId: data?.value ?? null,
                                   };
                                   setCourse(newCourse);
                                 }}
@@ -222,12 +227,7 @@ export function CourseFormTable({
                                   setCourse(newCourse);
                                 }}
                               >
-                                <Image
-                                  src="/img/delete.svg"
-                                  alt="delete"
-                                  width={24}
-                                  height={24}
-                                />
+                                <DeleteIcon />
                               </button>
                             </div>
                           ) : (
@@ -245,13 +245,7 @@ export function CourseFormTable({
                               }}
                             >
                               <div className="absolute inset-0 flex justify-center items-center">
-                                <Image
-                                  className="z-10"
-                                  src="/img/plus.svg"
-                                  alt="plus"
-                                  width={24}
-                                  height={24}
-                                />
+                                <PlusIcon className="z-10" />
                               </div>
                             </button>
                           )}

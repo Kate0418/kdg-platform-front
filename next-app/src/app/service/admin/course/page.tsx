@@ -11,6 +11,7 @@ import { Loader } from "@/components/layout/Loader";
 import { Token } from "@/api/Token";
 import { useRouter } from "next/navigation";
 import { CourseDestroy } from "@/api/CourseDestroy";
+import { Button } from "@/components/layout/button/button";
 
 export default function Page() {
   const [courses, setCourses] = useState<CourseResponse["courses"]>([]);
@@ -71,23 +72,26 @@ export default function Page() {
   return (
     <>
       <Title title="コース情報管理" icon="course" />
-      <List title="コース一覧" loaderFlg={loaderFlg} h={550}>
-        <div className="flex justify-end items-center">
-          <form onSubmit={handleSearch}>
+      <List title="コース一覧" loaderFlg={loaderFlg} h={250}>
+        <form
+          className="flex justify-end items-center gap-2 py-2"
+          onSubmit={handleSearch}
+        >
+          <div>
             <label>検索ワード：</label>
             <input
               className="p-1 border border-text-500"
               name="keyWord"
               defaultValue={keyWord}
             />
-            <button className="button !p-1 lg:!p-2" type="submit">
-              検索
-            </button>
-          </form>
-          <a className="a !p-1 lg:!p-2" href="/service/admin/course/store">
-            新規作成
-          </a>
-        </div>
+          </div>
+          <Button value="検索" type="submit" />
+          <Button
+            value="新規作成"
+            type="link"
+            href="/service/admin/course/store"
+          />
+        </form>
 
         <CourseListTable
           courses={courses}

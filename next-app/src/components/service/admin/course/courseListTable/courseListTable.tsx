@@ -1,4 +1,6 @@
 import { CourseResponse } from "@/api/Course";
+import { Checkbox } from "@/components/layout/checkbox/checkbox";
+import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 
 export interface CourseListTableProps {
@@ -29,12 +31,11 @@ export function CourseListTable({
   return (
     <table className="w-full">
       <thead>
-        <tr className="border border-text-500 bg-text-500 text-base-500">
-          <td className="border-r border-base-500 p-2 w-10">
+        <tr className="thead-tr">
+          <td className="thead-td w-10">
             <div className="flex justify-center items-center">
-              <input
-                type="checkbox"
-                className="scale-[2] accent-accent-500"
+              <Checkbox
+                color="var(--base-500)"
                 checked={allCheckFlg}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAllCheckFlg(e.target.checked);
@@ -43,20 +44,17 @@ export function CourseListTable({
               />
             </div>
           </td>
-          <td className="border-r border-base-500 p-2">コース名</td>
-          <td className="border-r border-base-500 p-2">学年</td>
-          <td className="w-[50px] lg:w-[100px]"></td>
+          <td className="thead-td">コース名</td>
+          <td className="thead-td">学年</td>
         </tr>
       </thead>
       <tbody>
         {Array.isArray(courses) &&
           courses.map((course, index) => (
             <tr key={index}>
-              <td className="border border-text-500 p-2">
+              <td className="tbody-td p-2">
                 <div className="flex justify-center items-center">
-                  <input
-                    type="checkbox"
-                    className="scale-[2] accent-accent-500"
+                  <Checkbox
                     checked={checkIds.includes(course.id)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       let newCheckIds;
@@ -71,16 +69,12 @@ export function CourseListTable({
                   />
                 </div>
               </td>
-              <td className="border border-text-500 p-2">{course.name}</td>
-              <td className="border border-text-500 p-2">{course.gradeName}</td>
-              <td className="border border-text-500 p-1 lg:p-3">
-                <a
-                  className="p-1 lg:p-3 rounded-lg bg-accent-500 text-base-500"
-                  href=""
-                >
-                  編集
-                </a>
+              <td className="tbody-td p-2">
+                <Link className="link" href="#">
+                  {course.name}
+                </Link>
               </td>
+              <td className="tbody-td p-2">{course.gradeName}</td>
             </tr>
           ))}
       </tbody>

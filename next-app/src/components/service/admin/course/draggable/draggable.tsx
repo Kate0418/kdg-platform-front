@@ -28,10 +28,10 @@ export function Draggable({ id, lessonFlg, children }: DraggableProps) {
       {lessonFlg ? (
         <div {...listeners}>
           <div className="absolute top-0 left-0 w-full h-2 bg-text-500 rounded-t-lg z-10" />
-          <div className="absolute top-0 left-0 w-full h-full bg-[var(--accent-500)] rounded-t-xl rounded-b-lg" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[var(--accent-opacity)] rounded-t-xl rounded-b-lg" />
         </div>
       ) : (
-        <div className="absolute top-0 left-0 w-full h-full bg-[var(--text-500)] rounded-lg" />
+        <div className="absolute top-0 left-0 w-full h-full bg-text-500 rounded-lg" />
       )}
       {children}
     </div>
