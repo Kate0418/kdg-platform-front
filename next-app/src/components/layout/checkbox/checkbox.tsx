@@ -14,8 +14,8 @@ export function Checkbox({
 }: CheckboxProps) {
   const id = useId();
   return (
-    <div className="list__item">
-      <label className="label--checkbox" htmlFor={id}>
+    <label className="list__item" htmlFor={id}>
+      <div className="label--checkbox">
         <input
           type="checkbox"
           id={id}
@@ -31,7 +31,7 @@ export function Checkbox({
             } as React.CSSProperties
           }
         />
-      </label>
-    </div>
+      </div>
+    </label>
   );
 }

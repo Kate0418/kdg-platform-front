@@ -43,7 +43,7 @@ export default function Page() {
   return (
     <>
       <Title title="生徒登録" icon="student" />
-      <List title="登録生徒一覧" h={520}>
+      <List title="登録生徒一覧" h={250}>
         <StudentFromTable students={students} setStudents={setStudents} />
       </List>
       <StoreFormController
@@ -69,7 +69,7 @@ export default function Page() {
               student.name != "" &&
               student.email != "" &&
               student.gradeId != null &&
-              student.yearId != null
+              student.yearId != null,
           )
             ? setModalFlg(true)
             : alert("名前,メールアドレス,年次,年制は必須です");

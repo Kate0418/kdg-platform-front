@@ -4,6 +4,8 @@
 
 :root {
     --accent-500: #344699;
+    --accent-opacity: rgba(78, 96, 178, 0.3);
+
     --base-500: #fbfcff;
     --text-500: #2b262e;
 }
@@ -94,7 +96,7 @@ input {
 
 @media (max-width: 480px) {
     body {
-        font-size: 10px !important;
+        font-size: 12px;
     }
 }
 

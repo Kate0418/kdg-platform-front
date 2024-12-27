@@ -1,3 +1,5 @@
+import { Button } from "../button/button";
+
 export interface StoreFormControllerProps {
   cancelUrl: string;
   addOnClick: () => void;
@@ -12,21 +14,13 @@ export function StoreFormController({
   confirmOnClick,
 }: StoreFormControllerProps) {
   return (
-    <div className="flex justify-between w-full">
-      <a className="a" href={cancelUrl}>
-        キャンセル
-      </a>
+    <div className="flex justify-between w-full p-2">
+      <Button value="キャンセル" type="link" href={cancelUrl} />
 
-      <div className="flex">
-        <button className="button" type="button" onClick={addOnClick}>
-          追加
-        </button>
-        <button className="button" type="button" onClick={deleteOnClick}>
-          削除
-        </button>
-        <button className="button" type="button" onClick={confirmOnClick}>
-          確認
-        </button>
+      <div className="flex gap-2">
+        <Button value="追加" type="button" onClick={addOnClick} />
+        <Button value="削除" type="button" onClick={deleteOnClick} />
+        <Button value="確認" type="button" onClick={confirmOnClick} />
       </div>
     </div>
   );

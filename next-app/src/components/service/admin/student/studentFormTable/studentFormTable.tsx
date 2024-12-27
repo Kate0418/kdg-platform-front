@@ -91,8 +91,8 @@ export function StudentFromTable({
             <tr>
               <td className="border border-text-500" colSpan={2}>
                 <div className="grid lg:grid-cols-[5fr_3fr_3fr]">
-                  <div className="flex">
-                    <div className="w-16 bg-text-500 text-base-500 p-1 flex items-center justify-center">
+                  <div className="flex max-lg:border-b border-text-500">
+                    <div className="w-16 bg-text-500 text-base-500 p-1 flex items-center justify-center max-lg:border-b border-base-500">
                       コース
                     </div>
                     {readOnly ? (
@@ -114,7 +114,7 @@ export function StudentFromTable({
                             const newStudents = [...students];
                             newStudents[index] = {
                               ...newStudents[index],
-                              courseId: e.value,
+                              courseId: e?.value,
                             };
                             setStudents(newStudents);
                           }}
@@ -122,8 +122,8 @@ export function StudentFromTable({
                       </div>
                     )}
                   </div>
-                  <div className="flex">
-                    <div className="w-14 bg-text-500 text-base-500 p-2 flex items-center justify-center">
+                  <div className="flex max-lg:border-b border-text-500">
+                    <div className="w-16 bg-text-500 text-base-500 p-2 flex items-center justify-center max-lg:border-b border-base-500">
                       年次
                     </div>
                     {readOnly ? (
@@ -145,7 +145,7 @@ export function StudentFromTable({
                             const newStudents = [...students];
                             newStudents[index] = {
                               ...newStudents[index],
-                              gradeId: e.value,
+                              gradeId: e?.value,
                             };
                             setStudents(newStudents);
                           }}
@@ -153,8 +153,8 @@ export function StudentFromTable({
                       </div>
                     )}
                   </div>
-                  <div className="flex">
-                    <div className="w-14 bg-text-500 text-base-500 p-2 flex items-center justify-center">
+                  <div className="flex  max-lg:border-b border-text-500">
+                    <div className="w-16 bg-text-500 text-base-500 p-2 flex items-center justify-center max-lg:border-b border-base-500">
                       年制
                     </div>
                     {readOnly ? (
@@ -175,7 +175,7 @@ export function StudentFromTable({
                             const newStudents = [...students];
                             newStudents[index] = {
                               ...newStudents[index],
-                              yearId: e.value,
+                              yearId: e?.value,
                             };
                             setStudents(newStudents);
                           }}

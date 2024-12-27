@@ -1,3 +1,5 @@
+import { Button } from "../button/button";
+
 export interface StoreModalControllerProps {
   setModalFlg: React.Dispatch<React.SetStateAction<boolean>>;
   storeOnClick: () => void;
@@ -8,17 +10,9 @@ export function StoreModalController({
   storeOnClick,
 }: StoreModalControllerProps) {
   return (
-    <div className="flex justify-end w-full">
-      <button
-        className="button"
-        type="button"
-        onClick={() => setModalFlg(false)}
-      >
-        戻る
-      </button>
-      <button className="button" type="button" onClick={storeOnClick}>
-        登録
-      </button>
+    <div className="flex justify-end w-full gap-2 p-2">
+      <Button value="戻る" type="button" onClick={() => setModalFlg(false)} />
+      <Button value="登録" type="button" onClick={storeOnClick} />
     </div>
   );
 }

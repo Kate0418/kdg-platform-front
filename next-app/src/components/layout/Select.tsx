@@ -26,7 +26,7 @@ const customStyles: StylesConfig = {
   option: (provided, state) => ({
     ...provided,
     color: "var(--text-500)",
-    backgroundColor: state.isFocused ? "var(--accent-500)" : undefined,
+    backgroundColor: state.isFocused ? "var(--accent-opacity)" : undefined,
   }),
   menu: (provided) => ({
     ...provided,
@@ -59,6 +59,7 @@ export function Select<IsMulti extends boolean = false>(
 
   return (
     <ReactSelect
+      isClearable={true}
       className={`relative ${props.className}`}
       options={props.options}
       isMulti={props.multi}

@@ -7,7 +7,7 @@ interface Props {
 
 export function List({ title, loaderFlg = false, children, h }: Props) {
   return (
-    <div className="py-5">
+    <div className="pt-5 pb-2">
       <div
         className="border border-text-500 rounded-xl"
         style={{ height: `calc(100vh - ${h}px)` }}

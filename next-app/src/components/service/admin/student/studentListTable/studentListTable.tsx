@@ -57,8 +57,10 @@ export function StudentListTable({
               />
             </div>
           </td>
-          <td className="thead-td">名前</td>
-          <td className="thead-td">メールアドレス</td>
+          <td className="thead-td w-32">名前</td>
+          <td className="thead-td break-words whitespace-normal">
+            メールアドレス
+          </td>
           <td className="thead-td w-[50px]"></td>
         </tr>
       </thead>
@@ -85,7 +87,7 @@ export function StudentListTable({
                   />
                 </div>
               </td>
-              <td className="tbody-td p-2">
+              <td className="tbody-td p-1 lg:p-2">
                 <button
                   className="link"
                   onClick={() => {
@@ -103,7 +105,7 @@ export function StudentListTable({
                   {student.name}
                 </button>
               </td>
-              <td className="tbody-td p-2">{student.email}</td>
+              <td className="tbody-td p-1 lg:p-2">{student.email}</td>
               <td
                 className="tbody-td p-2"
                 onClick={() => {
@@ -117,24 +119,24 @@ export function StudentListTable({
               <tr>
                 <td className="tbody-td" colSpan={4}>
                   <div className="grid lg:grid-cols-[5fr_3fr_3fr]">
-                    <div className="flex">
-                      <div className="w-16 bg-text-500 text-base-500 text-center p-1 lg:py-3">
+                    <div className="flex max-lg:border-b border-text-500">
+                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500">
                         コース
                       </div>
                       <div className="flex items-center py-1 px-6">
                         {student.course?.name}
                       </div>
                     </div>
-                    <div className="flex">
-                      <div className="w-14 bg-text-500 text-base-500 text-center p-1 lg:py-3">
+                    <div className="flex max-lg:border-b border-text-500">
+                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500">
                         年次
                       </div>
                       <div className="flex items-center py-1 px-6">
                         {student.grade.name}
                       </div>
                     </div>
-                    <div className="flex">
-                      <div className="w-14 bg-text-500 text-base-500 text-center p-1 lg:py-3">
+                    <div className="flex max-lg:border-b border-text-500">
+                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500">
                         年制
                       </div>
                       <div className="flex items-center py-1 px-6">
