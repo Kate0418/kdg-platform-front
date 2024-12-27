@@ -37,13 +37,13 @@ export default function Page() {
   return (
     <div className="flex flex-col items-center justify-center w-screen h-[calc(100vh-110px)]">
       <form
-        className="flex flex-col lg:w-1/3 border border-text-800 rounded-lg bg-white overflow-hidden"
+        className="flex flex-col lg:w-1/3 border border-text-500 rounded-lg bg-white overflow-hidden"
         onSubmit={(e) => {
           e.preventDefault();
           LoginApi();
         }}
       >
-        <p className="text-2xl text-center py-2 text-base-800 bg-text-800">
+        <p className="text-2xl text-center py-2 text-base-500 bg-text-500">
           ログイン
         </p>
         <div className="p-4">
@@ -60,7 +60,7 @@ export default function Page() {
           <div className="pb-5">
             <label>メールアドレス</label>
             <input
-              className="border border-text-800 w-full p-2"
+              className="border border-text-500 w-full p-2"
               type="text"
               value={email}
               onChange={function (e) {
@@ -71,7 +71,7 @@ export default function Page() {
           <div className="pb-2">
             <label>パスワード</label>
             <input
-              className="border border-text-800 w-full p-2"
+              className="border border-text-500 w-full p-2"
               type="password"
               value={password}
               onChange={function (e) {
@@ -84,7 +84,7 @@ export default function Page() {
             <Button type="submit">ログイン</Button>
           </div>
         </div>
-        <div className="bg-text-800 h-2 mt-auto"></div>
+        <div className="bg-text-500 h-2 mt-auto"></div>
       </form>
     </div>
   );

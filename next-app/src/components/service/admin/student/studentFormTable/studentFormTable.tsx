@@ -89,10 +89,10 @@ export function StudentFromTable({
               </td>
             </tr>
             <tr>
-              <td className="border border-text-800" colSpan={2}>
+              <td className="border border-text-500" colSpan={2}>
                 <div className="grid lg:grid-cols-[5fr_3fr_3fr]">
                   <div className="flex">
-                    <div className="w-16 bg-text-800 text-base-800 p-1 flex items-center justify-center">
+                    <div className="w-16 bg-text-500 text-base-500 p-1 flex items-center justify-center">
                       コース
                     </div>
                     {readOnly ? (
@@ -123,7 +123,7 @@ export function StudentFromTable({
                     )}
                   </div>
                   <div className="flex">
-                    <div className="w-14 bg-text-800 text-base-800 p-2 flex items-center justify-center">
+                    <div className="w-14 bg-text-500 text-base-500 p-2 flex items-center justify-center">
                       年次
                     </div>
                     {readOnly ? (
@@ -154,7 +154,7 @@ export function StudentFromTable({
                     )}
                   </div>
                   <div className="flex">
-                    <div className="w-14 bg-text-800 text-base-800 p-2 flex items-center justify-center">
+                    <div className="w-14 bg-text-500 text-base-500 p-2 flex items-center justify-center">
                       年制
                     </div>
                     {readOnly ? (

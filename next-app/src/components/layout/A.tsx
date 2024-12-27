@@ -7,7 +7,7 @@ export interface Props {
 export function A({ className, href, children }: Props) {
   return (
     <a
-      className={`m-2 p-3 rounded-lg bg-accent-800 text-base-800 ${className}`}
+      className={`m-2 p-3 rounded-lg bg-accent-500 text-base-500 ${className}`}
       href={href}
     >
       {children}

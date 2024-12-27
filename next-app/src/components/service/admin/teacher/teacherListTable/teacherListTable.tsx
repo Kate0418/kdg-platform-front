@@ -42,12 +42,12 @@ export function TeacherListTable({
   return (
     <table className="w-full">
       <thead>
-        <tr className="border border-text-800 bg-text-800 text-base-800">
-          <td className="border-r border-base-800 p-2 w-10">
+        <tr className="border border-text-500 bg-text-500 text-base-500">
+          <td className="border-r border-base-500 p-2 w-10">
             <div className="flex justify-center items-center">
               <input
                 type="checkbox"
-                className="scale-[2] accent-accent-800"
+                className="scale-[2] accent-accent-500"
                 checked={allCheckFlg}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAllCheckFlg(e.target.checked);
@@ -56,8 +56,8 @@ export function TeacherListTable({
               />
             </div>
           </td>
-          <td className="border-r border-base-800 p-2">名前</td>
-          <td className="border-r border-base-800 p-2">メールアドレス</td>
+          <td className="border-r border-base-500 p-2">名前</td>
+          <td className="border-r border-base-500 p-2">メールアドレス</td>
           <td className="w-[50px] lg:w-[100px]"></td>
         </tr>
       </thead>
@@ -65,11 +65,11 @@ export function TeacherListTable({
         {teachers.map((teacher, index) => (
           <React.Fragment key={index}>
             <tr>
-              <td className="border border-text-800 p-2">
+              <td className="border border-text-500 p-2">
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    className="scale-[2] accent-accent-800"
+                    className="scale-[2] accent-accent-500"
                     checked={checkIds.includes(teacher.id)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       let newCheckIds;
@@ -86,9 +86,9 @@ export function TeacherListTable({
                   />
                 </div>
               </td>
-              <td className="border border-text-800 lg:p-2">
+              <td className="border border-text-500 lg:p-2">
                 <button
-                  className="text-text-800 hover:text-text-800 underline"
+                  className="text-text-500 hover:text-text-500 underline"
                   onClick={() => {
                     setUpdateTeacher({
                       id: teacher.id,
@@ -102,8 +102,8 @@ export function TeacherListTable({
                   {teacher.name}
                 </button>
               </td>
-              <td className="border border-text-800 lg:p-2">{teacher.email}</td>
-              <td className="border border-text-800 lg:p-2">
+              <td className="border border-text-500 lg:p-2">{teacher.email}</td>
+              <td className="border border-text-500 lg:p-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -125,7 +125,7 @@ export function TeacherListTable({
             <tr className={teacher.zoom ? "" : "hidden"}>
               <td className="-800" colSpan={4}>
                 <div className="flex">
-                  <div className="bg-text-800 text-base-800 w-1/6 text-center p-1 lg:py-3 ">
+                  <div className="bg-text-500 text-base-500 w-1/6 text-center p-1 lg:py-3 ">
                     科目
                   </div>
                   <div className="flex items-center py-1 px-6">

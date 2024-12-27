@@ -23,15 +23,15 @@ export function SubjectFormTable({
   return (
     <table className="w-full mb-5 mt-2">
       <thead>
-        <tr className="border border-text-800 bg-text-800 text-base-800">
-          <td className="border-r border-base-800 p-1 w-1/2">科目名</td>
+        <tr className="border border-text-500 bg-text-500 text-base-500">
+          <td className="border-r border-base-500 p-1 w-1/2">科目名</td>
           <td className="p-1 w-1/2">講師</td>
         </tr>
       </thead>
       <tbody className="overflow-auto">
         {subjects.map((subject, index) => (
           <tr key={index}>
-            <td className="border border-text-800">
+            <td className="border border-text-500">
               {modalFlg ? (
                 <div className="w-full p-1 font-bold">{subject.name}</div>
               ) : (
@@ -50,7 +50,7 @@ export function SubjectFormTable({
                 />
               )}
             </td>
-            <td className="border border-text-800">
+            <td className="border border-text-500">
               {modalFlg ? (
                 <div>
                   {select.teachers.find(

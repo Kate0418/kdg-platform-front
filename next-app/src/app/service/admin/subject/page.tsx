@@ -99,7 +99,7 @@ export default function Page() {
           <form onSubmit={handleSearch}>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-text-800"
+              className="p-1 border border-text-500"
               name="keyWord"
               defaultValue={keyWord}
             />

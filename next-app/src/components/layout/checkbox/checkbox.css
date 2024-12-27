@@ -1,0 +1,75 @@
+.label--checkbox {
+    position: relative;
+    line-height: 135%;
+    cursor: pointer;
+}
+
+.checkbox {
+    position: relative;
+    top: -0.65rem;
+    left: -0.25rem;
+    margin: 0 1rem 0 0;
+    cursor: pointer;
+}
+.checkbox:before {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    content: "";
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.list__item input:checked + .checkbox:before {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    height: 0.5rem;
+    border-top-style: none;
+    border-right-style: none;
+}
+.checkbox:after {
+    content: "";
+    position: absolute;
+    top: -0.125rem;
+    left: 0;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+}
+
+.content {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: slideUp;
+    animation-name: slideUp;
+    -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@-webkit-keyframes slideUp {
+    0% {
+        -webkit-transform: translateY(6.25rem);
+        transform: translateY(6.25rem);
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+@keyframes slideUp {
+    0% {
+        -webkit-transform: translateY(6.25rem);
+        transform: translateY(6.25rem);
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}

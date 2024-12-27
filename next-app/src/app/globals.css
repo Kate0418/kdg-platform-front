@@ -3,48 +3,15 @@
 @tailwind utilities;
 
 :root {
-    --accent-100: #00b4c9;
-    --accent-200: #04a2b3;
-    --accent-300: #1594a1;
-    --accent-400: #238993;
-    --accent-500: #2e8088;
-    --accent-600: #37797f;
-    --accent-700: #3e7378;
-    --accent-800: #446e72; /* base-color */
-    --accent-900: #4a6a6e;
-
-    --base-100: #f1e4d5;
-    --base-200: #eee4d8;
-    --base-300: #ece4da;
-    --base-400: #eae4dc;
-    --base-500: #e9e4dd;
-    --base-600: #e8e4de;
-    --base-700: #e7e4df;
-    --base-800: #e6e4e0; /* base-color */
-    --base-900: #e5e4e1;
-
-    --text-100: #3f270e;
-    --text-200: #3a2713;
-    --text-300: #362717;
-    --text-400: #33271a;
-    --text-500: #30271c;
-    --text-600: #2e271e;
-    --text-700: #2c2720;
-    --text-800: #2b2721; /* base-color */
-    --text-900: #2a2722;
-
-    --accent-color: rgb(180, 188, 78);
-    --base-color: rgb(255, 251, 236);
-    --text-color: rgb(107, 94, 86);
-
-    --accent-color-60: rgba(180, 188, 78, 0.6);
-    --text-color-60: rgba(107, 94, 86, 0.6);
+    --accent-500: #344699;
+    --base-500: #fbfcff;
+    --text-500: #2b262e;
 }
 
 body {
-    color: var(--text-color);
+    color: var(--text-500);
     /* border-color: var(--text-color); */
-    background-color: var(--base-color);
+    background-color: var(--base-500);
     font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic",
         "Hiragino Sans", Meiryo, sans-serif;
 }
@@ -104,21 +71,25 @@ input {
         infinite square-spin-2-animation;
 }
 
-.button,
-.a {
-    @apply m-2 p-3 rounded-lg bg-accent-800 text-base-800;
+.button {
+    @apply m-2 p-3 rounded-lg bg-accent-500 text-base-500 border-2 border-accent-500 ring-offset-2 ring-accent-500
+        hover:bg-base-500 hover:text-text-500 transition duration-700 hover:ring-2;
+}
+
+.link {
+    @apply text-accent-500 underline opacity-80 hover:opacity-100;
 }
 
 .thead-td {
-    @apply [&:not(:last-child)]:border-r border-base-800 p-2;
+    @apply [&:not(:last-child)]:border-r border-base-500 p-2;
 }
 
 .thead-tr {
-    @apply border border-text-800 bg-text-800 text-base-800;
+    @apply border border-text-500 bg-text-500 text-base-500;
 }
 
 .tbody-td {
-    @apply border border-text-800 p-2;
+    @apply border border-text-500;
 }
 
 @media (max-width: 480px) {

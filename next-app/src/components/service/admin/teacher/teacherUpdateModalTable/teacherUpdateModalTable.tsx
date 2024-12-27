@@ -31,10 +31,10 @@ export function TeacherUpdateModalTable({
     <table>
       <tbody>
         <tr>
-          <td className="text-base-800 bg-text-800 border border-text-800 p-2 border-b-base-800">
+          <td className="text-base-500 bg-text-500 border border-text-500 p-2 border-b-base-500">
             名前
           </td>
-          <td className="border border-text-800 p-2">
+          <td className="border border-text-500 p-2">
             <input
               type="text"
               value={updateTeacher.name}
@@ -45,10 +45,10 @@ export function TeacherUpdateModalTable({
           </td>
         </tr>
         <tr>
-          <td className="text-base-800 bg-text-800 border border-text-800 p-2 border-b-base-800">
+          <td className="text-base-500 bg-text-500 border border-text-500 p-2 border-b-base-500">
             メールアドレス
           </td>
-          <td className="border border-text-800 p-2">
+          <td className="border border-text-500 p-2">
             <input
               type="email"
               value={updateTeacher.email}
@@ -59,10 +59,10 @@ export function TeacherUpdateModalTable({
           </td>
         </tr>
         <tr>
-          <td className="text-base bg-text-800 border border-text-800 p-2">
+          <td className="text-base bg-text-500 border border-text-500 p-2">
             科目
           </td>
-          <td className="border border-text-800 p-2">
+          <td className="border border-text-500 p-2">
             <Select
               multi={true}
               options={subjects}

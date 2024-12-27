@@ -10,37 +10,33 @@ const config: Config = {
     extend: {
       colors: {
         accent: {
-          100: "var(--accent-100)",
-          200: "var(--accent-200)",
-          300: "var(--accent-300)",
-          400: "var(--accent-400)",
           500: "var(--accent-500)",
-          600: "var(--accent-600)",
-          700: "var(--accent-700)",
-          800: "var(--accent-800)",
-          900: "var(--accent-900)",
         },
         base: {
-          100: "var(--base-100)",
-          200: "var(--base-200)",
-          300: "var(--base-300)",
-          400: "var(--base-400)",
           500: "var(--base-500)",
-          600: "var(--base-600)",
-          700: "var(--base-700)",
-          800: "var(--base-800)",
-          900: "var(--base-900)",
         },
         text: {
-          100: "var(--text-100)",
-          200: "var(--text-200)",
-          300: "var(--text-300)",
-          400: "var(--text-400)",
           500: "var(--text-500)",
-          600: "var(--text-600)",
-          700: "var(--text-700)",
-          800: "var(--text-800)",
-          900: "var(--text-900)",
+        },
+      },
+      animation: {
+        "slide-in-blurred-bottom":
+          "slide-in-blurred-bottom 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000)    both",
+      },
+      keyframes: {
+        "slide-in-blurred-bottom": {
+          "0%": {
+            transform: "translateY(1000px) scaleY(2.5) scaleX(.2)",
+            "transform-origin": "50% 100%",
+            filter: "blur(40px)",
+            opacity: "0",
+          },
+          to: {
+            transform: "translateY(0) scaleY(1) scaleX(1)",
+            "transform-origin": "50% 50%",
+            filter: "blur(0)",
+            opacity: "1",
+          },
         },
       },
     },

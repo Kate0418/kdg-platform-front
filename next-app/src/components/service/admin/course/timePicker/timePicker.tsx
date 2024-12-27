@@ -15,7 +15,7 @@ export function TimePicker({
 }: TimePickerProps) {
   return (
     <DatePicker
-      className="w-full border border-text-800 p-1 rounded-lg"
+      className="w-full border border-text-500 p-1 rounded-lg"
       dateFormat="HH:mm" // 時刻フォーマット
       selected={value} // 選択された日時
       onChange={onChange} // 変更時のハンドラ

@@ -36,12 +36,12 @@ export function SubjectListTable({
   return (
     <table className="w-full">
       <thead>
-        <tr className="border border-text-800 bg-text-800 text-base-800">
-          <td className="border-r border-base-800 p-2 w-10">
+        <tr className="border border-text-500 bg-text-500 text-base-500">
+          <td className="border-r border-base-500 p-2 w-10">
             <div className="flex justify-center items-center">
               <input
                 type="checkbox"
-                className="scale-[2] accent-accent-800"
+                className="scale-[2] accent-accent-500"
                 checked={allCheckFlg}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAllCheckFlg(e.target.checked);
@@ -50,7 +50,7 @@ export function SubjectListTable({
               />
             </div>
           </td>
-          <td className="border-r border-base-800 p-2">科目名</td>
+          <td className="border-r border-base-500 p-2">科目名</td>
           <td className="p-2 w-[100px] lg:w-[200px]">講師名</td>
         </tr>
       </thead>
@@ -58,11 +58,11 @@ export function SubjectListTable({
         {Array.isArray(subjects) &&
           subjects.map((subject, index) => (
             <tr key={index}>
-              <td className="border border-text-800 p-2">
+              <td className="border border-text-500 p-2">
                 <div className="flex justify-center items-center">
                   <input
                     type="checkbox"
-                    className="scale-[2] accent-accent-800"
+                    className="scale-[2] accent-accent-500"
                     checked={checkIds.includes(subject.id)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       let newCheckIds;
@@ -79,9 +79,9 @@ export function SubjectListTable({
                   />
                 </div>
               </td>
-              <td className="border border-text-800 p-2">
+              <td className="border border-text-500 p-2">
                 <button
-                  className="text-text-800 hover:text-text-800 underline"
+                  className="text-text-500 hover:text-text-500 underline"
                   onClick={() => {
                     setUpdateSubject({
                       id: subject.id,
@@ -94,7 +94,7 @@ export function SubjectListTable({
                   {subject.name}
                 </button>
               </td>
-              <td className="border border-text-800 p-2">
+              <td className="border border-text-500 p-2">
                 {subject.teacher ? subject.teacher.name : ""}
               </td>
             </tr>

@@ -1,3 +1,5 @@
+import { Button } from "../button/button";
+
 export interface UpdateControllerProps {
   setModalFlg: React.Dispatch<React.SetStateAction<boolean>>;
   updateOnClick: () => void;
@@ -8,17 +10,13 @@ export function UpdateController({
   updateOnClick,
 }: UpdateControllerProps) {
   return (
-    <div className="flex justify-end w-full">
-      <button
-        className="button"
+    <div className="flex justify-end w-full gap-2 p-2">
+      <Button
+        value="キャンセル"
         type="button"
         onClick={() => setModalFlg(false)}
-      >
-        キャンセル
-      </button>
-      <button className="button" type="button" onClick={updateOnClick}>
-        保存
-      </button>
+      />
+      <Button value="保存" type="button" onClick={updateOnClick} />
     </div>
   );
 }

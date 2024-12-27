@@ -6,19 +6,18 @@ interface Props {
 }
 
 export function List({ title, loaderFlg = false, children, h }: Props) {
-  const in_h = h - 60;
   return (
     <div className="py-5">
       <div
-        className="border border-text-800 rounded-xl bg-white"
-        style={{ height: `${h}px` }}
+        className="border border-text-500 rounded-xl"
+        style={{ height: `calc(100vh - ${h}px)` }}
       >
-        <div className="bg-text-800 text-base-800 p-1 rounded-t-lg">
+        <div className="bg-text-500 text-base-500 p-1 rounded-t-lg">
           {title}
         </div>
         <div
           className="px-2 pt-2 lg:px-8 lg:pt-5 overflow-y-auto"
-          style={{ height: `${in_h}px` }}
+          style={{ height: `calc(100vh - ${h + 50}px)` }}
         >
           {loaderFlg ? (
             <div className="flex items-center justify-center h-full">

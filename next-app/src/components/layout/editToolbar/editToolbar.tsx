@@ -1,3 +1,5 @@
+import { Button } from "../button/button";
+
 export interface EditToolbarProps {
   isShow: boolean;
   isHiddenEdit?: boolean;
@@ -14,15 +16,26 @@ export function EditToolbar({
   return (
     <>
       {isShow && (
-        <div className="fixed rounded-lg bg-white bottom-5 right-5 p-2 z-20 border border-text-800">
-          {isHiddenEdit || (
-            <button className="button" onClick={onClickEdit}>
-              一括編集
-            </button>
-          )}
-          <button className="button" onClick={onClickDelete}>
-            一括削除
-          </button>
+        <div
+          className="fixed rounded-lg bg-text-500 bottom-5 right-5 p-3 z-20 border border-text-500
+          animate-slide-in-blurred-bottom"
+        >
+          <div className="flex gap-2">
+            {isHiddenEdit || (
+              <Button
+                className="!p-3"
+                value="一括編集"
+                type="button"
+                onClick={onClickEdit}
+              />
+            )}
+            <Button
+              className="!p-3"
+              value="一括削除"
+              type="button"
+              onClick={onClickDelete}
+            />
+          </div>
         </div>
       )}
     </>

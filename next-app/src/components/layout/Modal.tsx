@@ -11,9 +11,9 @@ export function Modal({ className, modalFlg, setModalFlg, children }: Props) {
       className={`fixed inset-0 z-40 flex items-center justify-center ${modalFlg || "hidden"}`}
     >
       <div
-        className="absolute inset-0 bg-text-800 opacity-60"
+        className="absolute inset-0 bg-accent-500 opacity-30"
         onClick={() => setModalFlg(false)}
-      ></div>
+      />
       <div
         className={`relative z-50 bg-white p-4 lg:p-8 rounded-lg w-full h-[600px] overflow-auto mx-8 lg:mx-20 ${className}`}
       >

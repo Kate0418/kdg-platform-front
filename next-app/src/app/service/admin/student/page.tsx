@@ -5,7 +5,7 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { Title } from "@/components/layout/Title";
 import { List } from "@/components/layout/List";
-import { Pagination } from "@/components/layout/Pagination";
+import { Pagination } from "@/components/layout/pagination/pagination";
 import { StudentListTable } from "@/components/service/admin/student/studentListTable/studentListTable";
 import { StudentUpdate, StudentUpdateProps } from "@/api/StudentUpdate";
 import { Loader } from "@/components/layout/Loader";
@@ -16,6 +16,8 @@ import { Token } from "@/api/Token";
 import { useRouter } from "next/navigation";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { StudentDestroy } from "@/api/StudentDestroy";
+import { Button } from "@/components/layout/button/button";
+import { Checkbox } from "@/components/layout/checkbox/checkbox";
 
 type StudentsWithZoom = StudentResponse["students"][number] & { zoom: boolean };
 
@@ -115,23 +117,26 @@ export default function Page() {
     <>
       <Title title="生徒情報管理" icon="student" />
       <div className="flex"></div>
-      <List title="生徒一覧" h={550} loaderFlg={loaderFlg}>
-        <div className="flex justify-end items-center">
-          <form onSubmit={handleSearch}>
+      <List title="生徒一覧" h={250} loaderFlg={loaderFlg}>
+        <form
+          onSubmit={handleSearch}
+          className="flex justify-end items-center gap-2 py-2"
+        >
+          <div>
             <label>検索ワード：</label>
             <input
-              className="p-1 border border-text-800"
+              className="p-1 border border-text-500"
               name="keyWord"
               defaultValue={keyWord}
             />
-            <button className="button !p-1 lg:!p-2" type="submit">
-              検索
-            </button>
-          </form>
-          <a className="a !p-1 lg:!p-2" href="/service/admin/student/store">
-            新規作成
-          </a>
-        </div>
+          </div>
+          <Button value="検索" type="submit" />
+          <Button
+            value="新規作成"
+            type="link"
+            href="/service/admin/student/store"
+          />
+        </form>
         <StudentListTable
           students={students}
           setZoom={setZoom}
@@ -149,7 +154,7 @@ export default function Page() {
       />
 
       <Modal
-        className="!w-[720px] !h-96"
+        className="!w-[720px] !h-80"
         modalFlg={updateModalFlg}
         setModalFlg={setUpdateModalFlg}
       >

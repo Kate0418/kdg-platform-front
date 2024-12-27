@@ -25,14 +25,14 @@ export function TeacherFormTable({
       {teachers.map((teacher, index) => (
         <table key={index} className="w-full mb-16">
           <thead>
-            <tr className="border border-text-800 bg-text-800 text-base-800">
-              <td className="border-r border-base-800 p-1 w-5/12">名前</td>
+            <tr className="border border-text-500 bg-text-500 text-base-500">
+              <td className="border-r border-base-500 p-1 w-5/12">名前</td>
               <td className="p-1 w-7/12">メールアドレス</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="border border-text-800">
+              <td className="border border-text-500">
                 {modalFlg ? (
                   <div className="w-full p-1">{teacher.name}</div>
                 ) : (
@@ -51,7 +51,7 @@ export function TeacherFormTable({
                   />
                 )}
               </td>
-              <td className="border border-text-800">
+              <td className="border border-text-500">
                 {modalFlg ? (
                   <div className="w-full p-1">{teacher.email}</div>
                 ) : (
@@ -72,9 +72,9 @@ export function TeacherFormTable({
               </td>
             </tr>
             <tr>
-              <td className="border border-text-800" colSpan={2}>
+              <td className="border border-text-500" colSpan={2}>
                 <div className="flex">
-                  <div className="bg-text-800 text-base-800 p-1 w-1/6 text-center">
+                  <div className="bg-text-500 text-base-500 p-1 w-1/6 text-center">
                     科目
                   </div>
                   <div className="w-5/6">
