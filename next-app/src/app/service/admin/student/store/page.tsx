@@ -60,19 +60,25 @@ export default function Page() {
             },
           ])
         }
-        deleteOnClick={() =>
-          students.length > 1 && setStudents(students.slice(0, -1))
-        }
+        deleteOnClick={() => {
+          if (students.length > 1) {
+            setStudents(students.slice(0, -1));
+          }
+        }}
         confirmOnClick={() => {
-          students.every(
-            (student) =>
-              student.name != "" &&
-              student.email != "" &&
-              student.gradeId != null &&
-              student.yearId != null,
-          )
-            ? setModalFlg(true)
-            : alert("名前,メールアドレス,年次,年制は必須です");
+          if (
+            students.every(
+              (student) =>
+                student.name != "" &&
+                student.email != "" &&
+                student.gradeId != null &&
+                student.yearId != null,
+            )
+          ) {
+            setModalFlg(true);
+          } else {
+            alert("名前,メールアドレス,年次,年制は必須です");
+          }
         }}
       />
 

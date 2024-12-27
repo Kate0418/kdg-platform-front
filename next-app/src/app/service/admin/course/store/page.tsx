@@ -4,7 +4,7 @@ import { CourseStore, CourseStoreProps } from "@/api/CourseStore";
 import { List } from "@/components/layout/List";
 import { Modal } from "@/components/layout/Modal";
 import { Title } from "@/components/layout/Title";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Token } from "@/api/Token";
 import { Loader } from "@/components/layout/Loader";

@@ -17,7 +17,6 @@ import { useRouter } from "next/navigation";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { StudentDestroy } from "@/api/StudentDestroy";
 import { Button } from "@/components/layout/button/button";
-import { Checkbox } from "@/components/layout/checkbox/checkbox";
 
 type StudentsWithZoom = StudentResponse["students"][number] & { zoom: boolean };
 

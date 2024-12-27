@@ -5,7 +5,7 @@ import { Loader } from "@/components/layout/Loader";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/layout/Button";
+import { Button } from "@/components/layout/button/button";
 import { userTypes } from "@/config";
 
 export default function Page() {
@@ -81,7 +81,7 @@ export default function Page() {
           </div>
 
           <div className="flex justify-end pr-2">
-            <Button type="submit">ログイン</Button>
+            <Button value="ログイン" type="submit" />
           </div>
         </div>
         <div className="bg-text-500 h-2 mt-auto"></div>

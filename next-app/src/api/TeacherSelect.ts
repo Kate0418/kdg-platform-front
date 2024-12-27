@@ -18,6 +18,7 @@ export async function TeacherSelect(): Promise<TeacherSelectResponse> {
     });
     return response.data;
   } catch (e) {
+    console.error(e);
     return {
       success: false,
       teachers: [],
