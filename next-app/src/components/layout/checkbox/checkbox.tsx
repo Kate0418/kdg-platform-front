@@ -24,7 +24,7 @@ export function Checkbox({
           onChange={onChange}
         />
         <div
-          className="checkbox before:border-2 before:border-[var(--checkbox-border-color)]"
+          className="checkbox before:border-2 lg:before:border-[3px] before:border-[var(--checkbox-border-color)]"
           style={
             {
               "--checkbox-border-color": color,

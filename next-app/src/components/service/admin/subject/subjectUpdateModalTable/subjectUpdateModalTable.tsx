@@ -32,7 +32,7 @@ export function SubjectUpdateModalTable({
     <table className="w-full">
       <tbody>
         <tr>
-          <td className="text-base-500 bg-text-500 border border-text-500 p-2 border-b-base-500">
+          <td className="text-base-500 bg-text-500 border border-text-500 p-2 border-b-base-500 font-bold">
             科目名
           </td>
           <td className="border border-text-500 p-2">
@@ -45,7 +45,7 @@ export function SubjectUpdateModalTable({
           </td>
         </tr>
         <tr>
-          <td className="text-base-500 bg-text-500 border border-text-500 p-2">
+          <td className="text-base-500 bg-text-500 border border-text-500 p-2 font-bold">
             講師名
           </td>
           <td className="border border-text-500 p-2">
@@ -57,7 +57,7 @@ export function SubjectUpdateModalTable({
               onChange={(e: SelectItem) => {
                 setUpdateSubject({
                   ...updateSubject,
-                  teacherId: e.value,
+                  teacherId: e?.value ?? null,
                 });
               }}
             />

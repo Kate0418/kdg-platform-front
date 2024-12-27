@@ -67,7 +67,7 @@ export function StudentListTable({
         {students.map((student) => (
           <React.Fragment key={student.id}>
             <tr>
-              <td className="tbody-td">
+              <td className="tbody-td w-10">
                 <div className="flex justify-center items-center">
                   <Checkbox
                     checked={checkIds.includes(student.id)}

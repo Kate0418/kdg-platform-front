@@ -49,7 +49,7 @@ export function StudentFromTable({
           </thead>
           <tbody>
             <tr>
-              <td className="tbody-td !p-0">
+              <td className="tbody-td">
                 {readOnly ? (
                   <div className="p-2">{student.name}</div>
                 ) : (
@@ -114,7 +114,7 @@ export function StudentFromTable({
                             const newStudents = [...students];
                             newStudents[index] = {
                               ...newStudents[index],
-                              courseId: e?.value,
+                              courseId: e?.value ?? null,
                             };
                             setStudents(newStudents);
                           }}
@@ -145,7 +145,7 @@ export function StudentFromTable({
                             const newStudents = [...students];
                             newStudents[index] = {
                               ...newStudents[index],
-                              gradeId: e?.value,
+                              gradeId: e?.value ?? null,
                             };
                             setStudents(newStudents);
                           }}
@@ -175,7 +175,7 @@ export function StudentFromTable({
                             const newStudents = [...students];
                             newStudents[index] = {
                               ...newStudents[index],
-                              yearId: e?.value,
+                              yearId: e?.value ?? null,
                             };
                             setStudents(newStudents);
                           }}

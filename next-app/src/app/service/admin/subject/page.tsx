@@ -3,7 +3,7 @@
 import { Subject, SubjectResponse } from "@/api/Subject";
 import { SubjectListTable } from "@/components/service/admin/subject/subjectListTable/subjectListTable";
 import { List } from "@/components/layout/List";
-import { Pagination } from "@/components/layout/Pagination";
+import { Pagination } from "@/components/layout/pagination/pagination";
 import { Title } from "@/components/layout/Title";
 import { useState, useEffect, useCallback } from "react";
 import { Modal } from "@/components/layout/Modal";
@@ -15,6 +15,7 @@ import { SubjectUpdate, SubjectUpdateProps } from "@/api/SubjectUpdate";
 import { Loader } from "@/components/layout/Loader";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { SubjectDestroy } from "@/api/SubjectDestroy";
+import { Button } from "@/components/layout/button/button";
 
 export default function Page() {
   const [subjects, setSubjects] = useState<SubjectResponse["subjects"]>([]);
@@ -94,23 +95,26 @@ export default function Page() {
   return (
     <>
       <Title title="科目情報管理" icon="subject" />
-      <List title="科目一覧" loaderFlg={loaderFlg} h={550}>
-        <div className="flex justify-end items-center">
-          <form onSubmit={handleSearch}>
+      <List title="科目一覧" loaderFlg={loaderFlg} h={250}>
+        <form
+          className="flex justify-end items-center gap-2 py-2"
+          onSubmit={handleSearch}
+        >
+          <div>
             <label>検索ワード：</label>
             <input
               className="p-1 border border-text-500"
               name="keyWord"
               defaultValue={keyWord}
             />
-            <button className="button !p-1 lg:!p-2" type="submit">
-              検索
-            </button>
-          </form>
-          <a className="a !p-1 lg:!p-2" href="/service/admin/subject/store">
-            新規作成
-          </a>
-        </div>
+          </div>
+          <Button value="検索" type="submit" />
+          <Button
+            value="新規作成"
+            type="link"
+            href="/service/admin/subject/store"
+          />
+        </form>
         <SubjectListTable
           subjects={subjects}
           checkIds={checkIds}

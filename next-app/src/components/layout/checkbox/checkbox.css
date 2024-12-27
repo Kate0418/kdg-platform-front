@@ -28,6 +28,7 @@
     -ms-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
+    top: 0.25rem;
     height: 0.5rem;
     border-top-style: none;
     border-right-style: none;

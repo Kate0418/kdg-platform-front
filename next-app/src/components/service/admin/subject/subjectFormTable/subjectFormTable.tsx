@@ -1,43 +1,52 @@
 import { SubjectStoreProps } from "@/api/SubjectStore";
-import { TeacherSelectResponse } from "@/api/TeacherSelect";
+import { TeacherSelect, TeacherSelectResponse } from "@/api/TeacherSelect";
 import { Select } from "@/components/layout/Select";
 import { SelectItem } from "@/config";
+import { useEffect, useState } from "react";
 
 interface SubjectFormTableProps {
   subjects: SubjectStoreProps["subjects"];
   setSubjects: React.Dispatch<
     React.SetStateAction<SubjectStoreProps["subjects"]>
   >;
-  select: {
-    teachers: TeacherSelectResponse["teachers"];
-  };
   modalFlg?: boolean;
 }
 
 export function SubjectFormTable({
   subjects,
   setSubjects,
-  select,
   modalFlg = false,
 }: SubjectFormTableProps) {
+  const [teachers, setTeachers] = useState<TeacherSelectResponse["teachers"]>(
+    [],
+  );
+
+  useEffect(() => {
+    const selectApi = async () => {
+      const response = await TeacherSelect();
+      setTeachers(response.teachers);
+    };
+
+    selectApi();
+  }, []);
   return (
     <table className="w-full mb-5 mt-2">
       <thead>
-        <tr className="border border-text-500 bg-text-500 text-base-500">
-          <td className="border-r border-base-500 p-1 w-1/2">科目名</td>
-          <td className="p-1 w-1/2">講師</td>
+        <tr className="thead-tr">
+          <td className="thead-td w-1/2">科目名</td>
+          <td className="thead-td w-1/2">講師</td>
         </tr>
       </thead>
       <tbody className="overflow-auto">
         {subjects.map((subject, index) => (
           <tr key={index}>
-            <td className="border border-text-500">
+            <td className="tbody-td">
               {modalFlg ? (
-                <div className="w-full p-1 font-bold">{subject.name}</div>
+                <div className="w-full p-2">{subject.name}</div>
               ) : (
                 <input
                   type="text"
-                  className="w-full p-1 font-bold"
+                  className="w-full p-2"
                   value={subject.name}
                   onChange={(e) => {
                     const newSubjects = [...subjects];
@@ -50,24 +59,24 @@ export function SubjectFormTable({
                 />
               )}
             </td>
-            <td className="border border-text-500">
+            <td className="tbody-td">
               {modalFlg ? (
                 <div>
-                  {select.teachers.find(
+                  {teachers.find(
                     (teacher) => teacher.value === subject.teacherId,
                   )?.label ?? ""}
                 </div>
               ) : (
                 <Select
-                  options={select.teachers}
-                  value={select.teachers.find(
+                  options={teachers}
+                  value={teachers.find(
                     (teacher) => teacher.value === subject.teacherId,
                   )}
                   onChange={(e: SelectItem) => {
                     const newSubjects = [...subjects];
                     newSubjects[index] = {
                       ...newSubjects[index],
-                      teacherId: e.value,
+                      teacherId: e?.value ?? null,
                     };
                     setSubjects(newSubjects);
                   }}

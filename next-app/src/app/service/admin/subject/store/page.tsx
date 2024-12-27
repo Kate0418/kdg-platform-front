@@ -7,16 +7,12 @@ import { Token } from "@/api/Token";
 import { List } from "@/components/layout/List";
 import { SubjectStore, SubjectStoreProps } from "@/api/SubjectStore";
 import { Title } from "@/components/layout/Title";
-import { TeacherSelect, TeacherSelectResponse } from "@/api/TeacherSelect";
 import { Modal } from "@/components/layout/Modal";
 import { SubjectFormTable } from "@/components/service/admin/subject/subjectFormTable/subjectFormTable";
 import { StoreFormController } from "@/components/layout/storeFormController/storeFormController";
 import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
 
 export default function Page() {
-  const [teachers, setTeachers] = useState<TeacherSelectResponse["teachers"]>(
-    [],
-  );
   const [subjects, setSubjects] = useState<SubjectStoreProps["subjects"]>([
     { name: "", teacherId: null },
   ]);
@@ -24,15 +20,6 @@ export default function Page() {
   const [modalFlg, setModalFlg] = useState(false);
   const [loaderFlg, setLoaderFlg] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    const selectApi = async () => {
-      const response = await TeacherSelect();
-      setTeachers(response.teachers);
-    };
-
-    selectApi();
-  }, []);
 
   const storeApi = async () => {
     setLoaderFlg(true);
@@ -56,14 +43,8 @@ export default function Page() {
   return (
     <>
       <Title title="科目登録" icon="subject" />
-      <List title="登録科目一覧" h={520}>
-        <SubjectFormTable
-          subjects={subjects}
-          setSubjects={setSubjects}
-          select={{
-            teachers: teachers,
-          }}
-        />
+      <List title="登録科目一覧" h={250}>
+        <SubjectFormTable subjects={subjects} setSubjects={setSubjects} />
       </List>
       <StoreFormController
         cancelUrl="/service/admin/subject"
@@ -84,7 +65,6 @@ export default function Page() {
         <SubjectFormTable
           subjects={subjects}
           setSubjects={setSubjects}
-          select={{ teachers }}
           modalFlg={modalFlg}
         />
         <StoreModalController
