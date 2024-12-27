@@ -1,7 +1,9 @@
 import { TeacherResponse } from "@/api/Teacher";
 import { TeacherUpdateProps } from "@/api/TeacherUpdate";
+import { Checkbox } from "@/components/layout/checkbox/checkbox";
+import { ZoomInIcon } from "@/components/layout/icons/zoomInIcon/zoomInIcon";
+import { ZoomOutIcon } from "@/components/layout/icons/zoomOutIcon/zoomOutIcon";
 import { WithZoom } from "@/config";
-import Image from "next/image";
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 
@@ -42,12 +44,11 @@ export function TeacherListTable({
   return (
     <table className="w-full">
       <thead>
-        <tr className="border border-text-500 bg-text-500 text-base-500">
-          <td className="border-r border-base-500 p-2 w-10">
+        <tr className="thead-tr">
+          <td className="thead-td w-10">
             <div className="flex justify-center items-center">
-              <input
-                type="checkbox"
-                className="scale-[2] accent-accent-500"
+              <Checkbox
+                color="var(--base-500)"
                 checked={allCheckFlg}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAllCheckFlg(e.target.checked);
@@ -56,20 +57,18 @@ export function TeacherListTable({
               />
             </div>
           </td>
-          <td className="border-r border-base-500 p-2">名前</td>
-          <td className="border-r border-base-500 p-2">メールアドレス</td>
-          <td className="w-[50px] lg:w-[100px]"></td>
+          <td className="thead-td">名前</td>
+          <td className="thead-td">メールアドレス</td>
+          <td className="thead-td w-[50px]"></td>
         </tr>
       </thead>
       <tbody>
         {teachers.map((teacher, index) => (
           <React.Fragment key={index}>
             <tr>
-              <td className="border border-text-500 p-2">
+              <td className="tbody-td">
                 <div className="flex justify-center items-center">
-                  <input
-                    type="checkbox"
-                    className="scale-[2] accent-accent-500"
+                  <Checkbox
                     checked={checkIds.includes(teacher.id)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       let newCheckIds;
@@ -86,9 +85,9 @@ export function TeacherListTable({
                   />
                 </div>
               </td>
-              <td className="border border-text-500 lg:p-2">
+              <td className="tbody-td p-1 lg:p-2">
                 <button
-                  className="text-text-500 hover:text-text-500 underline"
+                  className="link"
                   onClick={() => {
                     setUpdateTeacher({
                       id: teacher.id,
@@ -102,38 +101,32 @@ export function TeacherListTable({
                   {teacher.name}
                 </button>
               </td>
-              <td className="border border-text-500 lg:p-2">{teacher.email}</td>
-              <td className="border border-text-500 lg:p-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setZoom(teacher.id);
-                  }}
-                >
-                  <Image
-                    className="lg:w-8"
-                    src={
-                      teacher.zoom ? "/img/zoom_out.svg" : "/img/zoom_in.svg"
-                    }
-                    alt="zoom"
-                    width={24}
-                    height={24}
-                  />
-                </button>
+              <td className="tbody-td p-1 lg:p-2">{teacher.email}</td>
+              <td
+                className="tbody-td p-2"
+                onClick={() => {
+                  setZoom(teacher.id);
+                }}
+              >
+                {teacher.zoom ? <ZoomOutIcon /> : <ZoomInIcon />}
               </td>
             </tr>
-            <tr className={teacher.zoom ? "" : "hidden"}>
-              <td className="-800" colSpan={4}>
-                <div className="flex">
-                  <div className="bg-text-500 text-base-500 w-1/6 text-center p-1 lg:py-3 ">
-                    科目
+            {teacher.zoom && (
+              <tr>
+                <td className="tbody-td" colSpan={4}>
+                  <div className="flex">
+                    <div className="bg-text-500 text-base-500 p-2 w-1/6 flex justify-center items-center font-bold">
+                      科目
+                    </div>
+                    <div className="flex items-center py-2 px-6">
+                      {teacher.subjects
+                        .map((subject) => subject.name)
+                        .join(", ")}
+                    </div>
                   </div>
-                  <div className="flex items-center py-1 px-6">
-                    {teacher.subjects.map((subject) => subject.name).join(", ")}
-                  </div>
-                </div>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            )}
           </React.Fragment>
         ))}
       </tbody>

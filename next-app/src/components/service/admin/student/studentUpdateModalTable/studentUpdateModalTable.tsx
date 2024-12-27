@@ -35,7 +35,7 @@ export function StudentUpdateModalTable({
     selectApi();
   }, []);
 
-  const theadTd = "bg-text-500 text-base-500 border-base-500 p-2";
+  const theadTd = "bg-text-500 text-base-500 border-base-500 p-2 font-bold";
   return (
     <table className="w-full">
       <tbody>

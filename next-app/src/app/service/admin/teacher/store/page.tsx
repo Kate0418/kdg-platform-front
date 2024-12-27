@@ -1,6 +1,5 @@
 "use client";
 
-import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
 import { Loader } from "@/components/layout/Loader";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -15,25 +14,12 @@ import { StoreFormController } from "@/components/layout/storeFormController/sto
 import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
 
 export default function Page() {
-  const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
-    [],
-  );
   const [teachers, setTeachers] = useState<TeacherStoreProps["teachers"]>([
     { name: "", email: "", subjectIds: [] },
   ]);
   const [modalFlg, setModalFlg] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    //セレクトボックスの取得
-    const selectApi = async () => {
-      const data = await SubjectSelect();
-      setSubjects(data.subjects);
-    };
-
-    selectApi();
-  }, []);
 
   const storeApi = async () => {
     setLoading(true);
@@ -59,12 +45,8 @@ export default function Page() {
   return (
     <>
       <Title title="講師登録" icon="teacher" />
-      <List title="登録講師一覧" h={520}>
-        <TeacherFormTable
-          teachers={teachers}
-          setTeachers={setTeachers}
-          select={{ subjects }}
-        />
+      <List title="登録講師一覧" h={250}>
+        <TeacherFormTable teachers={teachers} setTeachers={setTeachers} />
       </List>
 
       <StoreFormController
@@ -80,7 +62,7 @@ export default function Page() {
             (teacher) => teacher.name !== "" && teacher.email !== "",
           )
             ? setModalFlg(true)
-            : alert("講師情報を正しく入力してください")
+            : alert("名前, メールアドレスは必須です")
         }
       />
 
@@ -88,7 +70,6 @@ export default function Page() {
         <TeacherFormTable
           teachers={teachers}
           setTeachers={setTeachers}
-          select={{ subjects }}
           modalFlg={modalFlg}
         />
         <StoreModalController

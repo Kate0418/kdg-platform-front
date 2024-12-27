@@ -31,7 +31,7 @@ export function TeacherUpdateModalTable({
     <table>
       <tbody>
         <tr>
-          <td className="text-base-500 bg-text-500 border border-text-500 p-2 border-b-base-500">
+          <td className="text-base-500 bg-text-500 border border-text-500 p-2 border-b-base-500 font-bold">
             名前
           </td>
           <td className="border border-text-500 p-2">
@@ -45,7 +45,7 @@ export function TeacherUpdateModalTable({
           </td>
         </tr>
         <tr>
-          <td className="text-base-500 bg-text-500 border border-text-500 p-2 border-b-base-500">
+          <td className="text-base-500 bg-text-500 border border-text-500 p-2 border-b-base-500 font-bold">
             メールアドレス
           </td>
           <td className="border border-text-500 p-2">
@@ -59,7 +59,7 @@ export function TeacherUpdateModalTable({
           </td>
         </tr>
         <tr>
-          <td className="text-base bg-text-500 border border-text-500 p-2">
+          <td className="text-base-500 bg-text-500 border border-text-500 p-2 font-bold">
             科目
           </td>
           <td className="border border-text-500 p-2">

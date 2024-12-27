@@ -12,7 +12,7 @@ export function List({ title, loaderFlg = false, children, h }: Props) {
         className="border border-text-500 rounded-xl"
         style={{ height: `calc(100vh - ${h}px)` }}
       >
-        <div className="bg-text-500 text-base-500 p-1 rounded-t-lg">
+        <div className="bg-text-500 text-base-500 p-1 rounded-t-lg font-bold">
           {title}
         </div>
         <div

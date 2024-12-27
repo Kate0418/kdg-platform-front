@@ -73,9 +73,6 @@ export default function Page() {
 
     const response = await StudentUpdate({ students: [updateStudent] });
     alert(response.message);
-    if (response.success) {
-      router.push("/service/admin/student");
-    }
     setUpdateModalFlg(false);
     setUpdateFlg(false);
     indexApi();

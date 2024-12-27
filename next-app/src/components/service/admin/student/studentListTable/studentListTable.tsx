@@ -4,7 +4,6 @@ import { Checkbox } from "@/components/layout/checkbox/checkbox";
 import { ZoomInIcon } from "@/components/layout/icons/zoomInIcon/zoomInIcon";
 import { ZoomOutIcon } from "@/components/layout/icons/zoomOutIcon/zoomOutIcon";
 import { WithZoom } from "@/config";
-import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 
 type StudentWithZoom = WithZoom<StudentResponse["students"][number]>;
@@ -120,7 +119,7 @@ export function StudentListTable({
                 <td className="tbody-td" colSpan={4}>
                   <div className="grid lg:grid-cols-[5fr_3fr_3fr]">
                     <div className="flex max-lg:border-b border-text-500">
-                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500">
+                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500 font-bold">
                         コース
                       </div>
                       <div className="flex items-center py-1 px-6">
@@ -128,7 +127,7 @@ export function StudentListTable({
                       </div>
                     </div>
                     <div className="flex max-lg:border-b border-text-500">
-                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500">
+                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500 font-bold">
                         年次
                       </div>
                       <div className="flex items-center py-1 px-6">
@@ -136,7 +135,7 @@ export function StudentListTable({
                       </div>
                     </div>
                     <div className="flex max-lg:border-b border-text-500">
-                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500">
+                      <div className="w-16 bg-text-500 text-base-500 text-center p-2 max-lg:border-b border-base-500 font-bold">
                         年制
                       </div>
                       <div className="flex items-center py-1 px-6">

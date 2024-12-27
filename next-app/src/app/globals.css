@@ -83,7 +83,7 @@ input {
 }
 
 .thead-td {
-    @apply [&:not(:last-child)]:border-r border-base-500 p-2;
+    @apply [&:not(:last-child)]:border-r border-base-500 p-2 font-bold;
 }
 
 .thead-tr {

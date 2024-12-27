@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Title } from "@/components/layout/Title";
 import { List } from "@/components/layout/List";
 import { Teacher, TeacherResponse } from "@/api/Teacher";
-import { Pagination } from "@/components/layout/Pagination";
+import { Pagination } from "@/components/layout/pagination/pagination";
 import { TeacherListTable } from "@/components/service/admin/teacher/teacherListTable/teacherListTable";
 import { WithZoom } from "@/config";
 import { TeacherUpdate, TeacherUpdateProps } from "@/api/TeacherUpdate";
@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { Loader } from "@/components/layout/Loader";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { TeacherDestroy } from "@/api/TeacherDestroy";
+import { Button } from "@/components/layout/button/button";
 
 type TeachersWithZoom = WithZoom<TeacherResponse["teachers"][number]>;
 
@@ -67,9 +68,7 @@ export default function Page() {
 
     const response = await TeacherUpdate({ teachers: [updateTeacher] });
     alert(response.message);
-    if (response.success) {
-      router.push("/service/admin/teacher");
-    }
+    setUpdateModalFlg(false);
     setUpdateFlg(false);
     indexApi();
   };
@@ -108,23 +107,26 @@ export default function Page() {
   return (
     <>
       <Title title="講師情報管理" icon="teacher" />
-      <List title="講師一覧" h={550} loaderFlg={loaderFlg}>
-        <div className="flex justify-end items-center">
-          <form onSubmit={handleSearch}>
+      <List title="講師一覧" h={250} loaderFlg={loaderFlg}>
+        <form
+          className="flex justify-end items-center gap-2 py-2"
+          onSubmit={handleSearch}
+        >
+          <div>
             <label>検索ワード：</label>
             <input
               className="p-1 border border-text-500"
               name="keyWord"
               defaultValue={keyWord}
             />
-            <button className="button !p-1 lg:!p-2" type="submit">
-              検索
-            </button>
-          </form>
-          <a className="a !p-1 lg:!p-2" href="/service/admin/teacher/store">
-            新規作成
-          </a>
-        </div>
+          </div>
+          <Button value="検索" type="submit" />
+          <Button
+            value="新規作成"
+            type="link"
+            href="/service/admin/teacher/store"
+          />
+        </form>
         <TeacherListTable
           teachers={teachers}
           setZoom={setZoom}
@@ -142,7 +144,7 @@ export default function Page() {
       />
 
       <Modal
-        className="!w-[720px] !h-64"
+        className="!w-[720px] !h-72"
         modalFlg={updateModalFlg}
         setModalFlg={setUpdateModalFlg}
       >
