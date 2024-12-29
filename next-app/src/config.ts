@@ -14,5 +14,3 @@ export const daysOfWeek = [
 ];
 
 export type WithZoom<T> = T & { zoom: boolean };
-
-export const userTypes = ["develop", "admin", "teacher", "student"];

@@ -11,6 +11,7 @@ import { Loader } from "@/components/layout/Loader";
 import { CourseFormTable } from "@/components/service/admin/course/courseFormTable/courseFormTable";
 import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
 import { StoreFormController } from "@/components/layout/storeFormController/storeFormController";
+import { CourseIcon } from "@/components/layout/icons/courseIcon/courseIcon";
 
 export default function Page() {
   const period = 12;
@@ -53,7 +54,9 @@ export default function Page() {
 
   return (
     <>
-      <Title title="コース登録" icon="course" />
+      <Title label="コース登録">
+        <CourseIcon />
+      </Title>
       <List title="登録コース" h={250}>
         <CourseFormTable course={course} setCourse={setCourse} />
       </List>

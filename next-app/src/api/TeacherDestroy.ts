@@ -1,7 +1,8 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export interface TeacherDestroyProps {
-    teacherIds: number[];
+  teacherIds: number[];
 }
 
 export interface TeacherDestroyResponse {
@@ -9,22 +10,21 @@ export interface TeacherDestroyResponse {
   message: string;
 }
 
-export async function TeacherDestroy({teacherIds}: TeacherDestroyProps): Promise<TeacherDestroyResponse> {
+export async function TeacherDestroy({
+  teacherIds,
+}: TeacherDestroyProps): Promise<TeacherDestroyResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/teacher`;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   try {
-    const response = await axios.delete<TeacherDestroyResponse>(
-        api_url, 
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            params: {
-                teacherIds: teacherIds
-            }
-        }
-    );
+    const response = await axios.delete<TeacherDestroyResponse>(api_url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        teacherIds: teacherIds,
+      },
+    });
     return response.data;
   } catch (e) {
     console.error(e);

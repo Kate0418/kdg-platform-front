@@ -11,6 +11,7 @@ import { Title } from "@/components/layout/Title";
 import { StudentFromTable } from "@/components/service/admin/student/studentFormTable/studentFormTable";
 import { StoreFormController } from "@/components/layout/storeFormController/storeFormController";
 import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
+import { StudentIcon } from "@/components/layout/icons/studentIcon/studentIcon";
 
 export default function Page() {
   const [students, setStudents] = useState<StudentStoreProps["students"]>([
@@ -42,7 +43,9 @@ export default function Page() {
 
   return (
     <>
-      <Title title="生徒登録" icon="student" />
+      <Title label="生徒登録">
+        <StudentIcon />
+      </Title>
       <List title="登録生徒一覧" h={250}>
         <StudentFromTable students={students} setStudents={setStudents} />
       </List>

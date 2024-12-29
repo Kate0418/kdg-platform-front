@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export interface TeacherProps {
   keyWord: string;
@@ -25,7 +26,7 @@ export async function Teacher({
   pageCount,
 }: TeacherProps): Promise<TeacherResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/teacher`;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   try {
     const response = await axios.get<TeacherResponse>(api_url, {

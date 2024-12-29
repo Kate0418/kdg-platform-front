@@ -7,7 +7,7 @@ export interface LoginProps {
 
 export interface LoginResponse {
   success: boolean;
-  type?: number;
+  type?: string;
   token?: string;
 }
 

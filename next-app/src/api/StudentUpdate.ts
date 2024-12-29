@@ -1,5 +1,6 @@
 import axios from "axios";
 import { StudentStoreProps } from "./StudentStore";
+import Cookies from "js-cookie";
 
 export interface StudentUpdateProps {
   students: Array<{ id: number } & StudentStoreProps["students"][number]>;
@@ -11,30 +12,29 @@ export interface StudentUpdateResponse {
 }
 
 export async function StudentUpdate({
-    students,
-  }: StudentUpdateProps): Promise<StudentUpdateResponse> {
-    const api_url = `${process.env.NEXT_PUBLIC_API_URL}/student`;
-    const token = localStorage.getItem("token");
-  
-    try {
-      const response = await axios.put<StudentUpdateResponse>(
-        api_url,
-        {
-          students: students,
+  students,
+}: StudentUpdateProps): Promise<StudentUpdateResponse> {
+  const api_url = `${process.env.NEXT_PUBLIC_API_URL}/student`;
+  const token = Cookies.get("token");
+
+  try {
+    const response = await axios.put<StudentUpdateResponse>(
+      api_url,
+      {
+        students: students,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      return response.data;
-    } catch (e) {
-      console.error(e);
-      return {
-        success: false,
-        message: "更新に失敗しました",
-      };
-    }
+      },
+    );
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      message: "更新に失敗しました",
+    };
   }
-  
+}

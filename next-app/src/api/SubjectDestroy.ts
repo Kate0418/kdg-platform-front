@@ -1,7 +1,8 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export interface SubjectDestroyProps {
-    subjectIds: number[];
+  subjectIds: number[];
 }
 
 export interface SubjectDestroyResponse {
@@ -9,22 +10,21 @@ export interface SubjectDestroyResponse {
   message: string;
 }
 
-export async function SubjectDestroy({subjectIds}: SubjectDestroyProps): Promise<SubjectDestroyResponse> {
+export async function SubjectDestroy({
+  subjectIds,
+}: SubjectDestroyProps): Promise<SubjectDestroyResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject`;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   try {
-    const response = await axios.delete<SubjectDestroyResponse>(
-        api_url, 
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            params: {
-                subjectIds: subjectIds
-            }
-        }
-    );
+    const response = await axios.delete<SubjectDestroyResponse>(api_url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        subjectIds: subjectIds,
+      },
+    });
     return response.data;
   } catch (e) {
     console.error(e);

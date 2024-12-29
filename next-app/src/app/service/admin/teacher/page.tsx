@@ -18,6 +18,7 @@ import { Loader } from "@/components/layout/Loader";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { TeacherDestroy } from "@/api/TeacherDestroy";
 import { Button } from "@/components/layout/button/button";
+import { TeacherIcon } from "@/components/layout/icons/teacherIcon/teacherIcon";
 
 type TeachersWithZoom = WithZoom<TeacherResponse["teachers"][number]>;
 
@@ -106,7 +107,9 @@ export default function Page() {
 
   return (
     <>
-      <Title title="講師情報管理" icon="teacher" />
+      <Title label="講師情報管理">
+        <TeacherIcon />
+      </Title>
       <List title="講師一覧" h={250} loaderFlg={loaderFlg}>
         <form
           className="flex justify-end items-center gap-2 py-2"

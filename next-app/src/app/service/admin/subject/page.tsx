@@ -16,6 +16,7 @@ import { Loader } from "@/components/layout/Loader";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { SubjectDestroy } from "@/api/SubjectDestroy";
 import { Button } from "@/components/layout/button/button";
+import { SubjectIcon } from "@/components/layout/icons/subjectIcon/subjectIcon";
 
 export default function Page() {
   const [subjects, setSubjects] = useState<SubjectResponse["subjects"]>([]);
@@ -59,6 +60,7 @@ export default function Page() {
 
     const response = await SubjectUpdate({ subjects: [updateSubject] });
     alert(response.message);
+    setUpdateModalFlg(false);
     setUpdateFlg(false);
     indexApi();
   };
@@ -94,7 +96,9 @@ export default function Page() {
 
   return (
     <>
-      <Title title="科目情報管理" icon="subject" />
+      <Title label="科目情報管理">
+        <SubjectIcon />
+      </Title>
       <List title="科目一覧" loaderFlg={loaderFlg} h={250}>
         <form
           className="flex justify-end items-center gap-2 py-2"

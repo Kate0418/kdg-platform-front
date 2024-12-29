@@ -82,7 +82,7 @@ export function StudentUpdateModalTable({
               onChange={(e) => {
                 setUpdatStudent({
                   ...updatStudent,
-                  courseId: e.value,
+                  courseId: e?.value ?? null,
                 });
               }}
             />
@@ -99,7 +99,7 @@ export function StudentUpdateModalTable({
               onChange={(e) => {
                 setUpdatStudent({
                   ...updatStudent,
-                  gradeId: e.value,
+                  gradeId: e?.value ?? null,
                 });
               }}
             />

@@ -1,16 +1,14 @@
-import Image from "next/image";
-
 interface Props {
-  title: string;
-  icon: string;
+  label: string;
+  children: React.ReactNode;
 }
 
-export function Title({ title, icon }: Props) {
+export function Title({ label, children }: Props) {
   return (
     <div className="border-b border-text-500 w-full">
-      <div className="text-xl lg:text-3xl pl-2 pb-2 flex items-center gap-2">
-        <Image src={`/img/${icon}.svg`} width={36} height={36} alt={icon} />
-        {title}
+      <div className="text-2xl lg:text-3xl pl-2 pb-2 flex items-center gap-2">
+        {children}
+        {label}
       </div>
     </div>
   );

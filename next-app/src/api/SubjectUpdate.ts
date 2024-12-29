@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SubjectStoreProps } from "./SubjectStore";
+import Cookies from "js-cookie";
 
 export interface SubjectUpdateProps {
   subjects: Array<{ id: number } & SubjectStoreProps["subjects"][number]>;
@@ -14,7 +15,7 @@ export async function SubjectUpdate({
   subjects,
 }: SubjectUpdateProps): Promise<SubjectUpdateResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/subject`;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   try {
     const response = await axios.put<SubjectUpdateResponse>(

@@ -11,6 +11,7 @@ import { Modal } from "@/components/layout/Modal";
 import { SubjectFormTable } from "@/components/service/admin/subject/subjectFormTable/subjectFormTable";
 import { StoreFormController } from "@/components/layout/storeFormController/storeFormController";
 import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
+import { SubjectIcon } from "@/components/layout/icons/subjectIcon/subjectIcon";
 
 export default function Page() {
   const [subjects, setSubjects] = useState<SubjectStoreProps["subjects"]>([
@@ -42,7 +43,9 @@ export default function Page() {
 
   return (
     <>
-      <Title title="科目登録" icon="subject" />
+      <Title label="科目登録">
+        <SubjectIcon />
+      </Title>
       <List title="登録科目一覧" h={250}>
         <SubjectFormTable subjects={subjects} setSubjects={setSubjects} />
       </List>

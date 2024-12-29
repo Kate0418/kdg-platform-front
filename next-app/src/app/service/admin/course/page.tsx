@@ -12,6 +12,7 @@ import { Token } from "@/api/Token";
 import { useRouter } from "next/navigation";
 import { CourseDestroy } from "@/api/CourseDestroy";
 import { Button } from "@/components/layout/button/button";
+import { CourseIcon } from "@/components/layout/icons/courseIcon/courseIcon";
 
 export default function Page() {
   const [courses, setCourses] = useState<CourseResponse["courses"]>([]);
@@ -71,7 +72,9 @@ export default function Page() {
 
   return (
     <>
-      <Title title="コース情報管理" icon="course" />
+      <Title label="コース情報管理">
+        <CourseIcon />
+      </Title>
       <List title="コース一覧" loaderFlg={loaderFlg} h={250}>
         <form
           className="flex justify-end items-center gap-2 py-2"

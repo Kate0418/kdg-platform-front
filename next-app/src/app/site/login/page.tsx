@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/layout/button/button";
-import { userTypes } from "@/config";
+import Cookies from "js-cookie";
 
 export default function Page() {
   const [email, setEmail] = useState("");
@@ -19,11 +19,10 @@ export default function Page() {
     const response = await Login({ email, password });
     if (response.success) {
       if (response.token) {
-        localStorage.setItem("token", response.token);
-        localStorage.setItem("type", String(response.type));
+        Cookies.set("token", response.token);
+        Cookies.set("type", String(response.type));
       }
-      if (response.type)
-        router.push(`/service/${userTypes[response.type]}/top`);
+      if (response.type) router.push(`/service/${response.type}/top`);
     } else {
       setLoading(false);
       alert("メールアドレスもしくはパスワードが間違っています。");
@@ -35,7 +34,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-[calc(100vh-110px)]">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-110px)]">
       <form
         className="flex flex-col lg:w-1/3 border border-text-500 rounded-lg bg-white overflow-hidden"
         onSubmit={(e) => {

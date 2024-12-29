@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export interface TeacherStoreProps {
   teachers: Array<{
@@ -17,7 +18,7 @@ export async function TeacherStore({
   teachers,
 }: TeacherStoreProps): Promise<TeacherStoreResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/teacher`;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   try {
     const response = await axios.post<{ success: boolean; message: string }>(

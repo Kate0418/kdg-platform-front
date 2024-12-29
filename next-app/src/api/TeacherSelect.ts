@@ -1,5 +1,6 @@
 import { SelectItem } from "@/config";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export interface TeacherSelectResponse {
   success: boolean;
@@ -8,7 +9,7 @@ export interface TeacherSelectResponse {
 
 export async function TeacherSelect(): Promise<TeacherSelectResponse> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/teacher/select`;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   try {
     const response = await axios.get<TeacherSelectResponse>(api_url, {

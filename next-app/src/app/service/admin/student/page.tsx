@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { EditToolbar } from "@/components/layout/editToolbar/editToolbar";
 import { StudentDestroy } from "@/api/StudentDestroy";
 import { Button } from "@/components/layout/button/button";
+import { StudentIcon } from "@/components/layout/icons/studentIcon/studentIcon";
 
 type StudentsWithZoom = StudentResponse["students"][number] & { zoom: boolean };
 
@@ -111,7 +112,9 @@ export default function Page() {
 
   return (
     <>
-      <Title title="生徒情報管理" icon="student" />
+      <Title label="生徒情報管理">
+        <StudentIcon />
+      </Title>
       <div className="flex"></div>
       <List title="生徒一覧" h={250} loaderFlg={loaderFlg}>
         <form

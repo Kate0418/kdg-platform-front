@@ -12,6 +12,7 @@ import { Modal } from "@/components/layout/Modal";
 import { TeacherFormTable } from "@/components/service/admin/teacher/teacherFormTable/teacherFormTable";
 import { StoreFormController } from "@/components/layout/storeFormController/storeFormController";
 import { StoreModalController } from "@/components/layout/storeModalController/storeModalController";
+import { TeacherIcon } from "@/components/layout/icons/teacherIcon/teacherIcon";
 
 export default function Page() {
   const [teachers, setTeachers] = useState<TeacherStoreProps["teachers"]>([
@@ -44,7 +45,9 @@ export default function Page() {
 
   return (
     <>
-      <Title title="講師登録" icon="teacher" />
+      <Title label="講師登録">
+        <TeacherIcon />
+      </Title>
       <List title="登録講師一覧" h={250}>
         <TeacherFormTable teachers={teachers} setTeachers={setTeachers} />
       </List>

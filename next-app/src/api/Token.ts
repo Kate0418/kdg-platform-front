@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export interface Response {
   success: boolean;
@@ -6,7 +7,7 @@ export interface Response {
 
 export async function Token(): Promise<Response> {
   const api_url = `${process.env.NEXT_PUBLIC_API_URL}/token`;
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   if (!token) {
     return { success: false };
   }
