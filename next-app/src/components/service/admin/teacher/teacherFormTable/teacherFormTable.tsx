@@ -89,7 +89,7 @@ export function TeacherFormTable({
                   </div>
                   <div className="w-5/6">
                     {modalFlg ? (
-                      <div className="p-1">
+                      <div className="p-2">
                         {subjects
                           .filter((subject) =>
                             teacher.subjectIds?.includes(subject.value),
@@ -99,7 +99,7 @@ export function TeacherFormTable({
                       </div>
                     ) : (
                       <Select
-                        className="w-full p-1"
+                        className="w-full p-2"
                         multi={true}
                         options={subjects}
                         value={subjects.filter((subject) =>
