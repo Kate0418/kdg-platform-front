@@ -47,7 +47,7 @@ export default function Header() {
     ],
   };
 
-  useEffect(() => setUserType(Cookies.get("type") ?? ""), []);
+  useEffect(() => setUserType(Cookies.get("type") ?? ""));
 
   return (
     <>
