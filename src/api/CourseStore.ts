@@ -5,15 +5,14 @@ export interface CourseStoreProps {
   course: {
     name: string;
     gradeId: number | null;
-    times: Array<{
-      period: number;
+    periods: Array<{
+      sequence: number;
       startTime: Date | null;
       endTime: Date | null;
-    }>;
-    lessons: Array<{
-      dayOfWeek: number;
-      period: number;
-      subjectId: number | null;
+      lessons: Array<{
+        subjectId: number | null;
+        dayOfWeek: "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun";
+      }>;
     }>;
   };
 }

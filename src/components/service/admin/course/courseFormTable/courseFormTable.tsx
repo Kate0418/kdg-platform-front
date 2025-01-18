@@ -2,7 +2,7 @@ import { CourseStoreProps } from "@/api/CourseStore";
 import { GradeSelect, GradeSelectResponse } from "@/api/GradeSelect";
 import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
 import { Select } from "@/components/layout/Select";
-import { daysOfWeek, SelectItem } from "@/config";
+import { DayOfWeekKey, daysOfWeek, SelectItem } from "@/config";
 import { DndContext, DragEndEvent } from "@dnd-kit/core"; //ライブラリ
 import { ScheduleColumn } from "../scheduleColumn/scheduleColumn";
 import { Droppable } from "../droppable/droppable";
@@ -28,7 +28,6 @@ export function CourseFormTable({
   const [subjects, setSubjects] = useState<SubjectSelectResponse["subjects"]>(
     [],
   );
-  const period = 12;
 
   useEffect(() => {
     const selectApi = async () => {
@@ -42,14 +41,14 @@ export function CourseFormTable({
     selectApi();
   }, []);
 
-  const getLessonIndex = (i: number, j: number) => {
-    return course.lessons.findIndex(
-      (lesson) => lesson.dayOfWeek === i && lesson.period === j,
+  const getLessonIndex = (key: string, index: number) => {
+    return course.periods[index].lessons.findIndex(
+      (lesson) => lesson.dayOfWeek === key,
     );
   };
-  const getLessonFlg = (i: number, j: number) => {
-    return course.lessons.some(
-      (lesson) => lesson.dayOfWeek === i && lesson.period === j,
+  const getLessonFlg = (key: string, index: number) => {
+    return course.periods[index].lessons.some(
+      (lesson) => lesson.dayOfWeek === key,
     );
   };
 
@@ -60,43 +59,40 @@ export function CourseFormTable({
     if (overId !== null) {
       const [, activeDayOfWeek, activePeriod] = String(activeId).split("-");
       const [, overDayOfWeek, overPeriod] = String(overId).split("-");
-
-      const activeIndex = getLessonIndex(
-        Number(activeDayOfWeek),
-        Number(activePeriod),
+      const activePeriodNumber = Number(activePeriod);
+      const overPeriodNumber = Number(overPeriod);
+      const activeLessonIndex = getLessonIndex(
+        activeDayOfWeek,
+        activePeriodNumber,
       );
-      // -1の場合がある
-      const overIndex = getLessonIndex(
-        Number(overDayOfWeek),
-        Number(overPeriod),
-      );
+      const overLessonIndex = getLessonIndex(overDayOfWeek, overPeriodNumber); // -1の場合がある
 
-      // lessonsの配列を新しく作成
-      let newLessons = [...course.lessons];
+      const newCourse = { ...course };
+      const activeSubjectId = { ...course }.periods[activePeriodNumber].lessons[
+        activeLessonIndex
+      ].subjectId;
+      const overSubjectId = { ...course }.periods[overPeriodNumber].lessons[
+        overLessonIndex
+      ]?.subjectId;
 
-      if (overIndex === -1) {
-        newLessons = newLessons.filter((_, index) => index !== activeIndex);
-        newLessons.push({
-          dayOfWeek: Number(overDayOfWeek),
-          period: Number(overPeriod),
-          subjectId: course.lessons[activeIndex].subjectId,
+      if (overLessonIndex === -1) {
+        newCourse.periods[overPeriodNumber].lessons.push({
+          subjectId: activeSubjectId,
+          dayOfWeek: activeDayOfWeek as DayOfWeekKey,
         });
+        newCourse.periods[activePeriodNumber].lessons.splice(
+          activeLessonIndex,
+          1,
+        );
       } else {
-        // 要素の入れ替え
-        const tempSubjectId = newLessons[activeIndex].subjectId;
-        newLessons[activeIndex] = {
-          ...newLessons[activeIndex],
-          subjectId: newLessons[overIndex].subjectId,
-        };
-        newLessons[overIndex] = {
-          ...newLessons[overIndex],
-          subjectId: tempSubjectId,
-        };
+        newCourse.periods[overPeriodNumber].lessons[overLessonIndex].subjectId =
+          activeSubjectId;
+        newCourse.periods[activePeriodNumber].lessons[
+          activeLessonIndex
+        ].subjectId = overSubjectId;
       }
-      setCourse({
-        ...course,
-        lessons: newLessons,
-      });
+
+      setCourse(newCourse);
     }
   };
   return (
@@ -127,9 +123,9 @@ export function CourseFormTable({
       <DndContext onDragEnd={onDragEnd}>
         <div className="grid lg:grid-cols-[2fr_3fr_3fr_3fr_3fr_3fr_3fr_3fr] gap-2">
           <ScheduleColumn head="時間">
-            {Array.from({ length: period }).map((_, j) => (
+            {course.periods.map((period, index) => (
               <div
-                key={j}
+                key={index}
                 className="flex flex-col justify-center items-center border-b border-text-500 h-20"
               >
                 <div className="w-full flex flex-col gap-1 px-1">
@@ -137,11 +133,11 @@ export function CourseFormTable({
                     <TimeIcon />
                     <TimePicker
                       className="w-16"
-                      value={course.times[j].startTime}
+                      value={period.startTime}
                       onChange={(time) => {
                         if (time) {
                           const newCourse = { ...course };
-                          newCourse.times[j].startTime = time;
+                          newCourse.periods[index].startTime = time;
                           setCourse(newCourse);
                         }
                       }}
@@ -152,10 +148,10 @@ export function CourseFormTable({
                     <TimeIcon />
                     <TimePicker
                       className="w-16"
-                      value={course.times[j].endTime}
+                      value={course.periods[index].endTime}
                       onChange={(time) => {
                         const newCourse = { ...course };
-                        newCourse.times[j].endTime = time;
+                        newCourse.periods[index].endTime = time;
                         setCourse(newCourse);
                       }}
                       readOnly={modalFlg}
@@ -165,11 +161,11 @@ export function CourseFormTable({
               </div>
             ))}
           </ScheduleColumn>
-          {Array.from({ length: 7 }).map((_, i) => (
-            <ScheduleColumn head={daysOfWeek[i]} key={i}>
-              {Array.from({ length: period }).map((_, j) => (
+          {Object.entries(daysOfWeek).map(([key, value]) => (
+            <ScheduleColumn head={value} key={key}>
+              {course.periods.map((period, index) => (
                 <div
-                  key={j}
+                  key={index}
                   className="flex flex-col justify-center items-center border-b border-text-500 h-20"
                 >
                   <div className="w-full px-1">
@@ -179,39 +175,33 @@ export function CourseFormTable({
                           subjects.find(
                             (subject) =>
                               subject.value ===
-                              course.lessons[getLessonIndex(i, j)]?.subjectId,
+                              period.lessons[getLessonIndex(key, index)]
+                                ?.subjectId,
                           )?.label
                         }
                       </div>
                     ) : (
-                      <Droppable id={`drop-${i}-${j}`} key={j}>
+                      <Droppable id={`drop-${key}-${index}`} key={index}>
                         <Draggable
-                          id={`drag-${i}-${j}`}
-                          key={j}
-                          lessonFlg={getLessonFlg(i, j)}
+                          id={`drag-${key}-${index}`}
+                          lessonFlg={getLessonFlg(key, index)}
                         >
-                          {getLessonFlg(i, j) ? (
+                          {getLessonFlg(key, index) ? (
                             <div className="w-full p-2 flex">
                               <Select
                                 className="text-xs w-5/6 font-bold"
                                 options={subjects}
-                                value={(() => {
-                                  const lessonIndex = getLessonIndex(i, j);
-                                  const subjectId =
-                                    course.lessons[lessonIndex]?.subjectId;
-                                  return (
-                                    subjects.find(
-                                      (subject) => subject.value === subjectId,
-                                    ) || null
-                                  );
-                                })()}
-                                onChange={(newValue: unknown) => {
-                                  const data = newValue as SelectItem;
+                                value={subjects.find(
+                                  (subject) =>
+                                    subject.value ===
+                                    period.lessons[getLessonIndex(key, index)]
+                                      ?.subjectId,
+                                )}
+                                onChange={(e) => {
                                   const newCourse = { ...course };
-                                  newCourse.lessons[getLessonIndex(i, j)] = {
-                                    ...newCourse.lessons[getLessonIndex(i, j)],
-                                    subjectId: data?.value ?? null,
-                                  };
+                                  newCourse.periods[index].lessons[
+                                    getLessonIndex(key, index)
+                                  ].subjectId = e?.value;
                                   setCourse(newCourse);
                                 }}
                               />
@@ -220,8 +210,8 @@ export function CourseFormTable({
                                 type="button"
                                 onClick={() => {
                                   const newCourse = { ...course };
-                                  newCourse.lessons.splice(
-                                    getLessonIndex(i, j),
+                                  newCourse.periods[index].lessons.splice(
+                                    getLessonIndex(key, index),
                                     1,
                                   );
                                   setCourse(newCourse);
@@ -236,9 +226,8 @@ export function CourseFormTable({
                               type="button"
                               onClick={() => {
                                 const newCourse = { ...course };
-                                newCourse.lessons.push({
-                                  dayOfWeek: i,
-                                  period: j,
+                                newCourse.periods[index].lessons.push({
+                                  dayOfWeek: key as DayOfWeekKey,
                                   subjectId: null,
                                 });
                                 setCourse(newCourse);

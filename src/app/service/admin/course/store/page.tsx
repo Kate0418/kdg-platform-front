@@ -14,16 +14,16 @@ import { StoreFormController } from "@/components/layout/storeFormController/sto
 import { CourseIcon } from "@/components/layout/icons/courseIcon/courseIcon";
 
 export default function Page() {
-  const period = 12;
+  const periodCount = 12;
   const [course, setCourse] = useState<CourseStoreProps["course"]>({
     name: "",
     gradeId: null,
-    times: Array.from({ length: period }, (_, index) => ({
-      period: index,
+    periods: Array.from({ length: periodCount }, (_, index) => ({
+      sequence: index + 1,
       startTime: null,
       endTime: null,
+      lessons: [],
     })),
-    lessons: [],
   });
   const [modalFlg, setModalFlg] = useState(false);
   const [loaderFlg, setLoaderFlg] = useState(false);
@@ -39,7 +39,9 @@ export default function Page() {
 
     const storeCourse = {
       ...course,
-      times: course.times.filter((time) => time.startTime && time.endTime),
+      periods: course.periods.filter(
+        (period) => period.startTime && period.endTime,
+      ),
     };
     const subjectAdd = await CourseStore({ course: storeCourse });
     alert(subjectAdd.message);
@@ -69,17 +71,15 @@ export default function Page() {
             alert("コース名,学年が入力されていません");
             return;
           }
-          for (let i = 0; i < 7; i++) {
-            for (let j = 0; j < period; j++) {
-              if (course.times[j].startTime && course.times[j].endTime) {
-                break;
-              } else if (course.lessons.some((lesson) => lesson.period === j)) {
-                alert("時間が入力されていません");
-                return;
-              }
+          course.periods.forEach((period) => {
+            if (
+              period.startTime === null &&
+              period.endTime === null &&
+              period.lessons.length > 0
+            ) {
+              alert("授業があるコマに時間が入力されていません");
             }
-          }
-
+          });
           setModalFlg(true);
         }}
       />

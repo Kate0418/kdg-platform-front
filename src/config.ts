@@ -3,14 +3,23 @@ export interface SelectItem {
   label: string;
 }
 
-export const daysOfWeek = [
-  "日曜日",
-  "月曜日",
-  "火曜日",
-  "水曜日",
-  "木曜日",
-  "金曜日",
-  "土曜日",
-];
+export type DayOfWeekKey =
+  | "Sun"
+  | "Mon"
+  | "Tue"
+  | "Wed"
+  | "Thu"
+  | "Fri"
+  | "Sat";
+
+export const daysOfWeek = {
+  Sun: "日曜日",
+  Mon: "月曜日",
+  Tue: "火曜日",
+  Wed: "水曜日",
+  Thu: "木曜日",
+  Fri: "金曜日",
+  Sat: "土曜日",
+};
 
 export type WithZoom<T> = T & { zoom: boolean };
