@@ -94,7 +94,6 @@ export function CourseFormTable({
         ].subjectId = overSubjectId;
       }
 
-      console.log(newCourse);
       setCourse(newCourse);
     }
   };
