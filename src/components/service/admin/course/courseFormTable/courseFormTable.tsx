@@ -62,37 +62,39 @@ export function CourseFormTable({
       const [, overDayOfWeek, overPeriod] = String(overId).split("-");
       const activePeriodNumber = Number(activePeriod);
       const overPeriodNumber = Number(overPeriod);
+
+      const activePeriodIndex = getPeriodIndex(activePeriodNumber);
+      const overPeriodIndex = getPeriodIndex(overPeriodNumber);
       const activeLessonIndex = getLessonIndex(
         activeDayOfWeek,
         activePeriodNumber,
       );
       const overLessonIndex = getLessonIndex(overDayOfWeek, overPeriodNumber); // -1の場合がある
 
-      const newCourse = { ...course };
-      const activeSubjectId = { ...course }.periods[activePeriodNumber].lessons[
-        activeLessonIndex
-      ].subjectId;
-      const overSubjectId = { ...course }.periods[overPeriodNumber].lessons[
-        overLessonIndex
-      ]?.subjectId;
+      const newCourse = structuredClone(course);
+      const activeSubjectId =
+        course.periods[activePeriodIndex].lessons[activeLessonIndex].subjectId;
+      const overSubjectId =
+        course.periods[overPeriodIndex].lessons[overLessonIndex]?.subjectId;
 
       if (overLessonIndex === -1) {
-        newCourse.periods[overPeriodNumber].lessons.push({
+        newCourse.periods[overPeriodIndex].lessons.push({
           subjectId: activeSubjectId,
-          dayOfWeek: activeDayOfWeek as DayOfWeekKey,
+          dayOfWeek: overDayOfWeek as DayOfWeekKey,
         });
-        newCourse.periods[activePeriodNumber].lessons.splice(
+        newCourse.periods[activePeriodIndex].lessons.splice(
           activeLessonIndex,
           1,
         );
       } else {
-        newCourse.periods[overPeriodNumber].lessons[overLessonIndex].subjectId =
+        newCourse.periods[overPeriodIndex].lessons[overLessonIndex].subjectId =
           activeSubjectId;
-        newCourse.periods[activePeriodNumber].lessons[
+        newCourse.periods[activePeriodIndex].lessons[
           activeLessonIndex
         ].subjectId = overSubjectId;
       }
 
+      console.log(newCourse);
       setCourse(newCourse);
     }
   };
@@ -208,14 +210,19 @@ export function CourseFormTable({
                                 <Select
                                   className="text-xs w-5/6 font-bold"
                                   options={subjects}
-                                  value={subjects.find(
-                                    (subject) =>
-                                      subject.value ===
-                                      course.periods[getPeriodIndex(sequence)]
-                                        .lessons[
-                                        getLessonIndex(daysOfWeekKey, sequence)
-                                      ]?.subjectId,
-                                  )}
+                                  value={
+                                    subjects.find(
+                                      (subject) =>
+                                        subject.value ===
+                                        course.periods[getPeriodIndex(sequence)]
+                                          .lessons[
+                                          getLessonIndex(
+                                            daysOfWeekKey,
+                                            sequence,
+                                          )
+                                        ]?.subjectId,
+                                    ) ?? null
+                                  }
                                   onChange={(e) => {
                                     const newCourse = { ...course };
                                     newCourse.periods[
