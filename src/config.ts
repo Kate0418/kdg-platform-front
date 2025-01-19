@@ -12,7 +12,7 @@ export type DayOfWeekKey =
   | "Fri"
   | "Sat";
 
-export const daysOfWeek = {
+export const daysOfWeeks = {
   Sun: "日曜日",
   Mon: "月曜日",
   Tue: "火曜日",

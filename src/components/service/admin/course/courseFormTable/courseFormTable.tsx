@@ -2,7 +2,7 @@ import { CourseStoreProps } from "@/api/CourseStore";
 import { GradeSelect, GradeSelectResponse } from "@/api/GradeSelect";
 import { SubjectSelect, SubjectSelectResponse } from "@/api/SubjectSelect";
 import { Select } from "@/components/layout/Select";
-import { DayOfWeekKey, daysOfWeek, SelectItem } from "@/config";
+import { DayOfWeekKey, daysOfWeeks, SelectItem } from "@/config";
 import { DndContext, DragEndEvent } from "@dnd-kit/core"; //ライブラリ
 import { ScheduleColumn } from "../scheduleColumn/scheduleColumn";
 import { Droppable } from "../droppable/droppable";
@@ -41,14 +41,15 @@ export function CourseFormTable({
     selectApi();
   }, []);
 
-  const getLessonIndex = (key: string, index: number) => {
-    return course.periods[index].lessons.findIndex(
-      (lesson) => lesson.dayOfWeek === key,
+  const getPeriodIndex = (sequence: number) =>
+    course.periods.findIndex((period) => period.sequence === sequence);
+  const getLessonIndex = (dayOfWeekKey: string, sequence: number) =>
+    course.periods[getPeriodIndex(sequence)].lessons.findIndex(
+      (lesson) => lesson.dayOfWeek === dayOfWeekKey,
     );
-  };
-  const getLessonFlg = (key: string, index: number) => {
-    return course.periods[index].lessons.some(
-      (lesson) => lesson.dayOfWeek === key,
+  const getLessonFlg = (dayOfWeekKey: string, sequence: number) => {
+    return course.periods[getPeriodIndex(sequence)]?.lessons.some(
+      (lesson) => lesson.dayOfWeek === dayOfWeekKey,
     );
   };
 
@@ -123,129 +124,154 @@ export function CourseFormTable({
       <DndContext onDragEnd={onDragEnd}>
         <div className="grid lg:grid-cols-[2fr_3fr_3fr_3fr_3fr_3fr_3fr_3fr] gap-2">
           <ScheduleColumn head="時間">
-            {course.periods.map((period, index) => (
-              <div
-                key={index}
-                className="flex flex-col justify-center items-center border-b border-text-500 h-20"
-              >
-                <div className="w-full flex flex-col gap-1 px-1">
-                  <div className="flex gap-1 items-center">
-                    <TimeIcon />
-                    <TimePicker
-                      className="w-16"
-                      value={period.startTime}
-                      onChange={(time) => {
-                        if (time) {
-                          const newCourse = { ...course };
-                          newCourse.periods[index].startTime = time;
-                          setCourse(newCourse);
-                        }
-                      }}
-                      readOnly={modalFlg}
-                    />
-                  </div>
-                  <div className="flex gap-1 items-center">
-                    <TimeIcon />
-                    <TimePicker
-                      className="w-16"
-                      value={course.periods[index].endTime}
-                      onChange={(time) => {
-                        const newCourse = { ...course };
-                        newCourse.periods[index].endTime = time;
-                        setCourse(newCourse);
-                      }}
-                      readOnly={modalFlg}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </ScheduleColumn>
-          {Object.entries(daysOfWeek).map(([key, value]) => (
-            <ScheduleColumn head={value} key={key}>
-              {course.periods.map((period, index) => (
+            {Array.from({ length: course.periods.length }, (_, i) => i + 1).map(
+              (sequence) => (
                 <div
-                  key={index}
+                  key={sequence}
                   className="flex flex-col justify-center items-center border-b border-text-500 h-20"
                 >
-                  <div className="w-full px-1">
-                    {modalFlg ? (
-                      <div className="flex justify-center overflow-y-auto max-h-[80px]">
-                        {
-                          subjects.find(
-                            (subject) =>
-                              subject.value ===
-                              period.lessons[getLessonIndex(key, index)]
-                                ?.subjectId,
-                          )?.label
+                  <div className="w-full flex flex-col gap-1 px-1">
+                    <div className="flex gap-1 items-center">
+                      <TimeIcon />
+                      <TimePicker
+                        className="w-16"
+                        value={
+                          course.periods[getPeriodIndex(sequence)]?.startTime
                         }
-                      </div>
-                    ) : (
-                      <Droppable id={`drop-${key}-${index}`} key={index}>
-                        <Draggable
-                          id={`drag-${key}-${index}`}
-                          lessonFlg={getLessonFlg(key, index)}
+                        onChange={(time) => {
+                          const newCourse = { ...course };
+                          newCourse.periods[
+                            getPeriodIndex(sequence)
+                          ].startTime = time;
+                          setCourse(newCourse);
+                        }}
+                        readOnly={modalFlg}
+                      />
+                    </div>
+                    <div className="flex gap-1 items-center">
+                      <TimeIcon />
+                      <TimePicker
+                        className="w-16"
+                        value={
+                          course.periods[getPeriodIndex(sequence)]?.endTime
+                        }
+                        onChange={(time) => {
+                          const newCourse = { ...course };
+                          newCourse.periods[getPeriodIndex(sequence)].endTime =
+                            time;
+                          setCourse(newCourse);
+                        }}
+                        readOnly={modalFlg}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ),
+            )}
+          </ScheduleColumn>
+          {Object.entries(daysOfWeeks).map(
+            ([daysOfWeekKey, daysOfWeekValue]) => (
+              <ScheduleColumn head={daysOfWeekValue} key={daysOfWeekKey}>
+                {Array.from(
+                  { length: course.periods.length },
+                  (_, i) => i + 1,
+                ).map((sequence) => (
+                  <div
+                    key={sequence}
+                    className="flex flex-col justify-center items-center border-b border-text-500 h-20"
+                  >
+                    <div className="w-full px-1">
+                      {modalFlg ? (
+                        <div className="flex justify-center overflow-y-auto max-h-[80px]">
+                          {
+                            subjects.find(
+                              (subject) =>
+                                subject.value ===
+                                course.periods[getPeriodIndex(sequence)]
+                                  .lessons[
+                                  getLessonIndex(daysOfWeekKey, sequence)
+                                ]?.subjectId,
+                            )?.label
+                          }
+                        </div>
+                      ) : (
+                        <Droppable
+                          id={`drop-${daysOfWeekKey}-${sequence}`}
+                          key={sequence}
                         >
-                          {getLessonFlg(key, index) ? (
-                            <div className="w-full p-2 flex">
-                              <Select
-                                className="text-xs w-5/6 font-bold"
-                                options={subjects}
-                                value={subjects.find(
-                                  (subject) =>
-                                    subject.value ===
-                                    period.lessons[getLessonIndex(key, index)]
-                                      ?.subjectId,
-                                )}
-                                onChange={(e) => {
-                                  const newCourse = { ...course };
-                                  newCourse.periods[index].lessons[
-                                    getLessonIndex(key, index)
-                                  ].subjectId = e?.value;
-                                  setCourse(newCourse);
-                                }}
-                              />
+                          <Draggable
+                            id={`drag-${daysOfWeekKey}-${sequence}`}
+                            lessonFlg={getLessonFlg(daysOfWeekKey, sequence)}
+                          >
+                            {getLessonFlg(daysOfWeekKey, sequence) ? (
+                              <div className="w-full p-2 flex">
+                                <Select
+                                  className="text-xs w-5/6 font-bold"
+                                  options={subjects}
+                                  value={subjects.find(
+                                    (subject) =>
+                                      subject.value ===
+                                      course.periods[getPeriodIndex(sequence)]
+                                        .lessons[
+                                        getLessonIndex(daysOfWeekKey, sequence)
+                                      ]?.subjectId,
+                                  )}
+                                  onChange={(e) => {
+                                    const newCourse = { ...course };
+                                    newCourse.periods[
+                                      getPeriodIndex(sequence)
+                                    ].lessons[
+                                      getLessonIndex(daysOfWeekKey, sequence)
+                                    ].subjectId = e?.value;
+                                    setCourse(newCourse);
+                                  }}
+                                />
+                                <button
+                                  className="z-10"
+                                  type="button"
+                                  onClick={() => {
+                                    const newCourse = { ...course };
+                                    newCourse.periods[
+                                      getPeriodIndex(sequence)
+                                    ].lessons.splice(
+                                      getLessonIndex(daysOfWeekKey, sequence),
+                                      1,
+                                    );
+                                    setCourse(newCourse);
+                                  }}
+                                >
+                                  <DeleteIcon />
+                                </button>
+                              </div>
+                            ) : (
                               <button
-                                className="z-10"
+                                className="relative w-full h-full"
                                 type="button"
                                 onClick={() => {
                                   const newCourse = { ...course };
-                                  newCourse.periods[index].lessons.splice(
-                                    getLessonIndex(key, index),
-                                    1,
-                                  );
+                                  newCourse.periods[
+                                    getPeriodIndex(sequence)
+                                  ].lessons.push({
+                                    dayOfWeek: daysOfWeekKey as DayOfWeekKey,
+                                    subjectId: null,
+                                  });
                                   setCourse(newCourse);
                                 }}
                               >
-                                <DeleteIcon />
+                                <div className="absolute inset-0 flex justify-center items-center">
+                                  <PlusIcon className="z-10" />
+                                </div>
                               </button>
-                            </div>
-                          ) : (
-                            <button
-                              className="relative w-full h-full"
-                              type="button"
-                              onClick={() => {
-                                const newCourse = { ...course };
-                                newCourse.periods[index].lessons.push({
-                                  dayOfWeek: key as DayOfWeekKey,
-                                  subjectId: null,
-                                });
-                                setCourse(newCourse);
-                              }}
-                            >
-                              <div className="absolute inset-0 flex justify-center items-center">
-                                <PlusIcon className="z-10" />
-                              </div>
-                            </button>
-                          )}
-                        </Draggable>
-                      </Droppable>
-                    )}
+                            )}
+                          </Draggable>
+                        </Droppable>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </ScheduleColumn>
-          ))}
+                ))}
+              </ScheduleColumn>
+            ),
+          )}
         </div>
       </DndContext>
     </>
