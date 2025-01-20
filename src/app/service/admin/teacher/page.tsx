@@ -29,7 +29,7 @@ export default function Page() {
   const [teacherIds, setTeacherIds] = useState<TeacherResponse["teacherIds"]>(
     [],
   );
-  const [loaderFlg, setLoaderFlg] = useState(false);
+  const [loaderFlg, setLoaderFlg] = useState(true);
   const [updateModalFlg, setUpdateModalFlg] = useState(false);
   const [updateTeacher, setUpdateTeacher] = useState<
     TeacherUpdateProps["teachers"][number]
@@ -42,7 +42,6 @@ export default function Page() {
   const router = useRouter();
 
   const indexApi = useCallback(async () => {
-    setLoaderFlg(true);
     const response = await Teacher({ keyWord, pageCount });
     setTeachers(
       response.teachers.map((teacher) => ({

@@ -33,7 +33,7 @@ input {
 }
 
 .square-spin-2 {
-    --size: 120px;
+    --size: 80px;
     --stroke-width: calc(var(--size) / 6);
     --color: currentColor;
     --animation-timing-function: linear;

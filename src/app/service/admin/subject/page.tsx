@@ -30,7 +30,7 @@ export default function Page() {
 
   const [checkIds, setCheckIds] = useState<number[]>([]);
 
-  const [loaderFlg, setLoaderFlg] = useState(false);
+  const [loaderFlg, setLoaderFlg] = useState(true);
   const [updateModalFlg, setUpdateModalFlg] = useState(false);
   const [updateSubject, setUpdateSubject] = useState<
     SubjectUpdateProps["subjects"][number]
@@ -40,7 +40,6 @@ export default function Page() {
   const router = useRouter();
 
   const indexApi = useCallback(async () => {
-    setLoaderFlg(true);
     const response = await Subject({ keyWord: keyWord, pageCount: pageCount });
     if (response.success) {
       setSubjects(response.subjects);

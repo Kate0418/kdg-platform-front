@@ -23,12 +23,11 @@ export default function Page() {
   const [total, setTotal] = useState(0);
   const [checkIds, setCheckIds] = useState<number[]>([]);
 
-  const [loaderFlg, setLoaderFlg] = useState(false);
+  const [loaderFlg, setLoaderFlg] = useState(true);
   const [updateFlg, setUpdateFlg] = useState(false);
   const router = useRouter();
 
   const indexApi = useCallback(async () => {
-    setLoaderFlg(true);
     const response = await Course({
       keyWord: keyWord,
       pageCount: pageCount,

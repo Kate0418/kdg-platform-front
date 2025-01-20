@@ -25,7 +25,7 @@ export default function Page() {
   const [keyWord, setKeyWord] = useState("");
   const [pageCount, setPageCount] = useState(1);
   const [students, setStudents] = useState<StudentsWithZoom[]>([]);
-  const [loaderFlg, setLoaderFlg] = useState(false);
+  const [loaderFlg, setLoaderFlg] = useState(true);
   const [total, setTotal] = useState(0);
   const [studentIds, setStudentIds] = useState<StudentResponse["studentIds"]>(
     [],
@@ -46,7 +46,6 @@ export default function Page() {
   const router = useRouter();
 
   const indexApi = useCallback(async () => {
-    setLoaderFlg(true);
     const response = await Student({ keyWord, pageCount });
     setStudents(
       response.students.map((student) => ({
