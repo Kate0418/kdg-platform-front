@@ -2,9 +2,9 @@
 
 ## 公開 URL
 
-- 9:00~21:00 の公開
+- 9:00~21:00 の公開（現在停止中）
 
-  https://kdg-platform-test.vercel.app/site/login/
+  ~~https://kdg-platform-test.vercel.app/site/login/~~
 
 - テスト環境ユーザー
 
